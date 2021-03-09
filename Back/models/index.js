@@ -6,4 +6,4 @@ const Review = require("./review");
 const Transaction = require("./transaction");
 const transactionItem = require("./transactionItem");
 
-module.exports = {User,Address,Payment,Product,Review,Transaction,transactionItem}
+module.exports = { User, Address, Payment, Product, Review, Transaction, transactionItem }
