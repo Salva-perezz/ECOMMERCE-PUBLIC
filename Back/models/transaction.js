@@ -4,7 +4,9 @@ const db = require("../db");
 class Transaction extends Sequelize.Model{}
 
 Transaction.init({
-
+checkoutDate:{
+    type: Sequelize.DATE
+}
 },{sequelize:db , modelName:"transaction"})
 
 model.exports = Transaction
