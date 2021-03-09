@@ -6,6 +6,7 @@ const Review = require("./review");
 const Transaction = require("./transaction");
 const transactionItem = require("./transactionItem");
 
+
 //Relaciones: Transaction
 
 Transaction.belongsTo(User)
@@ -29,5 +30,5 @@ Review.belongsTo(User)
 
 Address.belongsTo(User)
 
+module.exports = { User, Address, Payment, Product, Review, Transaction, transactionItem }
 
-module.exports = {User,Address,Payment,Product,Review,Transaction,transactionItem}
