@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const models = require("../models");
 const Product = models.Product;
-module.exports = router;
+
 
 router.post("/add", (req, res) => {
     Product.create(req.body)
@@ -32,6 +32,7 @@ router.get("/search", (req, res) => {
     })
 })
 
+
 router.get("/", (req, res) => {
     Product.findAll()
         .then((products) => {
@@ -40,6 +41,7 @@ router.get("/", (req, res) => {
             res.sendStatus(500)
         })
 })
+
 
 router.put("/:id", (req, res) => {
     Product.update(req.body, {
@@ -53,6 +55,7 @@ router.put("/:id", (req, res) => {
     })
 })
 
+
 router.delete("/:id", (req, res) => {
     Product.delete({
         where: { id: req.params.id }
@@ -62,3 +65,5 @@ router.delete("/:id", (req, res) => {
         res.sendStatus(500)
     })
 })
+
+module.exports = router;

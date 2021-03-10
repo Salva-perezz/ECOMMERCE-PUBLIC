@@ -22,7 +22,10 @@ Product.init({
     description: {
         type: Sequelize.TEXT
     },
-    price: {
+    year:{
+        type: Sequelize.INTEGER
+    },
+    price:{
         type: Sequelize.INTEGER
     },
     size: {
