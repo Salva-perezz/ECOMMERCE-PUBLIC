@@ -14,10 +14,16 @@ const Login = () => {
   const handleSubmit = function (event) {
     event.preventDefault()
     axios
-      .post("/api/login", {
+      .post("/api/users/login", {
         email,
         password,
       })
+      .then((newUser) => {
+        localStorage.setItem("token", newUser.data.token)
+        // newUser.data.user
+      // dispatch(getCurrentUser({id:newUser.data.id}))
+      // history.push("/")
+    })
     //   .then((user) => {
     //     dispatch(getCurrentUser(user.data))
     //     return axios
@@ -39,9 +45,9 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <label>Email</label>
         <input
-          type="text"
+          type="email"
           name="email"
-          onChange={(event) => setUsername(event.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <label>Password</label>
         <input

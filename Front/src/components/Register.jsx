@@ -6,37 +6,39 @@ import { useHistory } from "react-router-dom"
 
 const NewUser = () => {
   const [email, setEmail] = useState("")
-  const [firstName, setFirstName] = useState("")
+  const [name, setName] = useState("")
   const [lastName, setLastName] = useState("")
   const [password, setPassword] = useState("")
 
-//   const dispatch = useDispatch()
+  //   const dispatch = useDispatch()
   const history = useHistory()
 
   const handleSubmit = function (event) {
     event.preventDefault()
     axios
-      .post("/api/signup", {
+      .post("/api/users/register", {
         email,
-        firstName,
+        name,
         lastName,
-        username,
         password,
       })
       .then((newUser) => {
-        dispatch(getCurrentUser({id:newUser.data.id}))
-        history.push("/")
+          localStorage.setItem("token", newUser.data.token)
+          // newUser.data.user
+        // dispatch(getCurrentUser({id:newUser.data.id}))
+        // history.push("/")
       })
   }
   return (
     <div className="sign-up-or-log-in">
-      <h2>Create a New Account
+      <h2>
+        Create a New Account
         <hr />
       </h2>
       <form onSubmit={handleSubmit}>
-          <label>Email</label>
+        <label>Email</label>
         <input
-          type="text"
+          type="email"
           name="email"
           onChange={(event) => setEmail(event.target.value)}
         />
@@ -44,7 +46,7 @@ const NewUser = () => {
         <input
           type="text"
           name="first_name"
-          onChange={(event) => setFirstName(event.target.value)}
+          onChange={(event) => setName(event.target.value)}
         />
         <label>Last Name</label>
         <input

@@ -11,6 +11,8 @@ const NavBar = () => {
   // const dispatch = useDispatch()
   const history = useHistory()
 
+  const token = localStorage.getItem("token")
+
   const handleChange = function (evt) {
     setSearchQuery(evt.target.value)
   }
@@ -23,6 +25,7 @@ const NavBar = () => {
 
   const handleLogout = function (event) {
     axios.post("/api/logout").then(() => {
+      localStorage.clear()
       dispatch(getCurrentUser(""))
       history.push("/")
     })

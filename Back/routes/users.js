@@ -1,13 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const models = require("../models");
-const User = models.user;
+const User = models.User;
 const jswt = require("jsonwebtoken");
 
 router.post("/register", (req, res) => {
+  console.log("llega")
   User.create(req.body)
     .then((user) => {
-      res.status(201).json(user);
+      const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
+
+      res.status(201).json({token, user});
     })
     .catch(() => {
       res.sendStatus(500);
@@ -25,7 +28,6 @@ router.post("/login", (req, res) => {
     },
   }).then((user) => {
     if (!user) return res.status(400).send("The user doesn't exist");
-
 
     if (!user.validPassword(password)) return res.status(401).send("Invalid credentials");
 
