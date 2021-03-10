@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const models = require("../models");
-const User = models.User;
+const {User} = require("../models");
+
+
 const jswt = require("jsonwebtoken");
 
 router.post("/register", (req, res) => {
@@ -33,20 +34,51 @@ router.post("/login", (req, res) => {
 
     const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
 
-    res.status(200).json({token, user});
+    res.status(200).json({ token, user });
   });
 });
 
 
 
 router.put("/:id", (req, res) => {
-    User.update(req.body, {
-        where: { id: req.params.id },
-        returning: true,
-    }).then((userEdited) => {
-        res.status(201).json(userEdited[1][0].dataValues)
+  User.update(req.body, {
+    where: { id: req.params.id },
+    returning: true,
+  }).then((userEdited) => {
+    userEdited = userEdited[1]
+    res.status(200).json(userEdited)
+  }).catch(() => {
+    res.sendStatus(500)
+  })
+})
+
+router.put("/", (req, res) => {
+  User.update(req.body.isAdmin, { returning: true })
+    .then((userIsAdminEdited) => {
+      userIsAdminEdited = userIsAdminEdited[1]
+      res.status(200).json(userIsAdminEdited)
     }).catch(() => {
-        res.sendStatus(500)
+      res.sendStatus(500)
+    })
+})
+
+router.get("/", (req, res) => {
+  User.findAll()
+    .then((users) => {
+      res.status(200).json(users)
+    }).catch(() => {
+      res.sendStatus(500)
+    })
+})
+
+router.delete("/", (req, res) => {
+  User.delete({
+    where: { id: req.body.id }
+  })
+    .then(() => {
+      res.status(200).send("User Deleted")
+    }).catch(() => {
+      res.sendStatus(500)
     })
 })
 
