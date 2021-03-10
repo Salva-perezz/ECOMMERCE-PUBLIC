@@ -1,0 +1,244 @@
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: ArcherPro-Light;
+}
+
+button {
+  outline: none;
+  border: none;
+}
+
+@font-face {
+  font-family: "prueba";
+  src: url("Archer-Bold-Pro.otf");
+}
+
+@font-face {
+  font-family: "ArcherPro-Light";
+  src: url("ArcherPro-Light.otf");
+}
+
+.single-product-container {
+  display: flex;
+  flex-direction: row;
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.single-product-picture img {
+  height: 500px;
+}
+
+.single-product-specs {
+  /* margin-right: 75px; */
+  margin: auto 124px auto 0;
+}
+
+.name {
+  font-family: "IM Fell Double Pica SC", serif;
+  font-size: 3em;
+}
+
+.single-product-description {
+  font-family: ArcherPro-Light;
+  font-size: 1.2em;
+  margin-top: 15px;
+}
+
+.specs {
+  font-family: ArcherPro-Light;
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px 0 5px 0;
+}
+
+.single-product-icon {
+  height: 1.5em;
+  margin-right: 5px;
+}
+
+.single-spec {
+  display: flex;
+  margin: 0 15px 15px 0;
+  align-items: center;
+}
+
+.single-product-price {
+  font-size: 3em;
+  color: rgb(163, 163, 163);
+}
+
+.add-to-cart {
+  background-color: rgb(231, 202, 127);
+  font-size: 1.2em;
+  padding: 10px 25px;
+  font-family: ArcherPro-Light;
+}
+
+.add-to-cart:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+.change-quantity {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-size: 1.2em;
+  padding: 10px 20px;
+  font-family: ArcherPro-Light;
+}
+
+.quantity {
+  outline: none;
+  border: none;
+  width: 12px;
+  font-size: 1.2em;
+  padding: 10px 20px;
+  font-family: ArcherPro-Light;
+  text-align: center;
+}
+
+.results-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 1120px;
+  margin: 0 auto;
+  padding-left: 30px;
+  /* border: rgb(201, 201, 201) solid 1px; */
+}
+
+.single-result {
+  /* display: flex;
+  flex-direction: column; */
+  margin-right: 30px;
+  margin-bottom: 30px;
+  /* border: rgb(201, 201, 201) solid 1px; */
+  width: 250px;
+  border-radius: 3px;
+  /* box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2); */
+  /* align-items: center; */
+}
+
+.single-result img {
+  height: 350px;
+  padding: 10px 0;
+}
+
+.single-result hr {
+  width: 100%;
+  border-top: 1px solid rgb(180, 180, 180);
+}
+
+.single-result-name {
+  margin-top: 4px;
+}
+
+.single-result-brand {
+  margin-bottom: 18px;
+}
+
+.single-result-price {
+  font-size: 1.5em;
+  /* font-weight: 600; */
+  color: rgb(120, 120, 120);
+}
+
+.single-result-specs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.picture-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-to-cart-results {
+  background-color: rgb(231, 202, 127);
+  font-size: 1em;
+  padding: 10px 25px;
+  font-family: ArcherPro-Light;
+  width: 100%;
+  /* font-weight: 600; */
+  /* color: white; */
+  /* color: rgb(50, 50, 50); */
+  border-bottom: 3px solid rgb(25, 25, 25);
+}
+
+.add-to-cart-results:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+
+.single-result-name {
+  font-weight: 600;
+}
+
+/* REGISTER */
+
+.sign-up-or-log-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 374px;
+  margin: 0 auto;
+  border: rgb(202, 202, 202) solid 1px;
+  padding: 40px;
+  margin-top: 50px;
+}
+
+.sign-up-or-log-in h2 {
+  margin-top: 20px;
+  font-weight: 200;
+}
+
+.sign-up-or-log-in hr {
+  margin: 10px auto -8px;
+  border: none;
+  border-top: rgb(128, 128, 128) solid 1px;
+  width: 374px;
+}
+
+.sign-up-or-log-in input {
+  outline: none;
+  width: 350px;
+  padding: 0.9em;
+  font-size: 0.9em;
+  border: none;
+  border: rgb(128, 128, 128) solid 1px;
+  margin-bottom: 5px;
+  font-family: ArcherPro-Light;
+}
+
+.sign-up-or-log-in label {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.sign-up-or-log-in button {
+  background-color: white;
+  outline: none;
+  width: 378px;
+  margin: 20px 0 0;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 1.2em;
+  padding: 12px 0.75em;
+  font-family: ArcherPro-Light;
+}
+
+.sign-up-or-log-in button:hover {
+  background-color: rgb(243, 208, 118);
+}
