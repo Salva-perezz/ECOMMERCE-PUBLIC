@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
+
 class User extends Sequelize.Model {}
 
 const crypto = require("crypto");
@@ -21,10 +22,6 @@ User.init(
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false,
-    },
-    birthDay: {
-      type: Sequelize.DATE,
       allowNull: false,
     },
     salt:{

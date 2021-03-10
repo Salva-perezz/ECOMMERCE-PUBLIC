@@ -24,7 +24,7 @@ router.get("/:id", (req, res) => {
 
 router.get("/search", (req, res) => {
     Product.findAll({
-        where: { name: req.body.name }
+        where: req.body
     }).then((product) => {
         res.status(201).json(product)
     }).catch(() => {
@@ -32,8 +32,32 @@ router.get("/search", (req, res) => {
     })
 })
 
+
+router.get("/", (req, res) => {
+    Product.findAll()
+        .then((products) => {
+            res.status(201).json(products)
+        }).catch(() => {
+            res.sendStatus(500)
+        })
+})
+
+
 router.put("/:id", (req, res) => {
     Product.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+    }).then((product) => {
+        product = product[1]
+        res.status(201).json(product)
+    }).catch(() => {
+        res.sendStatus(500)
+    })
+})
+
+
+router.delete("/:id", (req, res) => {
+    Product.delete({
         where: { id: req.params.id }
     }).then((product) => {
         res.status(201).json(product)
@@ -41,15 +65,5 @@ router.put("/:id", (req, res) => {
         res.sendStatus(500)
     })
 })
-
-// Router.("/:id", (req, res) => {
-//     Product.update(req.body, {
-//         where: { id: req.params.id }
-//     }).then((product) => {
-//         res.status(201).json(product)
-//     }).catch(() => {
-//         res.sendStatus(500)
-//     })
-// })
 
 module.exports = router;

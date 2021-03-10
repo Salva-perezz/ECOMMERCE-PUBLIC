@@ -1,12 +1,12 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-class Transaction extends Sequelize.Model{}
+class Transaction extends Sequelize.Model { }
 
 Transaction.init({
-checkoutDate:{
-    type: Sequelize.DATE
-}
-},{sequelize:db , modelName:"transaction"})
+    checkoutDate: {
+        type: Sequelize.DATE
+    }
+}, { sequelize: db, modelName: "transaction" })
 
 module.exports = Transaction

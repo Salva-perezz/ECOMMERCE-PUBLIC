@@ -26,6 +26,7 @@ router.post("/login", (req, res) => {
   }).then((user) => {
     if (!user) return res.status(400).send("The user doesn't exist");
 
+
     if (!user.validPassword(password)) return res.status(401).send("Invalid credentials");
 
     const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
@@ -33,5 +34,18 @@ router.post("/login", (req, res) => {
     res.status(200).json({token, user});
   });
 });
+
+
+
+router.put("/:id", (req, res) => {
+    User.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+    }).then((userEdited) => {
+        res.status(201).json(userEdited[1][0].dataValues)
+    }).catch(() => {
+        res.sendStatus(500)
+    })
+})
 
 module.exports = router;

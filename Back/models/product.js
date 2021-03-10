@@ -1,22 +1,22 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-class Product extends Sequelize.Model{}
+class Product extends Sequelize.Model { }
 
 Product.init({
-    name:{
+    name: {
         type: Sequelize.STRING
     },
-    brand:{
+    brand: {
         type: Sequelize.STRING
     },
-    region:{
+    region: {
         type: Sequelize.STRING
     },
-    country:{
+    country: {
         type: Sequelize.STRING
     },
-    type:{
+    type: {
         type: Sequelize.STRING
     },
     description: {
@@ -28,18 +28,18 @@ Product.init({
     price:{
         type: Sequelize.INTEGER
     },
-    size:{
+    size: {
         type: Sequelize.STRING
     },
-    stock:{
+    stock: {
         type: Sequelize.INTEGER
     },
-    discount:{
+    discount: {
         type: Sequelize.INTEGER
     },
-    urlPicture:{
+    urlPicture: {
         type: Sequelize.STRING
     }
-},{sequelize:db , modelName:"product"})
+}, { sequelize: db, modelName: "product" })
 
 module.exports = Product
