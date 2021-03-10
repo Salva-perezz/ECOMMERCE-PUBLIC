@@ -21,4 +21,4 @@ zipCode:{
 },
 },{sequelize:db , modelName:"address"})
 
-model.exports = Address
+module.exports = Address

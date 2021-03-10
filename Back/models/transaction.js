@@ -9,4 +9,4 @@ checkoutDate:{
 }
 },{sequelize:db , modelName:"transaction"})
 
-model.exports = Transaction
+module.exports = Transaction

@@ -25,6 +25,7 @@ Payment.belongsTo(User)
 //Relaciones: Review
 
 Review.belongsTo(User)
+Review.belongsTo(Product)
 
 //Relaciones: Address
 

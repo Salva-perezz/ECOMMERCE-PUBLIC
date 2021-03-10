@@ -9,4 +9,4 @@ quantity:{
 }
 },{sequelize:db , modelName:"transactionItem"})
 
-model.exports = TransactionItem
+module.exports = TransactionItem

@@ -22,6 +22,9 @@ Product.init({
     description: {
         type: Sequelize.TEXT
     },
+    year:{
+        type: Sequelize.INTEGER
+    },
     price:{
         type: Sequelize.INTEGER
     },
@@ -39,4 +42,4 @@ Product.init({
     }
 },{sequelize:db , modelName:"product"})
 
-model.exports = Product
+module.exports = Product

@@ -19,4 +19,4 @@ secCode:{
 
 },{sequelize:db , modelName:"payment"})
 
-model.exports = Payment
+module.exports = Payment

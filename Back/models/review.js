@@ -12,4 +12,4 @@ rating:{
 }
 },{sequelize:db , modelName:"review"})
 
-model.exports = Review
+module.exports = Review
