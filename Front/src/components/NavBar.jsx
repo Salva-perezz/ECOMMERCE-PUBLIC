@@ -33,37 +33,53 @@ const NavBar = () => {
 
   return (
     <div className="navbar-container">
-      <div className="navbar">
-        <div className="logo">OMDb</div>
-        <div className="search">
-          <form onSubmit={handleSubmit}>
-            <input
-              onChange={handleChange}
-              type="text"
-              placeholder="search"
-              value={searchQuery}
-            />
-          </form>
-        </div>
+      <div className="navbar-first-row-container">
+        <div className="navbar-first-row">
+          <div className="logo-container">
+            <div className="logo">Clement</div>
+            <div className="logo-tagline">online wine shop</div>
+          </div>
+          <div className="search-and-log-in">
+            <div className="search">
+              {/* <img className="search-icon" src="icons/search.png"></img> */}
+              <form onSubmit={handleSubmit}>
+                <input
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="search"
+                  value={searchQuery}
+                />
+              </form>
+            </div>
 
-        {typeof currentUser === "object" ? (
-          <div className="logged-in">
-            <Link to="/favorites">
-              <button>Favorites</button>
-            </Link>
-            <button onClick={handleLogout}>Log Out</button>
+            {typeof currentUser === "object" ? (
+              <div className="logged-in">
+                <Link to="/favorites">
+                  <button>Favorites</button>
+                </Link>
+                <button onClick={handleLogout}>Log Out</button>
+              </div>
+            ) : (
+              <div className="not-logged-in">
+                <Link to="/login">
+                  <button>Log In</button>
+                </Link>
+                <Link to="/register">
+                  <button>Sign Up</button>
+                </Link>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="not-logged-in">
-            <Link to="/login">
-              <button>Log In</button>
-            </Link>
-            <Link to="/signup">
-              <button>Sign Up</button>
-            </Link>
-          </div>
-        )}
+        </div>
       </div>
+      <hr />
+      <div className="categories">
+        <button>Type</button>
+        <button>Country</button>
+        <button>Wine Producer</button>
+        <button>Vintage</button>
+      </div>
+      <hr />
     </div>
   )
 }
