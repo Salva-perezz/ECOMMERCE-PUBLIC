@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router()
 const { Product } = require("../models");
 
 
@@ -7,7 +6,8 @@ router.post("/", (req, res) => {
     Product.create(req.body)
         .then((product) => {
             res.status(201).json(product)
-        }).catch(() => {
+        })
+        .catch(() => {
             res.sendStatus(500)
         })
 })
@@ -21,22 +21,23 @@ router.get("/:id", (req, res) => {
         })
 })
 
-router.get("/search", (req, res) => {
-    Product.findAll({
-        where: req.body
-    }).then((product) => {
-        res.status(200).json(product)
-    }).catch(() => {
-        res.sendStatus(500)
-    })
-})
+// router.get("/search", (req, res) => {
+//     Product.findAll({
+//         where: req.body
+//     }).then((product) => {
+//         res.status(200).json(product)
+//     }).catch(() => {
+//         res.sendStatus(500)
+//     })
+// })
 
 
 router.get("/", (req, res) => {
     Product.findAll()
         .then((products) => {
             res.status(200).json(products)
-        }).catch(() => {
+        }).catch((error) => {
+            console.log(error)
             res.sendStatus(500)
         })
 })

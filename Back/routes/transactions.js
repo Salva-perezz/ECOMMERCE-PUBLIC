@@ -1,20 +1,23 @@
-const express = require("express");
-const router = express.Router();
-const { Transaction } = require("../models");
+const router = require("express").Router()
+const { Transaction, transactionItem, User } = require("../models");
 
 router.post("/", (req, res) => {
-    Transaction.findOrCreate({
+    Transaction.findOne({
         where: {
-            userId: user.id,
-            checkoutDate: null
+            checkoutDate: null,
+            userId: req.body.userId
         }
-    }).then((transaction) => {
-        transaction = transaction[0]
-        Transaction.create({
-            userId: user.id
-        })
-        res.status(201).json(transaction)
-    }).catch(() => {
+    }).then(transaction => {
+        if (!transaction) {
+            Transaction.create()
+                .then(transaction2 => transaction2.setUser(req.body.userId))
+                .then(trans => res.send(trans))
+    
+        } else {
+            return res.send(transaction)
+        }
+    }).catch((error) => {
+        console.log(error)
         res.sendStatus(500)
     })
 })

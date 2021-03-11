@@ -1,10 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const { TransactionItem, transactionItem } = require("../models");
+const router = require("express").Router()
+const { TransactionItem, Transaction, Product } = require("../models");
 
 router.post("/", (req, res) => {
     TransactionItem.create(req.body)
         .then((transactionItem) => {
+            transactionItem.setTransaction(req.body.transactionId)
+            transactionItem.setProduct(req.body.productId)
             res.status(201).json(transactionItem)
         }).catch(() => {
             res.sendStatus(500)
@@ -24,7 +25,7 @@ router.delete("/", (req, res) => {
 
 router.put("/", (req, res) => {
     transactionItem.update(
-        { quantity: req.body.quantity },
+        { quantity: req.body.quantity},
         {
             where: { id: req.body.id },
             returning: true

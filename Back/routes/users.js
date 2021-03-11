@@ -1,6 +1,5 @@
-const express = require("express");
-const router = express.Router();
-const {User} = require("../models");
+const router = require("express").Router()
+const { User } = require("../models");
 
 
 const jswt = require("jsonwebtoken");
@@ -11,7 +10,7 @@ router.post("/register", (req, res) => {
     .then((user) => {
       const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
 
-      res.status(201).json({token, user});
+      res.status(201).json({ token, user });
     })
     .catch(() => {
       res.sendStatus(500);
