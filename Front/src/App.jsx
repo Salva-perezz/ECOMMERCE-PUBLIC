@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar"
 import Footer from "./components/Footer.jsx"
 import Home from "./components/Home"
 import SingleProduct from "./components/SingleProduct.jsx"
+import AllProducts from "./components/AllProducts.jsx"
 import SearchResults from "./components/SearchResults"
 import Register from "./components/Register.jsx"
 import Login from "./components/Login.jsx"
@@ -18,7 +19,8 @@ export default class App extends React.Component {
         <div className="main-container">
           <Switch>
             <Route path="/products/:id" render={({match}) => <SingleProduct match={match}/>} />
-            <Route path="/search" render={() => <SearchResults />} />
+            <Route path="/products/" render={() => <AllProducts />} />
+            <Route path="/search" render={({match}) => <SearchResults match={match}/>} />
             <Route path="/register" render={() => <Register />} />
             <Route path="/login" render={() => <Login />} />
             <Route path="/cart" render={() => <Cart />} />

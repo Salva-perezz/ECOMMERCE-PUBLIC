@@ -14,7 +14,7 @@ app.use("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-db.sync().then(() => {
+db.sync({force:false}).then(() => {
     console.log('Data base synchronized!')
   app.listen(PORT, () => {
     console.log(`The server is listening at port ${PORT}`);

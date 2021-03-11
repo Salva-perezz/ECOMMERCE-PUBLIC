@@ -213,6 +213,23 @@ module.exports = {
         createdAt: "2021-03-11 10:37:30.391-03",
         updatedAt: "2021-03-11 10:37:30.391-03"
       },
+      {
+        name: "Berry Bros. & Rudd Gavi di Gavi",
+        brand: "Roberto Sarotto",
+        region: "Piedmont",
+        country: "Italy",
+        type: "Cortese",
+        description:
+          "Our own-label Gavi is made by Roberto Sarotto. Produced from Cortese grapes, Gavi is the quintessential Northern Italian white, famed for its delicacy and finesse. This textbook example offers elegant aromas of white flowers and green pear. The palate is focused and energetic, with generous layers of fresh apple and lemon peel, while the white tufo soils of the vineyards impart a beautiful, refreshing minerality to the finish. Perfect with shellfish, white fish or delicate green vegetable dishes.",
+        year: 2019,
+        price: 25,
+        size: 75,
+        stock: 10,
+        discount: 20,
+        urlPicture: "https://media.bbr.com/s/bbr/20198117656-ms",
+        createdAt: "2021-03-11 10:37:30.391-03",
+        updatedAt: "2021-03-11 10:37:30.391-03"
+      }
     ]);
   },
   down: (queryInterface, Sequelize) => {
