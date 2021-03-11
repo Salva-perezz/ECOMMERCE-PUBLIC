@@ -13,7 +13,7 @@ router.post("/", (req, res) => {
 
 router.delete("/", (req, res) => {
     TransactionItem.delete({
-        where: { id }
+        where: { id : req.body.id }
     })
         .then(() => {
             res.status(200).send("Item Eliminado")
