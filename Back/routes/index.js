@@ -8,6 +8,4 @@ router.use("/reviews", require("./reviews"))
 router.use("/addresses", require("./addresses"))
 router.use("/transactionItems", require("./transactionItems"))
 
-
-
 module.exports = router

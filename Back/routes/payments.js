@@ -1,5 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const models = require("../models");
-const Payment = models.Payment;
+const { Payment } = require("../models");
+
+
+
+
+
 module.exports = router;
