@@ -1,43 +1,58 @@
-import React from "react"
+import React, { useState } from "react"
+import axios from "axios"
 
-const SearchResults = () => {
-  const products = [
-    {
-      name: "Berry Bros. & Rudd Gavi di Gavi",
-      brand: "Roberto Sarotto",
-      price: "$25",
-    },
-    {
-      name: "Berry Bros. & Rudd Gavi di Gavi",
-      brand: "Roberto Sarotto",
-      price: "$25",
-    },
-    {
-      name: "Berry Bros. & Rudd Gavi di Gavi",
-      brand: "Roberto Sarotto",
-      price: "$25",
-    },
-    {
-      name: "Berry Bros. & Rudd Gavi di Gavi",
-      brand: "Roberto Sarotto",
-      price: "$25",
-    },
-    {
-      name: "Berry Bros. & Rudd Gavi di Gavi",
-      brand: "Roberto Sarotto",
-      price: "$25",
-    },
-    {
-      name: "Berry Bros. & Rudd Gavi di Gavi",
-      brand: "Roberto Sarotto",
-      price: "$25",
-    },
-    {
-      name: "Berry Bros. & Rudd Gavi di Gavi",
-      brand: "Roberto Sarotto",
-      price: "$25",
-    },
-  ]
+const SearchResults = (props) => {
+  const [products, setProducts] = useState([])
+
+  console.log(props)
+
+  React.useEffect(() => {
+    axios
+      .get(`/api/search/${props.match.params.query}`)
+      .then(({ data }) => {
+        setProducts(data)
+      })
+      .catch((err) => console.log(err))
+    return () => setProducts({})
+  }, [])
+
+  // const products = [
+  //   {
+  //     name: "Berry Bros. & Rudd Gavi di Gavi",
+  //     brand: "Roberto Sarotto",
+  //     price: "$25",
+  //   },
+  //   {
+  //     name: "Berry Bros. & Rudd Gavi di Gavi",
+  //     brand: "Roberto Sarotto",
+  //     price: "$25",
+  //   },
+  //   {
+  //     name: "Berry Bros. & Rudd Gavi di Gavi",
+  //     brand: "Roberto Sarotto",
+  //     price: "$25",
+  //   },
+  //   {
+  //     name: "Berry Bros. & Rudd Gavi di Gavi",
+  //     brand: "Roberto Sarotto",
+  //     price: "$25",
+  //   },
+  //   {
+  //     name: "Berry Bros. & Rudd Gavi di Gavi",
+  //     brand: "Roberto Sarotto",
+  //     price: "$25",
+  //   },
+  //   {
+  //     name: "Berry Bros. & Rudd Gavi di Gavi",
+  //     brand: "Roberto Sarotto",
+  //     price: "$25",
+  //   },
+  //   {
+  //     name: "Berry Bros. & Rudd Gavi di Gavi",
+  //     brand: "Roberto Sarotto",
+  //     price: "$25",
+  //   },
+  // ]
   return (
     <>
       <div className="results-title">Search Results</div>

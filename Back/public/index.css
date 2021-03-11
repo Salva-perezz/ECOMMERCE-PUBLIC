@@ -13,6 +13,22 @@ button {
   cursor: pointer;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:link { 
+  color: black; 
+ }
+
+ a:visited { 
+  color: black; 
+ }
+
+ a hr {
+  border: none;
+ }
+
 @font-face {
   font-family: "prueba";
   src: url("Archer-Bold-Pro.otf");
@@ -251,11 +267,12 @@ button {
 }
 
 .single-result-name {
+  font-weight: 600;
   margin-top: 4px;
 }
 
-.single-result-brand {
-  margin-bottom: 18px;
+.single-result-name-and-brand {
+  height: 80px;
 }
 
 .single-result-price {
@@ -269,6 +286,7 @@ button {
   flex-direction: column;
   justify-content: center;
   margin-bottom: 10px;
+  /* height: 150px; */
 }
 
 .picture-container {
@@ -282,18 +300,11 @@ button {
   padding: 10px 25px;
   font-family: ArcherPro-Light;
   width: 100%;
-  /* font-weight: 600; */
-  /* color: white; */
-  /* color: rgb(50, 50, 50); */
-  border-bottom: 3px solid rgb(25, 25, 25);
+  border-bottom: 2px solid rgb(25, 25, 25);
 }
 
 .add-to-cart-results:hover {
   background-color: rgb(243, 208, 118);
-}
-
-.single-result-name {
-  font-weight: 600;
 }
 
 /* REGISTER */
@@ -465,4 +476,21 @@ button {
   color: black;
   font-size: 1.2em;
   padding: 12px 0.75em;
+}
+
+/* SPINNER */
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid rgb(231, 202, 127);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: 100px auto 200px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
