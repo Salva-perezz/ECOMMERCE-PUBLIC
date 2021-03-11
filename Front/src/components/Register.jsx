@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import axios from "axios"
-// import { useDispatch } from "react-redux"
-// import { getCurrentUser } from "../store/currentUser"
+import { useSelector, useDispatch } from "react-redux"
+import { getCurrentUser } from "../store/currentUser"
+import { loadStoreCart } from "../store/currentCart"
 import { useHistory } from "react-router-dom"
 
 const NewUser = () => {
@@ -9,8 +10,9 @@ const NewUser = () => {
   const [name, setName] = useState("")
   const [lastName, setLastName] = useState("")
   const [password, setPassword] = useState("")
+  const currentUser = useSelector((state) => state.currentUser)
 
-  //   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const history = useHistory()
 
   const handleSubmit = function (event) {
@@ -23,12 +25,23 @@ const NewUser = () => {
         password,
       })
       .then((newUser) => {
-          localStorage.setItem("token", newUser.data.token)
-          // newUser.data.user
-        // dispatch(getCurrentUser({id:newUser.data.id}))
-        // history.push("/")
+        console.log(newUser)
+        localStorage.setItem("token", newUser.data.token)
+        dispatch(getCurrentUser({ id: newUser.data.user.id }))
       })
   }
+
+  React.useEffect(() => {
+    if(currentUser) axios
+      .post("/api/transactions", {
+        userId: currentUser.id,
+      })
+      .then((cart) => {
+        dispatch(loadStoreCart({ id: cart.data.id }))
+        history.push("/products")
+      })
+  }, [currentUser])
+
   return (
     <div className="sign-up-or-log-in">
       <h2>

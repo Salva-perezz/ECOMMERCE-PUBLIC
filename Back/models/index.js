@@ -4,7 +4,7 @@ const Payment = require("./payment");
 const Product = require("./product");
 const Review = require("./review");
 const Transaction = require("./transaction");
-const transactionItem = require("./transactionItem");
+const TransactionItem = require("./transactionItem");
 
 
 //Relaciones: Transaction
@@ -15,8 +15,8 @@ Transaction.belongsTo(Address)
 
 //Relaciones: transactionItem
 
-transactionItem.belongsTo(Product)
-transactionItem.belongsTo(Transaction)
+TransactionItem.belongsTo(Product)
+TransactionItem.belongsTo(Transaction)
 
 //Relaciones: Payment
 
@@ -31,5 +31,5 @@ Review.belongsTo(Product)
 
 Address.belongsTo(User)
 
-module.exports = { User, Address, Payment, Product, Review, Transaction, transactionItem }
+module.exports = { User, Address, Payment, Product, Review, Transaction, TransactionItem }
 

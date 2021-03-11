@@ -3,6 +3,7 @@ import logger from "redux-logger"
 
 import { currentUserReducer } from "./currentUser"
 import { currentCartReducer } from "./currentCart"
+import { currentCartItemsReducer } from "./currentCartItems"
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -12,6 +13,7 @@ const store = configureStore({
   reducer: {
     currentUser: currentUserReducer,
     currentCart: currentCartReducer,
+    currentCartItems: currentCartItemsReducer,
   },
 })
 

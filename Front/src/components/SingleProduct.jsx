@@ -1,9 +1,14 @@
 import React, { useState } from "react"
 import axios from "axios"
+import { useSelector, useDispatch } from "react-redux"
+import { addToStoreCart } from "../store/currentCartItems"
 
 const SingleProduct = (props) => {
   const [quantity, setQuantity] = useState(1)
   const [product, setProduct] = useState("loading")
+  const currentCart = useSelector((state) => state.currentCart)
+
+  const dispatch = useDispatch()
 
   const increaseQuantity = function () {
     setQuantity((quantity) => quantity + 1)
@@ -22,6 +27,25 @@ const SingleProduct = (props) => {
       .catch((err) => console.log(err))
     return () => setProduct("loading")
   }, [])
+
+  const addToCart = function () {
+    axios
+      .post("/api/transactionitems", {
+        transactionId: currentCart.id,
+        productId: product.id,
+        quantity: quantity,
+      })
+      .then(() =>
+        dispatch(
+          addToStoreCart({
+            name: product.name,
+            urlPicture: product.urlPicture,
+            price: product.price,
+            quantity: quantity
+          })
+        )
+      )
+  }
 
   return (
     <>
@@ -102,7 +126,9 @@ const SingleProduct = (props) => {
               >
                 +
               </button>
-              <button className="add-to-cart">Add to Cart</button>
+              <button onClick={addToCart} className="add-to-cart">
+                Add to Cart
+              </button>
               {/* <div>Discount:</div> */}
             </div>
           </div>
