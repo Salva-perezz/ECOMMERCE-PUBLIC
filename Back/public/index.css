@@ -130,11 +130,11 @@ a:link {
   right: 120px;
 }
 
-.not-logged-in {
+.not-logged-in, .logged-in {
   margin: auto 0;
 }
 
-.not-logged-in button {
+.not-logged-in button, .logged-in button {
   font-size: 1.2em;
   margin-left: 10px;
 }

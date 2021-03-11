@@ -1,14 +1,14 @@
 import React, { useState } from "react"
-// import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom"
 import axios from "axios"
-// import { getCurrentUser } from "../store/currentUser"
+import { getCurrentUser } from "../store/currentUser"
 
 const NavBar = () => {
   // const currentUser = useSelector((state) => state.currentUser)
   const [searchQuery, setSearchQuery] = useState("")
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const history = useHistory()
 
   const token = localStorage.getItem("token")
@@ -24,12 +24,13 @@ const NavBar = () => {
   }
 
   const handleLogout = function (event) {
-    axios.post("/api/logout").then(() => {
-      localStorage.clear()
-      dispatch(getCurrentUser(""))
-      history.push("/")
-    })
+    localStorage.clear()
+    dispatch(getCurrentUser(""))
+    history.push("/")
   }
+
+  React.useEffect(() => {
+  }, [token])
 
   return (
     <div className="navbar-container">
@@ -52,10 +53,10 @@ const NavBar = () => {
               </form>
             </div>
 
-            {typeof currentUser === "object" ? (
+            {token ? (
               <div className="logged-in">
-                <Link to="/favorites">
-                  <button>Favorites</button>
+                <Link to="/cart">
+                  <button>View Cart</button>
                 </Link>
                 <button onClick={handleLogout}>Log Out</button>
               </div>
