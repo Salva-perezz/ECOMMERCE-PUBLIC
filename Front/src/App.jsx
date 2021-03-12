@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import NavBar from "./components/NavBar"
 import Footer from "./components/Footer.jsx"
 import Home from "./components/Home"
@@ -8,11 +8,31 @@ import SearchResults from "./components/SearchResults"
 import Register from "./components/Register.jsx"
 import Login from "./components/Login.jsx"
 import Cart from "./components/Cart.jsx"
+import { useSelector, useDispatch } from 'react-redux';
+import { getCurrentUser } from "./store/currentUser";
 
 import { Route, Switch } from "react-router"
+import axios from "axios"
 
-export default class App extends React.Component {
-  render() {
+const App = () => {
+  
+  const currentUser = useSelector(state => state.currentUser);
+  const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    if(!currentUser && token){
+      axios.post('/api/users/private', { token })
+      .then(user => dispatch(getCurrentUser({ id: user.data.id })))
+    }
+    console.log(currentUser)
+
+  }, [])
+  
+
+
+
     return (
       <div>
         <NavBar />
@@ -30,5 +50,6 @@ export default class App extends React.Component {
         <Footer />
       </div>
     )
-  }
 }
+
+export default App;
