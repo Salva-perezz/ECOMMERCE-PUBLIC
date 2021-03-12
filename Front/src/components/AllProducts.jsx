@@ -26,13 +26,15 @@ const AllProducts = () => {
         productId: product.id,
         quantity: 1,
       })
-      .then(() =>
-        dispatch(
+      .then((transactionItem) =>       
+          dispatch(
           addToStoreCart({
             name: product.name,
             urlPicture: product.urlPicture,
             price: product.price,
             quantity: 1,
+            productId: product.id,
+            id: transactionItem.data.id
           })
         )
       )
@@ -45,9 +47,9 @@ const AllProducts = () => {
       ) : (
         <div className="results-container">
           {products.map((product, index) => (
-            <div className="single-result">
+            <div key={index} className="single-result">
               <div className="picture-container">
-                <Link key={index} to={`/products/${product.id}`}>
+                <Link to={`/products/${product.id}`}>
                   <img src={product.urlPicture} />
                 </Link>
               </div>

@@ -2,10 +2,59 @@ import React, { useState } from "react"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
+import {
+  removeFromStoreCart,
+  changeQuantityInStoreCart,
+} from "../store/currentCartItems"
 
 const Cart = () => {
   const currentCartItems = useSelector((state) => state.currentCartItems)
   const [total, setTotal] = useState(0)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    setTotal(
+      currentCartItems &&
+        currentCartItems.reduce(
+          (accumulator, currentValue) =>
+            accumulator +
+            Number(currentValue.price) * Number(currentValue.quantity),
+          0
+        )
+    )
+  }, [currentCartItems])
+
+  const removeFromCart = function ({ id }) {
+    console.log("ID ENVIADO", id)
+    axios
+      .put("/api/transactionitems/remove", {
+        id,
+      })
+      .then(() =>
+        dispatch(
+          removeFromStoreCart({
+            id,
+          })
+        )
+      )
+  }
+
+  const changeQuantity = function ({ productId, quantity }) {
+    // axios
+    //   .post("/api/transactionitems", {
+    //     transactionId: currentCart.id,
+    //     productId: product.id,
+    //     quantity: 1,
+    //   })
+    //   .then(() =>
+    dispatch(
+      changeQuantityInStoreCart({
+        productId,
+        quantity,
+      })
+    )
+    // )
+  }
 
   return (
     <div className="cart-container">
@@ -28,7 +77,11 @@ const Cart = () => {
             <div className="column-2">{"$" + cartItem.price}</div>
             <div className="column-3">
               <input type="text" value={cartItem.quantity} />
-              <img className="cart-delete-icon" src="icons/delete.png"></img>
+              <img
+                onClick={() => removeFromCart(cartItem)}
+                className="cart-delete-icon"
+                src="icons/delete.png"
+              ></img>
             </div>
             <div className="column-4">
               {"$" + cartItem.price * cartItem.quantity}
@@ -38,13 +91,7 @@ const Cart = () => {
         </>
       ))}
       <div className="cart-total">
-        <div className="cart-total-amount">
-          Order Total: $
-          {currentCartItems && currentCartItems.reduce(
-              (accumulator, currentValue) =>
-                accumulator + Number(currentValue.price) * Number(currentValue.quantity), 0
-            )}
-        </div>
+        <div className="cart-total-amount">Order Total: ${total}</div>
         <button>Checkout</button>
       </div>
     </div>
