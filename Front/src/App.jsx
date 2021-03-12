@@ -42,14 +42,15 @@ const App = () => {
   }, [currentUser])
 
   useEffect(() => {
-    if (currentCart !== "loading")
+    if (currentCart !== "loading") {
+      console.log(currentCart)
       axios
         .put("/api/transactionitems/load", {
           transactionId: currentCart.id,
         })
         .then((cartItems) => {
           dispatch(loadStoreCartItems(cartItems.data))
-        })
+        })}
   }, [currentCart])
 
   return (

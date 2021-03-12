@@ -28,19 +28,20 @@ const NewUser = () => {
         console.log(newUser)
         localStorage.setItem("token", newUser.data.token)
         dispatch(getCurrentUser({ id: newUser.data.user.id }))
+        history.push("/products")
       })
   }
 
-  React.useEffect(() => {
-    if(currentUser) axios
-      .post("/api/transactions", {
-        userId: currentUser.id,
-      })
-      .then((cart) => {
-        dispatch(loadStoreCart({ id: cart.data.id }))
-        history.push("/products")
-      })
-  }, [currentUser])
+  // React.useEffect(() => {
+  //   if(currentUser) axios
+  //     .post("/api/transactions", {
+  //       userId: currentUser.id,
+  //     })
+  //     .then((cart) => {
+  //       dispatch(loadStoreCart({ id: cart.data.id }))
+  //       history.push("/products")
+  //     })
+  // }, [currentUser])
 
   return (
     <div className="sign-up-or-log-in">
