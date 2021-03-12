@@ -7,6 +7,7 @@ import { getCurrentUser } from "../store/currentUser"
 
 const NavBar = () => {
   // const currentUser = useSelector((state) => state.currentUser)
+  const currentCartItems = useSelector((state) => state.currentCartItems)
   const [searchQuery, setSearchQuery] = useState("")
   const dispatch = useDispatch()
   const history = useHistory()
@@ -29,8 +30,7 @@ const NavBar = () => {
     history.push("/")
   }
 
-  React.useEffect(() => {
-  }, [token])
+  React.useEffect(() => {}, [token])
 
   return (
     <div className="navbar-container">
@@ -58,6 +58,15 @@ const NavBar = () => {
                 <Link to="/cart">
                   <button>View Cart</button>
                 </Link>
+                {currentCartItems.length ? (
+                  <div className="cart-quantity">
+                    {currentCartItems.reduce(
+                      (accumulator, currentValue) =>
+                        accumulator + Number(currentValue.quantity),
+                      0
+                    )}
+                  </div>
+                ) : null}
                 <button onClick={handleLogout}>Log Out</button>
               </div>
             ) : (
