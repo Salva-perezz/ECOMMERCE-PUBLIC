@@ -3,6 +3,7 @@ import axios from "axios"
 import { getCurrentUser } from "../store/currentUser"
 import { useSelector, useDispatch } from "react-redux"
 import { loadStoreCart } from "../store/currentCart"
+import { loadStoreCartItems } from "../store/currentCartItems"
 import { useHistory } from "react-router-dom"
 
 const Login = () => {
@@ -13,6 +14,7 @@ const Login = () => {
   const history = useHistory()
 
   const currentUser = useSelector((state) => state.currentUser)
+  const currentCart = useSelector((state) => state.currentCart)
 
   const handleSubmit = function (event) {
     event.preventDefault()
@@ -36,9 +38,20 @@ const Login = () => {
         })
         .then((cart) => {
           dispatch(loadStoreCart({ id: cart.data.id }))
-          history.push("/products")
         })
   }, [currentUser])
+
+  React.useEffect(() => {
+    if (currentCart !== "loading")
+      axios
+        .put("/api/transactionitems/load", {
+          transactionId: currentCart.id,
+        })
+        .then((cartItems) => {
+          dispatch(loadStoreCartItems(cartItems.data))
+          history.push("/products")
+        })
+  }, [currentCart])
 
   const Error = () => (
     <div className="sign-up-or-log-in-error">Invalid Email or Password</div>

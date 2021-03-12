@@ -1,5 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit"
 
+export const loadStoreCartItems = createAction("LOAD_STORE_CART_ITEMS")
 export const addToStoreCart = createAction("ADD_TO_STORE_CART")
 export const removeFromStoreCart = createAction("REMOVE_FROM_STORE_FAVORITES")
 export const clearStoreCart = createAction("CLEAR_STORE_CART")
@@ -8,6 +9,7 @@ export const changeQuantityInStoreCart = createAction(
 )
 
 export const currentCartItemsReducer = createReducer([], {
+  [loadStoreCartItems]: (state, action) => action.payload,
   [addToStoreCart]: (state, action) => [...state, action.payload],
   [removeFromStoreCart]: (state, action) =>
     state.filter((cartItem) => cartItem.id !== action.payload.id),

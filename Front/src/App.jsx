@@ -10,6 +10,8 @@ import Login from "./components/Login.jsx"
 import Cart from "./components/Cart.jsx"
 import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentUser } from "./store/currentUser";
+import { loadStoreCart } from "./store/currentCart"
+import { loadStoreCartItems } from "./store/currentCartItems"
 
 import { Route, Switch } from "react-router"
 import axios from "axios"
@@ -17,6 +19,7 @@ import axios from "axios"
 const App = () => {
   
   const currentUser = useSelector(state => state.currentUser);
+  const currentCart = useSelector(state => state.currentCart);
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
@@ -26,13 +29,31 @@ const App = () => {
       axios.post('/api/users/private', { token })
       .then(user => dispatch(getCurrentUser({ id: user.data.id })))
     }
-    console.log(currentUser)
 
   }, [])
+
+  useEffect(() => {
+    if (currentUser && currentCart === "loading")
+      axios
+        .post("/api/transactions", {
+          userId: currentUser.id,
+        })
+        .then((cart) => {
+          dispatch(loadStoreCart({ id: cart.data.id }))
+        })
+  }, [currentUser])
+
+  useEffect(() => {
+    if (currentCart !== "loading")
+      axios
+        .put("/api/transactionitems/load", {
+          transactionId: currentCart.id,
+        })
+        .then((cartItems) => {
+          dispatch(loadStoreCartItems(cartItems.data))
+        })
+  }, [currentCart])
   
-
-
-
     return (
       <div>
         <NavBar />
