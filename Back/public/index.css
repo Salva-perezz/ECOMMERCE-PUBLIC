@@ -132,6 +132,8 @@ a:link {
 
 .not-logged-in, .logged-in {
   margin: auto 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .not-logged-in button, .logged-in button {
@@ -151,6 +153,16 @@ a:link {
 .navbar-container hr {
   border: none;
   border-top: rgb(218, 218, 218) solid 1px;
+}
+
+.cart-quantity {
+  background-color: black;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  text-align: center;
+  font-weight: 600;
 }
 
 .home-main-picture {
