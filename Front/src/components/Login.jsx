@@ -1,15 +1,18 @@
 import React, { useState } from "react"
 import axios from "axios"
-// import { getCurrentUser } from "../store/currentUser"
-// import { useDispatch } from "react-redux"
-// import { loadStoreFavorites } from "../store/currentFavorites"
+import { getCurrentUser } from "../store/currentUser"
+import { useSelector, useDispatch } from "react-redux"
+import { loadStoreCart } from "../store/currentCart"
 import { useHistory } from "react-router-dom"
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  //   const dispatch = useDispatch()
+  const [error, setError] = useState(false)
+  const dispatch = useDispatch()
   const history = useHistory()
+
+  const currentUser = useSelector((state) => state.currentUser)
 
   const handleSubmit = function (event) {
     event.preventDefault()
@@ -20,22 +23,27 @@ const Login = () => {
       })
       .then((newUser) => {
         localStorage.setItem("token", newUser.data.token)
-        // newUser.data.user
-      // dispatch(getCurrentUser({id:newUser.data.id}))
-      // history.push("/")
-    })
-    //   .then((user) => {
-    //     dispatch(getCurrentUser(user.data))
-    //     return axios
-    //       .post("/api/loadfavorites", {
-    //         userId: user.data.id,
-    //       })
-    //       .then((favorites) => {
-    //         dispatch(loadStoreFavorites(favorites.data))
-    //         history.push("/favorites")
-    //       })
-    //   })
+        dispatch(getCurrentUser({ id: newUser.data.user.id }))
+      })
+      .catch(() => setError(true))
   }
+
+  React.useEffect(() => {
+    if (currentUser)
+      axios
+        .post("/api/transactions", {
+          userId: currentUser.id,
+        })
+        .then((cart) => {
+          dispatch(loadStoreCart({ id: cart.data.id }))
+          history.push("/products")
+        })
+  }, [currentUser])
+
+  const Error = () => (
+    <div className="sign-up-or-log-in-error">Invalid Email or Password</div>
+  )
+
   return (
     <div className="sign-up-or-log-in">
       <h2>
@@ -57,6 +65,7 @@ const Login = () => {
         />
         <button>Log In</button>
       </form>
+      {error && <Error />}
     </div>
   )
 }

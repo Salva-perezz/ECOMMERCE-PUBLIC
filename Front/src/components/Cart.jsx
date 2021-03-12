@@ -1,8 +1,61 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import {
+  removeFromStoreCart,
+  changeQuantityInStoreCart,
+} from "../store/currentCartItems"
 
 const Cart = () => {
+  const currentCartItems = useSelector((state) => state.currentCartItems)
+  const [total, setTotal] = useState(0)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    setTotal(
+      currentCartItems &&
+        currentCartItems.reduce(
+          (accumulator, currentValue) =>
+            accumulator +
+            Number(currentValue.price) * Number(currentValue.quantity),
+          0
+        )
+    )
+  }, [currentCartItems])
+
+  const removeFromCart = function ({ id }) {
+    console.log("ID ENVIADO", id)
+    axios
+      .put("/api/transactionitems/remove", {
+        id,
+      })
+      .then(() =>
+        dispatch(
+          removeFromStoreCart({
+            id,
+          })
+        )
+      )
+  }
+
+  const changeQuantity = function ({ productId, quantity }) {
+    // axios
+    //   .post("/api/transactionitems", {
+    //     transactionId: currentCart.id,
+    //     productId: product.id,
+    //     quantity: 1,
+    //   })
+    //   .then(() =>
+    dispatch(
+      changeQuantityInStoreCart({
+        productId,
+        quantity,
+      })
+    )
+    // )
+  }
+
   return (
     <div className="cart-container">
       <div className="cart-title">Your Shopping Cart</div>
@@ -14,56 +67,31 @@ const Cart = () => {
         <div className="column-4">Sub-total</div>
       </div>
       <hr />
-      <div className="cart-item">
-        <div className="column-1">
-          <img
-            className="cart-product-picture"
-            src="https://media.bbr.com/s/bbr/20198117656-ms?img404=Default_Wine&$deskPDP$"
-          />
-          Berry Bros. & Rudd Gavi di Gavi
-        </div>
-        <div className="column-2">$25</div>
-        <div className="column-3">
-          <input type="text" value="2" />
-          <img className="cart-delete-icon" src="icons/delete.png"></img>
-        </div>
-        <div className="column-4">$50</div>
-      </div>
-      <hr />
-      <div className="cart-item">
-        <div className="column-1">
-          <img
-            className="cart-product-picture"
-            src="https://media.bbr.com/s/bbr/20198117656-ms?img404=Default_Wine&$deskPDP$"
-          />
-          Berry Bros. & Rudd Gavi di Gavi
-        </div>
-        <div className="column-2">$25</div>
-        <div className="column-3">
-          <input type="text" value="2" />
-          <img className="cart-delete-icon" src="icons/delete.png"></img>
-        </div>
-        <div className="column-4">$50</div>
-      </div>
-      <hr />
-      <div className="cart-item">
-        <div className="column-1">
-          <img
-            className="cart-product-picture"
-            src="https://media.bbr.com/s/bbr/20198117656-ms?img404=Default_Wine&$deskPDP$"
-          />
-          Berry Bros. & Rudd Gavi di Gavi
-        </div>
-        <div className="column-2">$25</div>
-        <div className="column-3">
-          <input type="text" value="2" />
-          <img className="cart-delete-icon" src="icons/delete.png"></img>
-        </div>
-        <div className="column-4">$50</div>
-      </div>
-      <hr />
+      {currentCartItems.map((cartItem, index) => (
+        <>
+          <div key={index} className="cart-item">
+            <div className="column-1">
+              <img className="cart-product-picture" src={cartItem.urlPicture} />
+              {cartItem.name}
+            </div>
+            <div className="column-2">{"$" + cartItem.price}</div>
+            <div className="column-3">
+              <input type="text" value={cartItem.quantity} />
+              <img
+                onClick={() => removeFromCart(cartItem)}
+                className="cart-delete-icon"
+                src="icons/delete.png"
+              ></img>
+            </div>
+            <div className="column-4">
+              {"$" + cartItem.price * cartItem.quantity}
+            </div>
+          </div>
+          <hr />
+        </>
+      ))}
       <div className="cart-total">
-        <div className="cart-total-amount">Order Total: $50</div>
+        <div className="cart-total-amount">Order Total: ${total}</div>
         <button>Checkout</button>
       </div>
     </div>

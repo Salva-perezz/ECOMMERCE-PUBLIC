@@ -1,5 +1,6 @@
-const router = require("express").Router()
+const router = require("express").Router();
 const { User } = require("../models");
+const checkToken = require('../middleware/jswt');
 
 
 const jswt = require("jsonwebtoken");
@@ -69,6 +70,10 @@ router.get("/", (req, res) => {
       res.sendStatus(500)
     })
 })
+
+router.post('/private', checkToken, (req, res) => {
+  res.status(200).send(req.user);
+});
 
 router.delete("/", (req, res) => {
   User.delete({

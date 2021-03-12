@@ -7,6 +7,6 @@ TransactionItem.init({
     quantity: {
         type: Sequelize.INTEGER
     }
-}, { sequelize: db, modelName: "transactionItem" })
+}, { sequelize: db, modelName: "transaction_item" })
 
 module.exports = TransactionItem

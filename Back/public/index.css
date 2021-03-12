@@ -130,11 +130,13 @@ a:link {
   right: 120px;
 }
 
-.not-logged-in {
+.not-logged-in, .logged-in {
   margin: auto 0;
+  display: flex;
+  flex-direction: row;
 }
 
-.not-logged-in button {
+.not-logged-in button, .logged-in button {
   font-size: 1.2em;
   margin-left: 10px;
 }
@@ -151,6 +153,16 @@ a:link {
 .navbar-container hr {
   border: none;
   border-top: rgb(218, 218, 218) solid 1px;
+}
+
+.cart-quantity {
+  background-color: black;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  text-align: center;
+  font-weight: 600;
 }
 
 .home-main-picture {
@@ -368,6 +380,10 @@ a:link {
   background-color: rgb(243, 208, 118);
 }
 
+.sign-up-or-log-in-error {
+  margin-top: 15px;
+}
+
 .footer {
   margin-top: 25px;
   padding-top: 20px;
@@ -451,6 +467,7 @@ a:link {
 .cart-delete-icon {
   height: 2em;
   margin-left: 3px;
+  cursor: pointer;
 }
 
 .cart-total {

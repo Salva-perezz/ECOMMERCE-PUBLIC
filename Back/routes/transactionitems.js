@@ -12,9 +12,10 @@ router.post("/", (req, res) => {
         })
 })
 
-router.delete("/", (req, res) => {
-    TransactionItem.delete({
-        where: { id: req.body.id }
+router.put("/remove", (req, res) => {
+    console.log("REQ BODY DEL DELETE", req.body)
+    TransactionItem.destroy({
+        where: { id : req.body.id }
     })
         .then(() => {
             res.status(200).send("Item Eliminado")
