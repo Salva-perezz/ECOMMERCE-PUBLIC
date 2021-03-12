@@ -14,7 +14,7 @@ router.post("/", (req, res) => {
 
 router.delete("/", (req, res) => {
     TransactionItem.delete({
-        where: { id : req.body.id }
+        where: { id: req.body.id }
     })
         .then(() => {
             res.status(200).send("Item Eliminado")
@@ -25,7 +25,7 @@ router.delete("/", (req, res) => {
 
 router.put("/", (req, res) => {
     transactionItem.update(
-        { quantity: req.body.quantity},
+        { quantity: req.body.quantity },
         {
             where: { id: req.body.id },
             returning: true
@@ -37,5 +37,15 @@ router.put("/", (req, res) => {
         res.sendStatus(500)
     })
 })
+
+router.get("/", (req, res) => {
+    TransactionItem.findAll(
+        { where: { transactionId: req.body.transactionId } }
+    ).then((transactionIds) => {
+        res.status(200).json(transactionIds);
+    }).catch(() => {
+        res.sendStatus(500);
+    });
+});
 
 module.exports = router;
