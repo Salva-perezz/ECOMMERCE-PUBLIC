@@ -8,8 +8,8 @@ import SearchResults from "./components/SearchResults"
 import Register from "./components/Register.jsx"
 import Login from "./components/Login.jsx"
 import Cart from "./components/Cart.jsx"
-import { useSelector, useDispatch } from 'react-redux';
-import { getCurrentUser } from "./store/currentUser";
+import { useSelector, useDispatch } from "react-redux"
+import { getCurrentUser } from "./store/currentUser"
 import { loadStoreCart } from "./store/currentCart"
 import { loadStoreCartItems } from "./store/currentCartItems"
 
@@ -17,19 +17,17 @@ import { Route, Switch } from "react-router"
 import axios from "axios"
 
 const App = () => {
-  
-  const currentUser = useSelector(state => state.currentUser);
-  const currentCart = useSelector(state => state.currentCart);
-  const token = localStorage.getItem('token');
-  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.currentUser)
+  const currentCart = useSelector((state) => state.currentCart)
+  const token = localStorage.getItem("token")
+  const dispatch = useDispatch()
 
   useEffect(() => {
-
-    if(!currentUser && token){
-      axios.post('/api/users/private', { token })
-      .then(user => dispatch(getCurrentUser({ id: user.data.id })))
+    if (!currentUser && token) {
+      axios
+        .post("/api/users/private", { token })
+        .then((user) => dispatch(getCurrentUser({ id: user.data.id })))
     }
-
   }, [])
 
   useEffect(() => {
@@ -53,24 +51,30 @@ const App = () => {
           dispatch(loadStoreCartItems(cartItems.data))
         })
   }, [currentCart])
-  
-    return (
-      <div>
-        <NavBar />
-        <div className="main-container">
-          <Switch>
-            <Route path="/products/:id" render={({match}) => <SingleProduct match={match}/>} />
-            <Route path="/products/" render={() => <AllProducts />} />
-            <Route path="/search" render={({match}) => <SearchResults match={match}/>} />
-            <Route path="/register" render={() => <Register />} />
-            <Route path="/login" render={() => <Login />} />
-            <Route path="/cart" render={() => <Cart />} />
-            <Route path="/" render={() => <Home />} />
-          </Switch>
-        </div>
-        <Footer />
+
+  return (
+    <div>
+      <NavBar />
+      <div className="main-container">
+        <Switch>
+          <Route
+            path="/products/:id"
+            render={({ match }) => <SingleProduct match={match} />}
+          />
+          <Route path="/products/" render={() => <AllProducts />} />
+          <Route
+            path="/search"
+            render={({ match }) => <SearchResults match={match} />}
+          />
+          <Route path="/register" render={() => <Register />} />
+          <Route path="/login" render={() => <Login />} />
+          <Route path="/cart" render={() => <Cart />} />
+          <Route path="/" render={() => <Home />} />
+        </Switch>
       </div>
-    )
+      <Footer />
+    </div>
+  )
 }
 
-export default App;
+export default App

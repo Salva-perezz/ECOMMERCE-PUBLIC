@@ -70,8 +70,8 @@ const Cart = () => {
           </div>
           <hr />
           {currentCartItems.map((cartItem, index) => (
-            <>
-              <div key={index} className="cart-item">
+            <div key={index} >
+              <div className="cart-item">
                 <div className="column-1">
                   <img
                     className="cart-product-picture"
@@ -93,7 +93,7 @@ const Cart = () => {
                 </div>
               </div>
               <hr />
-            </>
+            </div>
           ))}
           <div className="cart-total">
             <div className="cart-total-amount">Order Total: ${total}</div>

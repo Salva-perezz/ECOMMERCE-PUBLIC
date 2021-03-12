@@ -45,7 +45,7 @@ const SingleProduct = (props) => {
             name: product.name,
             urlPicture: product.urlPicture,
             price: product.price,
-            quantity: quantity,
+            quantity: transactionItem.data.quantity,
             productId: product.id,
             id: transactionItem.data.id
           })

@@ -163,6 +163,7 @@ a:link {
   border-radius: 100%;
   text-align: center;
   font-weight: 600;
+  margin-top: 2px;
 }
 
 .home-main-picture {
@@ -382,6 +383,12 @@ a:link {
 
 .sign-up-or-log-in-error {
   margin-top: 15px;
+}
+
+.sign-up-or-log-in-no-account {
+  margin-top: 15px;
+  font-weight: 600;
+  color: rgb(114, 114, 114);
 }
 
 .footer {

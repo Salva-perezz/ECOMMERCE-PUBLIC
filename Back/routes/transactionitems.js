@@ -39,10 +39,9 @@ router.post("/", (req, res) => {
 })
 
 router.put("/remove", (req, res) => {
-    console.log("REQ BODY DEL DELETE", req.body)
-    TransactionItem.destroy({
-        where: { id: req.body.id },
-    })
+  TransactionItem.destroy({
+    where: { id: req.body.id },
+  })
         .then(() => {
             res.status(200).send("Item Eliminado")
         })
@@ -70,26 +69,27 @@ router.put("/", (req, res) => {
 })
 
 router.put("/load", (req, res) => {
-    TransactionItem.findAll({
-        where: { transactionId: req.body.transactionId },
-        include: Product,
+  TransactionItem.findAll({
+    where: { transactionId: req.body.transactionId },
+    include: Product,
+  })
+    .then((transactionItems) => {
+      transactionItems = transactionItems.map((item) => {
+        return {
+          id: item.id,
+          productId: item.productId,
+          quantity: item.quantity,
+          name: item.product.name,
+          price: item.product.price,
+          urlPicture: item.product.urlPicture
+        }
+      })
+      res.status(200).json(transactionItems)
     })
-        .then((transactionItems) => {
-            transactionItems = transactionItems.map((item) => {
-                return {
-                    id: item.id,
-                    productId: item.productId,
-                    quantity: item.quantity,
-                    name: item.product.name,
-                    price: item.product.price,
-                    urlPicture: item.product.urlPicture
-                }
-            })
-            res.status(200).json(transactionItems)
-        })
-        .catch(() => {
-            res.sendStatus(500)
-        })
+    .catch((err) => {
+      console.log(err)
+      res.sendStatus(500)
+    })
 })
 
 module.exports = router
