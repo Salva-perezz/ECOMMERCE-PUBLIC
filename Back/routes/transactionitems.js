@@ -14,7 +14,6 @@ router.post("/", (req, res) => {
 })
 
 router.put("/remove", (req, res) => {
-  console.log("REQ BODY DEL DELETE", req.body)
   TransactionItem.destroy({
     where: { id: req.body.id },
   })
@@ -62,7 +61,8 @@ router.put("/load", (req, res) => {
       })
       res.status(200).json(transactionItems)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.sendStatus(500)
     })
 })

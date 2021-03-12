@@ -35,7 +35,7 @@ const AllProducts = () => {
             name: product.name,
             urlPicture: product.urlPicture,
             price: product.price,
-            quantity: 1,
+            quantity: transactionItem.data.quantity,
             productId: product.id,
             id: transactionItem.data.id
           })

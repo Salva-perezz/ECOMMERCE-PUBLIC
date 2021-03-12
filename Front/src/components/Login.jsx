@@ -4,7 +4,7 @@ import { getCurrentUser } from "../store/currentUser"
 import { useSelector, useDispatch } from "react-redux"
 import { loadStoreCart } from "../store/currentCart"
 import { loadStoreCartItems } from "../store/currentCartItems"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -78,6 +78,9 @@ const Login = () => {
         />
         <button>Log In</button>
       </form>
+      <Link to="/register">
+        <div className="sign-up-or-log-in-no-account" >Don't have an account? Sign up</div>
+      </Link>
       {error && <Error />}
     </div>
   )
