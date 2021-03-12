@@ -1,42 +1,42 @@
 const router = require("express").Router()
 const { TransactionItem, Transaction, Product } = require("../models")
 
-router.post("/", (req, res) => {
-  TransactionItem.create(req.body)
-    .then((transactionItem) => {
-      transactionItem.setTransaction(req.body.transactionId)
-      transactionItem.setProduct(req.body.productId)
-      res.status(201).json(transactionItem)
-    })
-    .catch(() => {
-      res.sendStatus(500)
-    })
-})
-
 // router.post("/", (req, res) => {
-//     TransactionItem.findOne({
-//         where: {
-//             transactionId: req.body.transactionId,
-//             productId: req.body.productId
-//         }
-//     }).then(transactionItem => {
-//         if (!transactionItem) {
-//             TransactionItem.create(req.body)
-//                 .then(transactionItem => {
-//                     transactionItem.setTransaction(req.body.transactionId),
-//                         transactionItem.setProduct(req.body.productId)
-//                 })
-//                 .then(transItem => res.send(transItem))
-
-//         } else {
-//             transactionItem.update({ quantity: req.body.quantity + transactionItem.quantity })
-//                 .then(transactionItem => res.send(transactionItem))
-//         }
-//     }).catch((error) => {
-//         console.log(error)
-//         res.sendStatus(500)
+//   TransactionItem.create(req.body)
+//     .then((transactionItem) => {
+//       transactionItem.setTransaction(req.body.transactionId)
+//       transactionItem.setProduct(req.body.productId)
+//       res.status(201).json(transactionItem)
+//     })
+//     .catch(() => {
+//       res.sendStatus(500)
 //     })
 // })
+
+router.post("/", (req, res) => {
+    TransactionItem.findOne({
+        where: {
+            transactionId: req.body.transactionId,
+            productId: req.body.productId
+        }
+    }).then(transactionItem => {
+        if (!transactionItem) {
+            TransactionItem.create(req.body)
+                .then(transactionItem => {
+                    transactionItem.setTransaction(req.body.transactionId),
+                        transactionItem.setProduct(req.body.productId)
+                })
+                .then(transItem => res.send(transItem))
+
+        } else {
+            transactionItem.update({ quantity: req.body.quantity + transactionItem.quantity })
+                .then(transactionItem => res.send(transactionItem))
+        }
+    }).catch((error) => {
+        console.log(error)
+        res.sendStatus(500)
+    })
+})
 
 router.put("/remove", (req, res) => {
     console.log("REQ BODY DEL DELETE", req.body)
