@@ -26,7 +26,6 @@ const Cart = () => {
   }, [currentCartItems])
 
   const removeFromCart = function ({ id }) {
-    console.log("ID ENVIADO", id)
     axios
       .put("/api/transactionitems/remove", {
         id,
