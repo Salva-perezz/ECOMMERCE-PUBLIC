@@ -368,6 +368,10 @@ a:link {
   background-color: rgb(243, 208, 118);
 }
 
+.sign-up-or-log-in-error {
+  margin-top: 15px;
+}
+
 .footer {
   margin-top: 25px;
   padding-top: 20px;
@@ -451,6 +455,7 @@ a:link {
 .cart-delete-icon {
   height: 2em;
   margin-left: 3px;
+  cursor: pointer;
 }
 
 .cart-total {

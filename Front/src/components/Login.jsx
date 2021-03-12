@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom"
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -24,19 +25,24 @@ const Login = () => {
         localStorage.setItem("token", newUser.data.token)
         dispatch(getCurrentUser({ id: newUser.data.user.id }))
       })
+      .catch(() => setError(true))
   }
 
   React.useEffect(() => {
-    if(currentUser) axios
-      .post("/api/transactions", {
-        userId: currentUser.id,
-      })
-      .then((cart) => {
-        dispatch(loadStoreCart({ id: cart.data.id }))
-        history.push("/products")
-      })
+    if (currentUser)
+      axios
+        .post("/api/transactions", {
+          userId: currentUser.id,
+        })
+        .then((cart) => {
+          dispatch(loadStoreCart({ id: cart.data.id }))
+          history.push("/products")
+        })
   }, [currentUser])
 
+  const Error = () => (
+    <div className="sign-up-or-log-in-error">Invalid Email or Password</div>
+  )
 
   return (
     <div className="sign-up-or-log-in">
@@ -59,6 +65,7 @@ const Login = () => {
         />
         <button>Log In</button>
       </form>
+      {error && <Error />}
     </div>
   )
 }

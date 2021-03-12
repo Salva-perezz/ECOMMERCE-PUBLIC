@@ -35,13 +35,15 @@ const SingleProduct = (props) => {
         productId: product.id,
         quantity: quantity,
       })
-      .then(() =>
+      .then((transactionItem) =>
         dispatch(
           addToStoreCart({
             name: product.name,
             urlPicture: product.urlPicture,
             price: product.price,
-            quantity: quantity
+            quantity: quantity,
+            productId: product.id,
+            id: transactionItem.data.id
           })
         )
       )
