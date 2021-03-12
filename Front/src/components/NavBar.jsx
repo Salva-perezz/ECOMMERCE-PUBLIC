@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { getCurrentUser } from "../store/currentUser"
+import { loadStoreCart } from "../store/currentCart"
+import { clearStoreCart } from "../store/currentCartItems"
 
 const NavBar = () => {
   // const currentUser = useSelector((state) => state.currentUser)
@@ -27,6 +29,8 @@ const NavBar = () => {
   const handleLogout = function (event) {
     localStorage.clear()
     dispatch(getCurrentUser(""))
+    dispatch(loadStoreCart("loading"))
+    dispatch(clearStoreCart())
     history.push("/")
   }
 

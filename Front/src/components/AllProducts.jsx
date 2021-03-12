@@ -1,13 +1,15 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { addToStoreCart } from "../store/currentCartItems"
 
 const AllProducts = () => {
   const [products, setProducts] = useState("loading")
   const currentCart = useSelector((state) => state.currentCart)
+  const currentUser = useSelector((state) => state.currentUser)
   const dispatch = useDispatch()
+  const history = useHistory()
 
   React.useEffect(() => {
     axios
@@ -20,7 +22,8 @@ const AllProducts = () => {
   }, [])
 
   const addToCart = function (product) {
-    axios
+    if(!currentUser) history.push("/login")
+    else axios
       .post("/api/transactionitems", {
         transactionId: currentCart.id,
         productId: product.id,

@@ -495,6 +495,31 @@ a:link {
   padding: 12px 0.75em;
 }
 
+.empty-cart-container {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-cart-title {
+  font-family: "IM Fell Double Pica SC";
+  font-size: 2em;
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 200px;
+}
+
+.empty-cart-container button {
+  width: 255px;
+  margin: 20px 0 0;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 20px;
+  padding: 12px 0.75em;
+}
+
 /* SPINNER */
 
 .loader {
