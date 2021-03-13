@@ -10,7 +10,10 @@ export const changeQuantityInStoreCart = createAction(
 
 export const currentCartItemsReducer = createReducer([], {
   [loadStoreCartItems]: (state, action) => action.payload,
-  [addToStoreCart]: (state, action) => [...state, action.payload],
+  [addToStoreCart]: (state, action) => {
+    let filteredState = state.filter((cartItem) => cartItem.id !== action.payload.id)
+    return [...filteredState, action.payload]
+  },
   [removeFromStoreCart]: (state, action) =>
     state.filter((cartItem) => cartItem.id !== action.payload.id),
   [clearStoreCart]: (state, action) => [],

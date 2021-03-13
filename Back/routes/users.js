@@ -6,7 +6,6 @@ const checkToken = require('../middleware/jswt');
 const jswt = require("jsonwebtoken");
 
 router.post("/register", (req, res) => {
-  console.log("llega")
   User.create(req.body)
     .then((user) => {
       const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
