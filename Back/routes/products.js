@@ -7,8 +7,9 @@ router.post("/", (req, res) => {
         .then((product) => {
             res.status(201).json(product)
         })
-        .catch(() => {
-            res.sendStatus(500)
+        .catch((err) => {
+            console.log(err)
+            res.sendStatus()
         })
 })
 
@@ -16,8 +17,8 @@ router.get("/:id", (req, res) => {
     Product.findByPk(req.params.id)
         .then((product) => {
             res.status(200).json(product)
-        }).catch(() => {
-            res.sendStatus(500)
+        }).catch((error) => {
+            console.log(error)
         })
 })
 

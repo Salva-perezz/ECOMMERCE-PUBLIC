@@ -8,8 +8,9 @@ const { TransactionItem, Transaction, Product } = require("../models")
 //       transactionItem.setProduct(req.body.productId)
 //       res.status(201).json(transactionItem)
 //     })
-//     .catch(() => {
-//       res.sendStatus(500)
+//     .catch((error) => {
+//      console.log(error)
+//       res.sendStatus(404)
 //     })
 // })
 
@@ -34,7 +35,7 @@ router.post("/", (req, res) => {
         }
     }).catch((error) => {
         console.log(error)
-        res.sendStatus(500)
+        res.sendStatus(404)
     })
 })
 
@@ -46,8 +47,9 @@ router.put("/remove", (req, res) => {
         .then(() => {
             res.status(200).send("Item Eliminado")
         })
-        .catch(() => {
-            res.sendStatus(500)
+        .catch((error) => {
+            console.log(error)
+            res.sendStatus(404)
         })
 })
 
@@ -64,8 +66,9 @@ router.put("/", (req, res) => {
             transactionItemUpdated = transactionItemUpdated[1]
             res.status(200).json(transactionItemUpdated)
         })
-        .catch(() => {
-            res.sendStatus(500)
+        .catch((error) => {
+            console.log(error)
+            res.sendStatus(404)
         })
 })
 
@@ -87,8 +90,9 @@ router.put("/load", (req, res) => {
             })
             res.status(200).json(transactionItems)
         })
-        .catch(() => {
-            res.sendStatus(500)
+        .catch((error) => {
+            console.log(error)
+            res.sendStatus(404)
         })
 })
 
