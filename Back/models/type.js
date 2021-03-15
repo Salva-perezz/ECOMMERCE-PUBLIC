@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-class Type extends Sequelize.Model() {}
+class Type extends Sequelize.Model {}
 
 Type.init({
     name:{

@@ -5,6 +5,9 @@ const Product = require("./product");
 const Review = require("./review");
 const Transaction = require("./transaction");
 const TransactionItem = require("./transactionItem");
+const Year = require("./year");
+const Type = require("./type");
+const Country = require("./country");
 
 
 //Relaciones: Transaction
@@ -33,7 +36,9 @@ Address.belongsTo(User);
 
 //Relaciones: Productos
 
-
+Product.belongsTo(Type);
+Product.belongsTo(Country);
+Product.belongsTo(Year);
 
 module.exports = { User, Address, Payment, Product, Review, Transaction, TransactionItem }
 
