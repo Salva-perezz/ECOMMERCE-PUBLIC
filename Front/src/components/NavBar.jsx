@@ -90,7 +90,7 @@ const NavBar = () => {
       <div className="categories">
         <button>Type</button>
         <button>Country</button>
-        <button>Wine Producer</button>
+        {/* <button>Wine Producer</button> */}
         <button>Vintage</button>
       </div>
       <hr />
