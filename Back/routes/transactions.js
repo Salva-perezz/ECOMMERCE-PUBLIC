@@ -10,27 +10,27 @@ router.post("/", (req, res) => {
     }).then(transaction => {
         if (!transaction) {
             Transaction.create()
-                .then(transaction2 => transaction2.setUser(req.body.userId))
-                .then(trans => res.send(trans))
-    
+                .then(transaction => transaction.setUser(req.body.userId))
+                .then(transaction => res.send(transaction))
         } else {
             return res.send(transaction)
         }
-    }).catch((error) => {
-        console.log(error)
-        res.sendStatus(500)
+    }).catch((err) => {
+        console.log(err)
+        res.sendStatus(400)
     })
 })
 
-// router.get("/", (req, res) => {
-//     Transaction.findOne({
-//         userId: user.id
-//     }).then((transaction) => {
-//         res.status(201).json(transaction)
-//     }).catch(() => {
-//         res.sendStatus(500)
-//     })
-// })
+router.get("/:id", (req, res) => {
+    Transaction.findAll({
+        where: { userId: req.params.id },
+    }).then((transaction) => {
+        res.status(201).json(transaction)
+    }).catch((err) => {
+        console.log(err)
+        res.sendStatus(400)
+    })
+})
 
 module.exports = router;
 
