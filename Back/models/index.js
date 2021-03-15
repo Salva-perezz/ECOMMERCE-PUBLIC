@@ -9,27 +9,31 @@ const TransactionItem = require("./transactionItem");
 
 //Relaciones: Transaction
 
-Transaction.belongsTo(User)
-Transaction.belongsTo(Payment)
-Transaction.belongsTo(Address)
+Transaction.belongsTo(User);
+Transaction.belongsTo(Payment);
+Transaction.belongsTo(Address);
 
 //Relaciones: transactionItem
 
-TransactionItem.belongsTo(Product)
-TransactionItem.belongsTo(Transaction)
+TransactionItem.belongsTo(Product);
+TransactionItem.belongsTo(Transaction);
 
 //Relaciones: Payment
 
-Payment.belongsTo(User)
+Payment.belongsTo(User);
 
 //Relaciones: Review
 
-Review.belongsTo(User)
-Review.belongsTo(Product)
+Review.belongsTo(User);
+Review.belongsTo(Product);
 
 //Relaciones: Address
 
-Address.belongsTo(User)
+Address.belongsTo(User);
+
+//Relaciones: Productos
+
+
 
 module.exports = { User, Address, Payment, Product, Review, Transaction, TransactionItem }
 
