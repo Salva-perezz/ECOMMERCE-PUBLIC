@@ -1,9 +1,60 @@
 const router = require("express").Router();
 const { User } = require("../models");
+const { Op } = require("sequelize")
 const checkToken = require('../middleware/jswt');
-
-
 const jswt = require("jsonwebtoken");
+
+router.get("/:userId", (req, res) => {
+  User.findOne({
+    where: { id: req.params.userId }
+  })
+    .then((users) => {
+      res.status(200).json(users)
+    }).catch((err) => {
+      console.log(err)
+      res.sendStatus(400)
+    })
+})
+
+router.get("/all/:id", (req, res) => {
+  User.findAll({
+    where: { id: { [Op.ne]: req.params.id } } // Menos el del req.params.id
+  })
+    .then((users) => {
+      res.status(200).json(users)
+    }).catch((err) => {
+      console.log(err)
+      res.sendStatus(400)
+    })
+})
+
+
+
+
+router.put("/:id", (req, res) => {
+  User.update(req.body, {
+    where: { id: req.params.id },
+    returning: true,
+    plain: ture
+  }).then((userEdited) => {
+    res.status(200).json(userEdited[1])
+  }).catch((err) => {
+    console.log(err)
+    res.sendStatus(400)
+  })
+})
+
+router.delete("/:id", (req, res) => {
+  User.destroy({
+    where: { id: req.params.id }
+  })
+    .then(() => {
+      res.status(200).send()
+    }).catch((err) => {
+      console.log(err)
+      res.sendStatus(400)
+    })
+})
 
 router.post("/register", (req, res) => {
   User.create(req.body)
@@ -11,9 +62,9 @@ router.post("/register", (req, res) => {
       const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
 
       res.status(201).json({ token, user });
-    })
-    .catch(() => {
-      res.sendStatus(500);
+    }).catch((err) => {
+      console.log(err)
+      res.sendStatus(400)
     });
 });
 
@@ -38,51 +89,8 @@ router.post("/login", (req, res) => {
 });
 
 
-
-router.put("/:id", (req, res) => {
-  User.update(req.body, {
-    where: { id: req.params.id },
-    returning: true,
-  }).then((userEdited) => {
-    userEdited = userEdited[1]
-    res.status(200).json(userEdited)
-  }).catch(() => {
-    res.sendStatus(500)
-  })
-})
-
-router.put("/", (req, res) => {
-  User.update(req.body.isAdmin, { returning: true })
-    .then((userIsAdminEdited) => {
-      userIsAdminEdited = userIsAdminEdited[1]
-      res.status(200).json(userIsAdminEdited)
-    }).catch(() => {
-      res.sendStatus(500)
-    })
-})
-
-router.get("/", (req, res) => {
-  User.findAll()
-    .then((users) => {
-      res.status(200).json(users)
-    }).catch(() => {
-      res.sendStatus(500)
-    })
-})
-
 router.post('/private', checkToken, (req, res) => {
   res.status(200).send(req.user);
 });
-
-router.delete("/", (req, res) => {
-  User.delete({
-    where: { id: req.body.id }
-  })
-    .then(() => {
-      res.status(200).send("User Deleted")
-    }).catch(() => {
-      res.sendStatus(500)
-    })
-})
 
 module.exports = router;

@@ -43,14 +43,14 @@ const App = () => {
 
   useEffect(() => {
     if (currentCart !== "loading") {
-      console.log(currentCart)
       axios
         .put("/api/transactionitems/load", {
           transactionId: currentCart.id,
         })
         .then((cartItems) => {
           dispatch(loadStoreCartItems(cartItems.data))
-        })}
+        })
+    }
   }, [currentCart])
 
   return (
@@ -58,6 +58,10 @@ const App = () => {
       <NavBar />
       <div className="main-container">
         <Switch>
+          <Route path="/admin/products/:id" render={() => <AdminProduct />} /> {/* Salva y Mar */}
+          <Route path="/admin/products" render={() => <AllProducts />} />
+          <Route path="/admin/users" render={() => <AdminUsers />} /> {/* Salva y Mar */}
+          <Route path="/admin/categories" render={() => <AdminCategories />} /> {/* Salva y Mar */}
           <Route
             path="/products/:id"
             render={({ match }) => <SingleProduct match={match} />}

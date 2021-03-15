@@ -1,10 +1,9 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-
+const Sequelize = require("sequelize")
+const db = require("../db")
 
 class User extends Sequelize.Model {}
 
-const crypto = require("crypto");
+const crypto = require("crypto")
 
 User.init(
   {
@@ -24,24 +23,28 @@ User.init(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    salt:{
-        type: Sequelize.STRING
+    salt: {
+      type: Sequelize.STRING,
+    },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
   },
   { sequelize: db, modelName: "user" }
-);
+)
 
 User.addHook("beforeCreate", (user) => {
-  user.salt = crypto.randomBytes(20).toString("hex");
-  user.password = user.hashPassword(user.password);
-});
+  user.salt = crypto.randomBytes(20).toString("hex")
+  user.password = user.hashPassword(user.password)
+})
 
 User.prototype.hashPassword = function (password) {
-  return crypto.createHmac("sha1", this.salt).update(password).digest("hex");
-};
+  return crypto.createHmac("sha1", this.salt).update(password).digest("hex")
+}
 
 User.prototype.validPassword = function (loginPassword) {
-  return this.password === this.hashPassword(loginPassword);
-};
+  return this.password === this.hashPassword(loginPassword)
+}
 
-module.exports = User;
+module.exports = User
