@@ -12,6 +12,7 @@ const TransactionItem = require("./transactionItem");
 Transaction.belongsTo(User)
 Transaction.belongsTo(Payment)
 Transaction.belongsTo(Address)
+Transaction.hasMany(TransactionItem)
 
 //Relaciones: transactionItem
 

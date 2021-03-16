@@ -11,10 +11,13 @@ Payment.init({
         type: Sequelize.STRING
     },
     ccNumber: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
+        // validate: {
+        //     isCreditCard: true
+        // }
     },
     secCode: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
     }
 
 }, { sequelize: db, modelName: "payment" })
