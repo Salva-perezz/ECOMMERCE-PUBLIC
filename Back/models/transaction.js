@@ -5,7 +5,7 @@ class Transaction extends Sequelize.Model { }
 
 Transaction.init({
     checkoutDate: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
     }
 }, { sequelize: db, modelName: "transaction" })
 

@@ -12,6 +12,18 @@ Payment.init(
       type: Sequelize.STRING,
     },
     ccNumber: {
+<<<<<<< HEAD
+        type: Sequelize.STRING,
+        // validate: {
+        //     isCreditCard: true
+        // }
+    },
+    secCode: {
+        type: Sequelize.INTEGER,
+    }
+
+}, { sequelize: db, modelName: "payment" })
+=======
       type: Sequelize.INTEGER,
     },
     secCode: {
@@ -36,5 +48,6 @@ Payment.init(
   },
   { sequelize: db, modelName: "payment" }
 )
+>>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
 
 module.exports = Payment

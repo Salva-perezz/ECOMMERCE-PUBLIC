@@ -12,9 +12,16 @@ const Country = require("./country");
 
 //Relaciones: Transaction
 
+<<<<<<< HEAD
+Transaction.belongsTo(User)
+Transaction.belongsTo(Payment)
+Transaction.belongsTo(Address)
+Transaction.hasMany(TransactionItem)
+=======
 Transaction.belongsTo(User);
 Transaction.belongsTo(Payment);
 Transaction.belongsTo(Address);
+>>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
 
 //Relaciones: transactionItem
 
@@ -40,5 +47,5 @@ Product.belongsTo(Type);
 Product.belongsTo(Country);
 Product.belongsTo(Year);
 
-module.exports = { User, Address, Payment, Product, Review, Transaction, TransactionItem }
+module.exports = { User, Address, Payment, Product, Review, Transaction, TransactionItem, Type, Year, Country }
 

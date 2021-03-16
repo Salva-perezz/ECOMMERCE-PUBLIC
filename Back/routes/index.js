@@ -1,4 +1,4 @@
-const router = require("express").Router()
+const router = require("express").Router();
 
 router.use("/products", require("./products"))
 router.use("/users", require("./users"))
@@ -7,6 +7,6 @@ router.use("/transactions", require("./transactions"))
 router.use("/reviews", require("./reviews"))
 router.use("/addresses", require("./addresses"))
 router.use("/transactionitems", require("./transactionitems"))
+router.use("/emails", require("./emails"))
 
 module.exports = router
-
