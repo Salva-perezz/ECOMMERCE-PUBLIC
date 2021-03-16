@@ -1,43 +1,69 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const AdminUsers = () => {
-    const token = localStorage.getItem('token');
-    const currentUser = useSelector((state) => state.currentUser);
-    const [userList, setUserList] = useState([]);
+  const token = localStorage.getItem("token");
+  const currentUser = useSelector((state) => state.currentUser);
+  const [userList, setUserList] = useState([]);
 
+  useEffect(() => {
+    if(currentUser)axios.get(`/api/users/admin/all/${currentUser.id}/${token}`).then((users) => setUserList(users.data));
+  }, [currentUser]);
 
-useEffect(() => {
-       axios.get(`/api/users/admin`)
-    .then(users => setUserList(users.data))
-    console.log(userList)
-}, []);
+  useEffect(() => {}, [userList]);
 
-const adminHandler = (e) => {
+  const adminHandler = (e, id, isAdmin) => {
     e.preventDefault();
-
-}
-
-return(
-<div>
-     {
-     userList.length && userList.map(user => {
-       return(
-           <>
-            <div>
+    axios
+      .put("/api/users/admin/updateuser", { token, id, isAdmin })
+      .then(({ data }) => {
+        setUserList(
+          userList.map((user) => {
+            if (user.id != data.id) {
+              return user;
+            } else {
+              user.isAdmin = data.isAdmin;
+              return user;
+            }
+          })
+        );
+      })
+      .catch((err) => console.log(err));
+  };
+  return (
+    <div>
+      {userList.length &&
+        userList.map((user) => {
+          return (
+            <div key={user.id}>
+              <div>
                 <h3>{`${user.name} ${user.lastName}`}</h3>
-            </div>
-            <div>
+              </div>
+              <div>
                 <p>{user.email}</p>
+              </div>
+              <div>
+                {user.isAdmin ? (
+                  <button
+                    type="submit"
+                    onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
+                  >
+                    Remove admin
+                  </button>
+                ) : (
+                  <button
+                    onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
+                  >
+                    Give admin
+                  </button>
+                )}
+              </div>
             </div>
-            <div>
-                {user.isAdmin ? <button>Remove admin</button> : <button>Give admin</button>}
-            </div>
-           </>
-       )
-    })} 
-</div>
-)};
+          );
+        })}
+    </div>
+  );
+};
 
 export default AdminUsers;
