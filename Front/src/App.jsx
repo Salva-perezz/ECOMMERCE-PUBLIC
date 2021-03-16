@@ -58,8 +58,6 @@ const App = () => {
         .then((cart) => {
           dispatch(loadStoreCart({ id: cart.data.id }))
         });
-
-    let axios1 = axios.get()
   }, [currentUser]);
 
   useEffect(() => {

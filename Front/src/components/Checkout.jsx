@@ -1,13 +1,16 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { useSelector } from "react-redux"
-import { currentCartReducer } from "../store/currentCart"
+import { useSelector, useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom"
+import { clearStoreCart } from "../store/currentCartItems"
+import { loadStoreCart } from "../store/currentCart"
 
 const Checkout = () => {
   const currentCart = useSelector((state) => state.currentCart)
+  const currentUser = useSelector((state) => state.currentUser)
 
-  //   const [cards, setCards] = useState([])
-  //   const [addresses, setAddresses] = useState([])
+  const [cards, setCards] = useState([])
+  const [addresses, setAddresses] = useState([])
 
   const [showPaymentForm, setShowPaymentForm] = useState(false)
   const [showAddressForm, setShowAddressForm] = useState(false)
@@ -28,62 +31,24 @@ const Checkout = () => {
   const [country, setCountry] = useState("")
   const [zipCode, setZipCode] = useState("")
 
-  const cards = [
-    {
-      id: 1,
-      fullname: "Juan Perez",
-      cardType: "Visa",
-      hiddenNumber: "********2398",
-      secCode: 421,
-      expirationMonth: 12,
-      expirationYear: 21,
-    },
-    {
-      id: 2,
-      fullname: "Juan Perez",
-      cardType: "American Express",
-      hiddenNumber: "********2438",
-      secCode: 994,
-      expirationMonth: 2,
-      expirationYear: 22,
-    },
-    {
-      id: 3,
-      fullname: "Juan Perez",
-      cardType: "MasterCard",
-      hiddenNumber: "********2943",
-      secCode: 334,
-      expirationMonth: 10,
-      expirationYear: 21,
-    },
-  ]
+  const history = useHistory()
+  const dispatch = useDispatch()
 
-  const addresses = [
-    {
-      id: 1,
-      address: "Cabildo 1002",
-      country: "Argentina",
-      city: "Buenos Aires",
-      state: "CABA",
-      zipCode: 1414,
-    },
-    {
-      id: 2,
-      address: "Amenabar 489",
-      country: "Argentina",
-      city: "Buenos Aires",
-      state: "CABA",
-      zipCode: 1435,
-    },
-    {
-      id: 3,
-      address: "Olazabal 2178",
-      country: "Argentina",
-      city: "Buenos Aires",
-      state: "CABA",
-      zipCode: 1467,
-    },
-  ]
+  React.useEffect(() => {
+    console.log(currentUser.id)
+    if (currentUser)
+      axios.get("/api/payments/" + currentUser.id).then((cards) => {
+        setCards(cards.data)
+      })
+  }, [currentUser])
+
+  React.useEffect(() => {
+    console.log(currentUser.id)
+    if (currentUser)
+      axios.get("/api/addresses/" + currentUser.id).then((address) => {
+        setAddresses(address.data)
+      })
+  }, [currentUser])
 
   const handleTransactionSubmit = (event) => {
     event.preventDefault()
@@ -91,29 +56,60 @@ const Checkout = () => {
     axios
       .put("/api/transactions/" + currentCart.id, {
         checkoutDate,
-        paymentId,
-        addressId,
+        paymentId: selectedPayment,
+        addressId: selectedAddress,
       })
-      .then((newUser) => {
-        localStorage.setItem("token", newUser.data.token)
-        dispatch(getCurrentUser({ id: newUser.data.user.id }))
+      .then(() => {
+        dispatch(clearStoreCart())
+        return axios.post("/api/transactions", {
+          userId: currentUser.id,
+        })
       })
-      .catch(() => setError(true))
+      .then((newTransaction) => {
+        dispatch(loadStoreCart({ id: newTransaction.data.id }))
+        history.push("/")
+      })
+      .catch((error) => console.log(error))
+  }
+
+  const handleAddressSubmit = (event) => {
+    event.preventDefault()
+    axios
+      .post("/api/addresses/", {
+        address,
+        city,
+        state,
+        country,
+        zipCode,
+        userId: currentUser.id,
+      })
+      .then((newAddress) => {
+        setAddresses([...addresses, newAddress.data])
+        setAddress("")
+        setCity("")
+        setState("")
+        setCountry("")
+        setZipCode("")
+        setShowAddressForm(false)
+      })
   }
 
   const handlePaymentSubmit = (event) => {
     event.preventDefault()
     axios
-      .post("/api/payment/", {
+      .post("/api/payments/", {
         fullname,
         cardType,
         ccNumber,
         secCode,
         expirationMonth,
         expirationYear,
+        userId: currentUser.id,
       })
       .then((newPayment) => {
-        setCards([...cards, newPayment])
+        console.log(newPayment)
+        setCards([...cards, newPayment.data])
+        console.log(cards)
         setFullname("")
         setCardType("")
         setCCNumber("")
@@ -124,10 +120,18 @@ const Checkout = () => {
       })
   }
 
-  const handleAddressSubmit = (event) => {
-    event.preventDefault()
-    console.log("NEW ADDRESS")
-    setShowAddressForm(false)
+  const removePayment = function ({ id }) {
+    axios
+      .delete("/api/payments/" + id)
+      .then(() => setCards(cards.filter((card) => card.id !== id)))
+  }
+
+  const removeAddress = function ({ id }) {
+    axios
+      .delete("/api/addresses/" + id)
+      .then(() =>
+        setAddresses(addresses.filter((address) => address.id !== id))
+      )
   }
 
   return (
@@ -146,7 +150,14 @@ const Checkout = () => {
                       key={index}
                       value={card.id}
                     >
-                      <input name="card" type="radio" value={card.id} />
+                      <input
+                        name="card"
+                        type="radio"
+                        value={card.id}
+                        onChange={(event) =>
+                          setSelectedPayment(event.target.value)
+                        }
+                      />
                       <div>
                         {card.cardType + ", " + card.hiddenNumber}
                         <div>
@@ -160,6 +171,7 @@ const Checkout = () => {
                     <img
                       className="checkout-delete-icon"
                       src="icons/delete.png"
+                      onClick={() => removePayment(card)}
                     ></img>
                   </div>
                   <hr />
@@ -249,7 +261,14 @@ const Checkout = () => {
                       key={index}
                       value={address.id}
                     >
-                      <input name="card" type="radio" value={address.id} />
+                      <input
+                        name="address"
+                        type="radio"
+                        value={address.id}
+                        onChange={(event) =>
+                          setSelectedAddress(event.target.value)
+                        }
+                      />
                       <div>
                         <div>{address.address}</div>
                         <div>
@@ -266,6 +285,7 @@ const Checkout = () => {
                     <img
                       className="checkout-delete-icon"
                       src="icons/delete.png"
+                      onClick={() => removeAddress(address)}
                     ></img>
                   </div>
                   <hr />

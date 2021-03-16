@@ -5,48 +5,29 @@ const { checkToken } = require("../middleware/jswt");
 const { checkTokenBody } = require("../middleware/jswt");
 const jswt = require("jsonwebtoken");
 
-<<<<<<< HEAD
-router.get("/all/:id", (req, res) => {
-=======
 router.get("/admin/all/:id/:token", checkToken, (req, res) => {
->>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
   User.findAll({
     where: { id: { [Op.ne]: req.params.id } }, // Menos el del req.params.id
   })
     .then((users) => {
       res.status(200).json(users);
     })
-<<<<<<< HEAD
-})
-=======
     .catch((err) => {
       console.log(err);
       res.sendStatus(400);
     });
 });
->>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
 
 router.put("/:id", (req, res) => {
   User.update(req.body, {
     where: { id: req.params.id },
     returning: true,
-<<<<<<< HEAD
-    plain: ture
+    plain: true
   }).then((userUpdated) => {
     res.status(200).json(userUpdated[1])
   }).catch((err) => {
     console.log(err)
     res.sendStatus(400)
-=======
-    plain: true,
->>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
-  })
-    .then((userEdited) => {
-      res.status(200).json(userEdited[1]);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(400);
     });
 });
 
