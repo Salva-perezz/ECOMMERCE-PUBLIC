@@ -23,7 +23,12 @@ router.put("/:id", (req, res) => {
   User.update(req.body, {
     where: { id: req.params.id },
     returning: true,
-    plain: true,
+    plain: true
+  }).then((userUpdated) => {
+    res.status(200).json(userUpdated[1])
+  }).catch((err) => {
+    console.log(err)
+    res.sendStatus(400)
   })
     .then((userEdited) => {
       res.status(200).json(userEdited[1]);

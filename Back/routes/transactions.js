@@ -1,5 +1,6 @@
 const router = require("express").Router()
-const { Transaction, transactionItem, User } = require("../models");
+const { NOW, Op } = require("sequelize");
+const { Transaction, TransactionItem, Product, Payment, Address } = require("../models");
 
 router.post("/", (req, res) => {
     Transaction.findOne({
@@ -10,9 +11,8 @@ router.post("/", (req, res) => {
     }).then(transaction => {
         if (!transaction) {
             Transaction.create()
-                .then(transaction => transaction.setUser(req.body.userId))
-                .then(transaction => res.send(transaction))
-                .catch(err => console.log('ACAA', err))
+                .then(transactionCreated => transactionCreated.setUser(req.body.userId))
+                .then(transactionCreated => res.send(transactionCreated))
         } else {
             return res.send(transaction)
         }
@@ -24,13 +24,48 @@ router.post("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
     Transaction.findAll({
-        where: { userId: req.params.id },
-    }).then((transaction) => {
-        res.status(201).json(transaction)
+        where: {
+            userId: req.params.id,
+            checkoutDate: { [Op.ne] : null }
+        }, attributes: ["checkoutDate"],
+        include: [{
+            model: Payment,
+            attributes: ["fullName", "cardType", "ccNumber"]
+        }, {
+            model: Address,
+            attributes: ["address", "country", "city", "zipCode"]
+        }, {
+            model: TransactionItem,
+            attributes: ["quantity"],
+            include: {
+                model: Product,
+                attributes: ["name", "price", "urlPicture"]
+            }
+        }]
+    }).then((transactions) => {
+        res.status(201).json(transactions)
     }).catch((err) => {
         console.log(err)
         res.sendStatus(400)
     })
+})
+
+router.put("/:id", (req, res) => {
+    Transaction.update(
+        { checkoutDate: req.body.checkoutDate },
+        {
+            where: { id: req.params.id },
+            returning: true,
+            plain: true,
+        },
+    ).then(transactionUpdate => transactionUpdate[1].setPayment(req.body.paymentId))
+        .then(transactionUpdate => transactionUpdate.setAddress(req.body.addressId))
+        .then((transactionUpdated) => {
+            res.status(200).json(transactionUpdated)
+        }).catch((err) => {
+            console.log(err)
+            res.sendStatus(400)
+        })
 })
 
 module.exports = router;

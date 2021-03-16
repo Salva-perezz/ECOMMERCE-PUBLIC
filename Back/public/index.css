@@ -534,17 +534,15 @@ a:link {
 
 .checkout-container {
   width: 1000px;
-  margin: 70px auto 80px;
+  margin: 70px auto 20px;
   display: flex;
   flex-direction: row;
-  /* align-items: flex-start; */
   justify-content: center;
 }
 
 .payment-container {
   display: flex;
   flex-direction: column;
-  margin-left: 25px;
 }
 
 .address-container {
@@ -556,7 +554,7 @@ a:link {
 .payment-or-address-container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto 40px;
+  margin: 0 auto 30px;
   width: 374px;
   border: rgb(202, 202, 202) solid 1px;
   padding: 40px;
@@ -586,7 +584,6 @@ a:link {
 }
 
 .card-or-address-option input {
-  margin-bottom: 5px;
   margin-right: 8px;
 }
 
@@ -631,6 +628,39 @@ a:link {
   padding-top: 10px;
   padding-bottom: 5px;
   font-size: 0.9em;
+}
+
+.security-code-and-expiration-date {
+  display: flex;
+  flex-direction: row;
+}
+
+.security-code input{
+  width: 146px;
+  margin-right: 20px;
+}
+
+.expiration-date {
+  display: flex;
+  flex-direction: row;
+}
+
+.expiration-date input {
+  width: 62px;
+}
+
+.expiration-date input:first-child {
+  margin-right: 5px;
+}
+
+.checkout-submit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 936px;
+  margin: 0 auto;
+  border: rgb(202, 202, 202) solid 1px;
+  margin-bottom: 60px;
 }
 
 /* SPINNER */
