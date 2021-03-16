@@ -76,7 +76,6 @@ router.put("/load", (req, res) => {
                 }
             })
             res.status(200).json(transactionItems)
-            res.sendStatus(400)
 
         })
 })

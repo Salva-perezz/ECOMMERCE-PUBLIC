@@ -4,19 +4,9 @@ const { Op } = require("sequelize")
 const checkToken = require('../middleware/jswt');
 const jswt = require("jsonwebtoken");
 
-router.get("/:userId", (req, res) => {
-  User.findOne({
-    where: { id: req.params.userId }
-  })
-    .then((users) => {
-      res.status(200).json(users)
-    }).catch((err) => {
-      console.log(err)
-      res.sendStatus(400)
-    })
-})
 
 router.get("/all/:id", (req, res) => {
+  console.log('IDDDDDDDD', req.params.id)
   User.findAll({
     where: { id: { [Op.ne]: req.params.id } } // Menos el del req.params.id
   })
@@ -35,7 +25,7 @@ router.put("/:id", (req, res) => {
   User.update(req.body, {
     where: { id: req.params.id },
     returning: true,
-    plain: ture
+    plain: true
   }).then((userEdited) => {
     res.status(200).json(userEdited[1])
   }).catch((err) => {
@@ -89,8 +79,19 @@ router.post("/login", (req, res) => {
 });
 
 
-router.post('/private', checkToken, (req, res) => {
+router.get('/private/:token', checkToken, (req, res) => {
   res.status(200).send(req.user);
 });
+
+router.get('/admin', (req, res) => {
+  User.findAll()
+  .then( data => {
+    res.status(200).json(data);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500);
+  })
+})
 
 module.exports = router;
