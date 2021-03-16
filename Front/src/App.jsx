@@ -16,7 +16,6 @@ import { useSelector, useDispatch } from "react-redux"
 import { getCurrentUser } from "./store/currentUser"
 import { loadStoreCart } from "./store/currentCart"
 import { loadStoreCartItems } from "./store/currentCartItems"
-import AdminUsers from './components/AdminUsers';
 
 import { Route, Switch } from "react-router"
 import axios from "axios"
