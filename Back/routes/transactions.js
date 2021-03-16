@@ -12,6 +12,7 @@ router.post("/", (req, res) => {
             Transaction.create()
                 .then(transaction => transaction.setUser(req.body.userId))
                 .then(transaction => res.send(transaction))
+                .catch(err => console.log('ACAA', err))
         } else {
             return res.send(transaction)
         }

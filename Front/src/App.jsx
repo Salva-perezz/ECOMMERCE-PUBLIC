@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { getCurrentUser } from "./store/currentUser"
 import { loadStoreCart } from "./store/currentCart"
 import { loadStoreCartItems } from "./store/currentCartItems"
+import AdminUsers from './components/AdminUsers';
 
 import { Route, Switch } from "react-router"
 import axios from "axios"
@@ -29,7 +30,7 @@ const App = () => {
   useEffect(() => {
     if (!currentUser && token) {
       axios
-        .post("/api/users/private", { token })
+        .get(`/api/users/private/${token}`)
         .then((user) => dispatch(getCurrentUser({ id: user.data.id })))
     }
   }, [])
@@ -43,7 +44,7 @@ const App = () => {
         .then((cart) => {
           dispatch(loadStoreCart({ id: cart.data.id }))
         })
-  }, [currentUser])
+  }, [currentUser]);
 
   useEffect(() => {
     if (currentCart !== "loading") {
