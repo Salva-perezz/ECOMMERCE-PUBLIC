@@ -8,7 +8,7 @@ const AdminUsers = () => {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    if(currentUser)axios.get(`/api/users/admin/all/${currentUser.id}/${token}`).then((users) => setUserList(users.data));
+    if(currentUser)axios.get(`/api/users/admin/all/${currentUser.id}/${currentUser.isAdmin}`).then((users) => setUserList(users.data));
   }, [currentUser]);
 
   useEffect(() => {}, [userList]);
