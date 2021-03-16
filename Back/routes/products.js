@@ -82,7 +82,7 @@ router.put("/:id", (req, res) => {
     })
 })
 
-router.delete("/:id", (req, res) => {
+router.delete("/admin/delete/:id", (req, res) => {
     Product.destroy({
         where: { id: req.params.id }
     }).then(() => {

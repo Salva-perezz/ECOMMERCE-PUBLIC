@@ -23,7 +23,7 @@ const NavBar = () => {
   const handleSubmit = function (event) {
     event.preventDefault()
     setSearchQuery("")
-    history.push("/search/" + searchQuery)
+    history.push("/search?s=" + searchQuery)
   }
 
   const handleLogout = function (event) {
@@ -90,7 +90,7 @@ const NavBar = () => {
       <div className="categories">
         <button>Type</button>
         <button>Country</button>
-        <button>Wine Producer</button>
+        {/* <button>Wine Producer</button> */}
         <button>Vintage</button>
       </div>
       <hr />

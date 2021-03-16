@@ -8,9 +8,16 @@ import SearchResults from "./components/SearchResults"
 import Register from "./components/Register.jsx"
 import Login from "./components/Login.jsx"
 import Cart from "./components/Cart.jsx"
+import Checkout from "./components/Checkout.jsx"
+import AdminProduct from "./components/AdminProduct.jsx"
+import AdminUsers from "./components/AdminUsers.jsx"
+import AdminCategories from "./components/AdminCategories.jsx"
 import { useSelector, useDispatch } from "react-redux"
 import { getCurrentUser } from "./store/currentUser"
 import { loadStoreCart } from "./store/currentCart"
+import { setTypes } from "./store/types"
+import { setYears} from "./store/years"
+import { setCountries } from "./store/countries"
 import { loadStoreCartItems } from "./store/currentCartItems"
 
 import { Route, Switch } from "react-router"
@@ -19,15 +26,28 @@ import axios from "axios"
 const App = () => {
   const currentUser = useSelector((state) => state.currentUser)
   const currentCart = useSelector((state) => state.currentCart)
+  const types = useSelector((state) => state.types)
+  const years = useSelector((state) => state.years)
+  const countries = useSelector((state) => state.countries)
   const token = localStorage.getItem("token")
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!currentUser && token) {
       axios
-        .post("/api/users/private", { token })
+        .get(`/api/users/private/${token}`)
         .then((user) => dispatch(getCurrentUser({ id: user.data.id })))
     }
+    let axios1 = axios.get(`/api/categories/types`);
+    let axios2 = axios.get(`/api/categories/countries`);
+    let axios3 = axios.get(`/api/categories/years`);
+
+    Promise.all([axios1, axios2, axios3])
+    .then(values => {
+      dispatch(setTypes(values[0].data));
+      dispatch(setCountries(values[1].data));
+      dispatch(setYears(values[2].data));
+    })
   }, [])
 
   useEffect(() => {
@@ -38,19 +58,21 @@ const App = () => {
         })
         .then((cart) => {
           dispatch(loadStoreCart({ id: cart.data.id }))
-        })
-  }, [currentUser])
+        });
+
+    let axios1 = axios.get()
+  }, [currentUser]);
 
   useEffect(() => {
     if (currentCart !== "loading") {
-      console.log(currentCart)
       axios
         .put("/api/transactionitems/load", {
           transactionId: currentCart.id,
         })
         .then((cartItems) => {
           dispatch(loadStoreCartItems(cartItems.data))
-        })}
+        })
+    }
   }, [currentCart])
 
   return (
@@ -58,6 +80,10 @@ const App = () => {
       <NavBar />
       <div className="main-container">
         <Switch>
+          <Route path="/admin/products/:id" render={() => <AdminProduct />} /> {/* Salva y Mar */}
+          <Route path="/admin/products" render={() => <AllProducts />} />
+          <Route path="/admin/users" render={() => <AdminUsers />} /> {/* Salva y Mar */}
+          <Route path="/admin/categories" render={() => <AdminCategories />} /> {/* Salva y Mar */}
           <Route
             path="/products/:id"
             render={({ match }) => <SingleProduct match={match} />}
@@ -70,6 +96,7 @@ const App = () => {
           <Route path="/register" render={() => <Register />} />
           <Route path="/login" render={() => <Login />} />
           <Route path="/cart" render={() => <Cart />} />
+          <Route path="/checkout" render={() => <Checkout />} />
           <Route path="/" render={() => <Home />} />
         </Switch>
       </div>
