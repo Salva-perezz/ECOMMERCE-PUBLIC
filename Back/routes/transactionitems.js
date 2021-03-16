@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const { TransactionItem, Transaction, Product } = require("../models")
+const { TransactionItem, Transaction, Product, Address, Payment } = require("../models")
 
 router.post("/", (req, res) => {
     TransactionItem.findOne({
@@ -11,16 +11,16 @@ router.post("/", (req, res) => {
         .then((transactionItem) => {
             if (!transactionItem) {
                 TransactionItem.create(req.body)
-                    .then(transactionItem => transactionItem.setTransaction(req.body.transactionId))
-                    .then(transactionItem => transactionItem.setProduct(req.body.productId))
-                    .then((transactionItem) => res.send(transactionItem))
+                    .then(transactionItemCreated => transactionItemCreated.setTransaction(req.body.transactionId))
+                    .then(transactionItemCreated => transactionItemCreated.setProduct(req.body.productId))
+                    .then((transactionItemCreated) => res.send(transactionItemCreated))
             } else {
                 transactionItem
                     .update({
                         quantity:
                             Number(req.body.quantity) + Number(transactionItem.quantity),
                     })
-                    .then((transactionItem) => res.send(transactionItem))
+                    .then((transactionItemUpdated) => res.send(transactionItemUpdated))
             }
         }).catch((err) => {
             console.log(err)
@@ -29,28 +29,26 @@ router.post("/", (req, res) => {
 })
 
 //Modificar por delete con req.params.id
-router.put("/remove", (req, res) => {
+router.delete("/id", (req, res) => {
     TransactionItem.destroy({
-        where: { id: req.body.id },
+        where: { id: req.params.id },
+    }).then(() => {
+        res.status(200).send()
+    }).catch((err) => {
+        console.log(err)
+        res.sendStatus(400)
     })
-        .then(() => {
-            res.status(200).send()
-        }).catch((err) => {
-            console.log(err)
-            res.sendStatus(400)
-        })
 })
 
 router.put("/", (req, res) => {
-    transactionItem
+    TransactionItem
         .update(
             { quantity: req.body.quantity },
             {
                 where: { id: req.body.id },
                 returning: true,
                 plain: true
-            }
-        )
+            })
         .then((transactionItemUpdated) => {
             res.status(200).json(transactionItemUpdated[1])
         }).catch((err) => {
@@ -82,7 +80,7 @@ router.put("/load", (req, res) => {
       })
 })
 
-router.get("/:id", (req, res) => {
+router.get("/all/:id", (req, res) => {
     TransactionItem.findAll({
         include: [{
             model: Transaction,
@@ -90,6 +88,23 @@ router.get("/:id", (req, res) => {
         }, Product],
     }).then((transactionItems) => {
         res.status(201).json(transactionItems)
+    }).catch((err) => {
+        console.log(err)
+        res.sendStatus(400)
+    })
+})
+
+router.get("/:id", (req, res) => {
+    TransactionItem.findOne({
+        include: [{
+            model: Transaction,
+            where: {
+                userId: req.params.id,
+                checkoutDate: null
+            },
+        }, Product],
+    }).then((openTransactionItems) => {
+        res.status(201).json(openTransactionItems)
     }).catch((err) => {
         console.log(err)
         res.sendStatus(400)
