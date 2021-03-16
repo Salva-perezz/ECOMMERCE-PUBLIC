@@ -13,6 +13,10 @@ button {
   cursor: pointer;
 }
 
+select {
+  font-family: ArcherPro-Light;
+}
+
 a {
   text-decoration: none;
 }
@@ -331,7 +335,6 @@ a:link {
   margin: 70px auto 120px;
   border: rgb(202, 202, 202) solid 1px;
   padding: 40px;
-
 }
 
 .sign-up-or-log-in h2 {
@@ -525,6 +528,109 @@ a:link {
   color: black;
   font-size: 20px;
   padding: 12px 0.75em;
+}
+
+/* CHECKOUT */
+
+.checkout-container {
+  width: 1000px;
+  margin: 70px auto 80px;
+  display: flex;
+  flex-direction: row;
+  /* align-items: flex-start; */
+  justify-content: center;
+}
+
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+}
+
+.address-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+}
+
+.payment-or-address-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 40px;
+  width: 374px;
+  border: rgb(202, 202, 202) solid 1px;
+  padding: 40px;
+  align-self: center;
+}
+
+.payment-or-address-title {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 200;
+}
+
+.payment-or-address-container hr {
+  border: none;
+  border-top: rgb(218, 218, 218) solid 1px;
+  width: 370px;
+}
+
+.card-or-address-option {
+  display: flex;
+  flex-direction: row;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-or-address-option input {
+  margin-bottom: 5px;
+  margin-right: 8px;
+}
+
+.card-or-address-input-and-name {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkout-delete-icon {
+  height: 1.5em;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
+.payment-or-address-container button {
+  width: 378px;
+  margin: 20px 0 0;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 1.2em;
+  padding: 12px 0.75em;
+}
+
+.payment-or-address-container button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+.payment-or-address-form input {
+  outline: none;
+  width: 350px;
+  padding: 0.9em;
+  font-size: 0.9em;
+  border: none;
+  border: rgb(128, 128, 128) solid 1px;
+  margin-bottom: 5px;
+}
+
+.payment-or-address-form label {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-size: 0.9em;
 }
 
 /* SPINNER */

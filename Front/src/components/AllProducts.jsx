@@ -22,25 +22,26 @@ const AllProducts = () => {
   }, [])
 
   const addToCart = function (product) {
-    if(!currentUser) history.push("/login")
-    else axios
-      .post("/api/transactionitems", {
-        transactionId: currentCart.id,
-        productId: product.id,
-        quantity: 1,
-      })
-      .then((transactionItem) =>       
+    if (!currentUser) history.push("/login")
+    else
+      axios
+        .post("/api/transactionitems", {
+          transactionId: currentCart.id,
+          productId: product.id,
+          quantity: 1,
+        })
+        .then((transactionItem) =>
           dispatch(
-          addToStoreCart({
-            name: product.name,
-            urlPicture: product.urlPicture,
-            price: product.price,
-            quantity: transactionItem.data.quantity,
-            productId: product.id,
-            id: transactionItem.data.id
-          })
+            addToStoreCart({
+              name: product.name,
+              urlPicture: product.urlPicture,
+              price: product.price,
+              quantity: transactionItem.data.quantity,
+              productId: product.id,
+              id: transactionItem.data.id,
+            })
+          )
         )
-      )
   }
 
   return (
@@ -48,32 +49,37 @@ const AllProducts = () => {
       {products === "loading" ? (
         <div className="loader"></div>
       ) : (
-        <div className="results-container">
-          {products.map((product, index) => (
-            <div key={index} className="single-result">
-              <div className="picture-container">
-                <Link to={`/products/${product.id}`}>
-                  <img src={product.urlPicture} />
-                </Link>
-              </div>
-              <hr />
-              <div className="single-result-specs">
-                <div className="single-result-name-and-brand">
-                  <div className="single-result-name">{product.name}</div>
-                  <div className="single-result-brand">{product.brand}</div>
+        <>
+          <div className="results-title">Search Results</div>
+          <div className="results-container">
+            {products.map((product, index) => (
+              <div key={index} className="single-result">
+                <div className="picture-container">
+                  <Link to={`/products/${product.id}`}>
+                    <img src={product.urlPicture} />
+                  </Link>
                 </div>
                 <hr />
-                <div className="single-result-price">{"$" + product.price}</div>
+                <div className="single-result-specs">
+                  <div className="single-result-name-and-brand">
+                    <div className="single-result-name">{product.name}</div>
+                    <div className="single-result-brand">{product.brand}</div>
+                  </div>
+                  <hr />
+                  <div className="single-result-price">
+                    {"$" + product.price}
+                  </div>
+                </div>
+                <button
+                  onClick={() => addToCart(product)}
+                  className="add-to-cart-results"
+                >
+                  Add to Cart
+                </button>
               </div>
-              <button
-                onClick={() => addToCart(product)}
-                className="add-to-cart-results"
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </>
       )}
     </>
   )

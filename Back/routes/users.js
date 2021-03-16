@@ -4,7 +4,6 @@ const { Op } = require("sequelize")
 const checkToken = require('../middleware/jswt');
 const jswt = require("jsonwebtoken");
 
-
 router.get("/all/:id", (req, res) => {
   console.log('IDDDDDDDD', req.params.id)
   User.findAll({
@@ -17,9 +16,6 @@ router.get("/all/:id", (req, res) => {
       res.sendStatus(400)
     })
 })
-
-
-
 
 router.put("/:id", (req, res) => {
   User.update(req.body, {

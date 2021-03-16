@@ -8,6 +8,10 @@ import SearchResults from "./components/SearchResults"
 import Register from "./components/Register.jsx"
 import Login from "./components/Login.jsx"
 import Cart from "./components/Cart.jsx"
+import Checkout from "./components/Checkout.jsx"
+import AdminProduct from "./components/AdminProduct.jsx"
+import AdminUsers from "./components/AdminUsers.jsx"
+import AdminCategories from "./components/AdminCategories.jsx"
 import { useSelector, useDispatch } from "react-redux"
 import { getCurrentUser } from "./store/currentUser"
 import { loadStoreCart } from "./store/currentCart"
@@ -75,6 +79,7 @@ const App = () => {
           <Route path="/register" render={() => <Register />} />
           <Route path="/login" render={() => <Login />} />
           <Route path="/cart" render={() => <Cart />} />
+          <Route path="/checkout" render={() => <Checkout />} />
           <Route path="/" render={() => <Home />} />
         </Switch>
       </div>
