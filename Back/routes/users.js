@@ -4,8 +4,9 @@ const { Op } = require("sequelize");
 const { checkToken } = require("../middleware/jswt");
 const { checkTokenBody } = require("../middleware/jswt");
 const jswt = require("jsonwebtoken");
+const { checkAdmin } = require("../middleware/isAdmin");
 
-router.get("/admin/all/:id/:token", checkToken, (req, res) => {
+router.get("/admin/all/:id/:isAdmin", checkAdmin, (req, res) => {
   User.findAll({
     where: { id: { [Op.ne]: req.params.id } }, // Menos el del req.params.id
   })
@@ -28,6 +29,16 @@ router.put("/:id", (req, res) => {
   }).catch((err) => {
     console.log(err)
     res.sendStatus(400)
+<<<<<<< HEAD
+=======
+  })
+    .then((userEdited) => {
+      res.status(200).json(userEdited[1]);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+>>>>>>> 7970134bbde322d3226f1c9b6e9c7864752ba807
     });
 });
 
@@ -72,8 +83,7 @@ router.post("/login", (req, res) => {
     if (!user.validPassword(password))
       return res.status(401).send("Invalid credentials");
 
-    const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
-
+    const token = jswt.sign({ id: user.id, isAdmin: user.isAdmin }, "ecommerce");
     res.status(200).json({ token, user });
   });
 });

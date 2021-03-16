@@ -21,6 +21,7 @@ import { setCountries } from "./store/countries"
 import { loadStoreCartItems } from "./store/currentCartItems"
 import { Route, Switch } from "react-router"
 import axios from "axios"
+import AdminProducts from "./components/AdminProducts"
 
 const App = () => {
   const currentUser = useSelector((state) => state.currentUser)
@@ -35,7 +36,10 @@ const App = () => {
     if (!currentUser && token) {
       axios
         .get(`/api/users/private/${token}`)
-        .then((user) => dispatch(getCurrentUser({ id: user.data.id })))
+        .then((user) => {
+          console.log(user)
+          dispatch(getCurrentUser({ id: user.data.id, isAdmin: user.data.isAdmin }))
+        })
     }
     let axios1 = axios.get(`/api/categories/types`);
     let axios2 = axios.get(`/api/categories/countries`);
@@ -77,8 +81,8 @@ const App = () => {
       <NavBar />
       <div className="main-container">
         <Switch>
-          <Route path="/admin/products/:id" render={() => <AdminProduct />} /> {/* Salva y Mar */}
-          <Route path="/admin/products" render={() => <AllProducts />} />
+          <Route path="/admin/product/edit" render={() => <AdminProduct />} /> {/* Salva y Mar */}
+          <Route path="/admin/products" render={() => <AdminProducts />} />
           <Route path="/admin/users" render={() => <AdminUsers />} /> {/* Salva y Mar */}
           <Route path="/admin/categories" render={() => <AdminCategories />} /> {/* Salva y Mar */}
           <Route
