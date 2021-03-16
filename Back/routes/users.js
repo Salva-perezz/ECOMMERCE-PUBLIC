@@ -4,18 +4,6 @@ const { Op } = require("sequelize")
 const checkToken = require('../middleware/jswt');
 const jswt = require("jsonwebtoken");
 
-router.get("/:userId", (req, res) => {
-  User.findOne({
-    where: { id: req.params.userId }
-  })
-    .then((users) => {
-      res.status(200).json(users)
-    }).catch((err) => {
-      console.log(err)
-      res.sendStatus(400)
-    })
-})
-
 router.get("/all/:id", (req, res) => {
   User.findAll({
     where: { id: { [Op.ne]: req.params.id } } // Menos el del req.params.id
@@ -27,9 +15,6 @@ router.get("/all/:id", (req, res) => {
       res.sendStatus(400)
     })
 })
-
-
-
 
 router.put("/:id", (req, res) => {
   User.update(req.body, {

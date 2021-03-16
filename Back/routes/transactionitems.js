@@ -76,9 +76,10 @@ router.put("/load", (req, res) => {
                 }
             })
             res.status(200).json(transactionItems)
-            res.sendStatus(400)
-
-        })
+        }).catch((err) => {
+          console.log(err)
+          res.sendStatus(400)
+      })
 })
 
 router.get("/:id", (req, res) => {
