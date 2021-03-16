@@ -40,5 +40,5 @@ Product.belongsTo(Type);
 Product.belongsTo(Country);
 Product.belongsTo(Year);
 
-module.exports = { User, Address, Payment, Product, Review, Transaction, TransactionItem }
+module.exports = { User, Address, Payment, Product, Review, Transaction, TransactionItem, Type, Year, Country }
 
