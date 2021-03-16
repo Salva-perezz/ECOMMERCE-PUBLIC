@@ -29,6 +29,8 @@ router.put("/:id", (req, res) => {
   }).catch((err) => {
     console.log(err)
     res.sendStatus(400)
+<<<<<<< HEAD
+=======
   })
     .then((userEdited) => {
       res.status(200).json(userEdited[1]);
@@ -36,6 +38,7 @@ router.put("/:id", (req, res) => {
     .catch((err) => {
       console.log(err);
       res.sendStatus(400);
+>>>>>>> 7970134bbde322d3226f1c9b6e9c7864752ba807
     });
 });
 

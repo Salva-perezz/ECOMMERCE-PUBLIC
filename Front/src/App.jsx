@@ -62,7 +62,6 @@ const App = () => {
         .then((cart) => {
           dispatch(loadStoreCart({ id: cart.data.id }))
         });
-
   }, [currentUser]);
 
   useEffect(() => {
