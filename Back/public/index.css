@@ -643,7 +643,6 @@ a:link {
 .expiration-date {
   display: flex;
   flex-direction: row;
-  /* background-color: red; */
 }
 
 .expiration-date input {

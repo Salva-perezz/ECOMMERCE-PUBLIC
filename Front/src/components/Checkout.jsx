@@ -325,7 +325,7 @@ const Checkout = () => {
         </div>
       </div>
       <div className="checkout-submit-container">
-        <button onClick={handleTransactionSubmit}>Submit</button>
+        <button onClick={handleTransactionSubmit}>Confirm Order</button>
       </div>
     </>
   )

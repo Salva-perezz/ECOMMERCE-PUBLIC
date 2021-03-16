@@ -19,7 +19,6 @@ import { setTypes } from "./store/types"
 import { setYears} from "./store/years"
 import { setCountries } from "./store/countries"
 import { loadStoreCartItems } from "./store/currentCartItems"
-
 import { Route, Switch } from "react-router"
 import axios from "axios"
 
