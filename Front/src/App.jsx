@@ -15,6 +15,9 @@ import AdminCategories from "./components/AdminCategories.jsx"
 import { useSelector, useDispatch } from "react-redux"
 import { getCurrentUser } from "./store/currentUser"
 import { loadStoreCart } from "./store/currentCart"
+import { setTypes } from "./store/types"
+import { setYears} from "./store/years"
+import { setCountries } from "./store/countries"
 import { loadStoreCartItems } from "./store/currentCartItems"
 import { Route, Switch } from "react-router"
 import axios from "axios"
@@ -22,6 +25,9 @@ import axios from "axios"
 const App = () => {
   const currentUser = useSelector((state) => state.currentUser)
   const currentCart = useSelector((state) => state.currentCart)
+  const types = useSelector((state) => state.types)
+  const years = useSelector((state) => state.years)
+  const countries = useSelector((state) => state.countries)
   const token = localStorage.getItem("token")
   const dispatch = useDispatch()
 
@@ -31,6 +37,16 @@ const App = () => {
         .get(`/api/users/private/${token}`)
         .then((user) => dispatch(getCurrentUser({ id: user.data.id })))
     }
+    let axios1 = axios.get(`/api/categories/types`);
+    let axios2 = axios.get(`/api/categories/countries`);
+    let axios3 = axios.get(`/api/categories/years`);
+
+    Promise.all([axios1, axios2, axios3])
+    .then(values => {
+      dispatch(setTypes(values[0].data));
+      dispatch(setCountries(values[1].data));
+      dispatch(setYears(values[2].data));
+    })
   }, [])
 
   useEffect(() => {
@@ -41,7 +57,9 @@ const App = () => {
         })
         .then((cart) => {
           dispatch(loadStoreCart({ id: cart.data.id }))
-        })
+        });
+
+    let axios1 = axios.get()
   }, [currentUser]);
 
   useEffect(() => {
