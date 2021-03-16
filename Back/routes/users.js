@@ -4,42 +4,31 @@ const { Op } = require("sequelize");
 const { checkToken } = require("../middleware/jswt");
 const { checkTokenBody } = require("../middleware/jswt");
 const jswt = require("jsonwebtoken");
+const { checkAdmin } = require("../middleware/isAdmin");
 
-<<<<<<< HEAD
-router.get("/all/:id", (req, res) => {
-=======
-router.get("/admin/all/:id/:token", checkToken, (req, res) => {
->>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
+router.get("/admin/all/:id/:isAdmin", checkAdmin, (req, res) => {
   User.findAll({
     where: { id: { [Op.ne]: req.params.id } }, // Menos el del req.params.id
   })
     .then((users) => {
       res.status(200).json(users);
     })
-<<<<<<< HEAD
-})
-=======
     .catch((err) => {
       console.log(err);
       res.sendStatus(400);
     });
 });
->>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
 
 router.put("/:id", (req, res) => {
   User.update(req.body, {
     where: { id: req.params.id },
     returning: true,
-<<<<<<< HEAD
-    plain: ture
+    plain: true
   }).then((userUpdated) => {
     res.status(200).json(userUpdated[1])
   }).catch((err) => {
     console.log(err)
     res.sendStatus(400)
-=======
-    plain: true,
->>>>>>> 3e87a8a2da92559e3aa4861d61b65cfafe3602c8
   })
     .then((userEdited) => {
       res.status(200).json(userEdited[1]);
@@ -91,8 +80,7 @@ router.post("/login", (req, res) => {
     if (!user.validPassword(password))
       return res.status(401).send("Invalid credentials");
 
-    const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
-
+    const token = jswt.sign({ id: user.id, isAdmin: user.isAdmin }, "ecommerce");
     res.status(200).json({ token, user });
   });
 });
