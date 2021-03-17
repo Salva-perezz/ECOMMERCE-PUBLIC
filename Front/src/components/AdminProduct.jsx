@@ -5,8 +5,9 @@ import { useHistory } from "react-router-dom";
 
 
 const AdminProduct = () => {
+  const Product = JSON.parse(localStorage.getItem('currentProduct'));
+  const currentProduct = Product ? Product : {};
   const history = useHistory();
-  const currentProduct = JSON.parse(localStorage.getItem('currentProduct'))
   const currentUser = useSelector((state) => state.currentUser);
   const years = useSelector((state) => state.years);
   const countries = useSelector((state) => state.countries);
@@ -72,7 +73,7 @@ const AdminProduct = () => {
         typeId,
       });
     }
-    localStorage.removeItem("currentUser");
+    localStorage.removeItem("currentProduct");
   };
 
   console.log(currentProduct);
