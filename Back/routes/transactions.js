@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const { NOW, Op } = require("sequelize");
+const { Op } = require("sequelize");
 const { Transaction, TransactionItem, Product, Payment, Address } = require("../models");
 
 router.post("/", (req, res) => {
@@ -12,9 +12,9 @@ router.post("/", (req, res) => {
         if (!transaction) {
             Transaction.create()
                 .then(transactionCreated => transactionCreated.setUser(req.body.userId))
-                .then(transactionCreated => res.send(transactionCreated))
+                .then(transactionCreated => res.json(transactionCreated))
         } else {
-            return res.send(transaction)
+            return res.json(transaction)
         }
     }).catch((err) => {
         console.log(err)
@@ -30,7 +30,7 @@ router.get("/:id", (req, res) => {
         }, attributes: ["checkoutDate"],
         include: [{
             model: Payment,
-            attributes: ["fullName", "cardType", "ccNumber"]
+            attributes: ["fullName", "cardType", "ccNumber", "expirationMonth", "expirationYear"]
         }, {
             model: Address,
             attributes: ["address", "country", "city", "zipCode"]
