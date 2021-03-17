@@ -12,15 +12,30 @@ Payment.init(
       type: Sequelize.STRING,
     },
     ccNumber: {
-        type: Sequelize.STRING,
-        // validate: {
-        //     isCreditCard: true
-        // }
+      type: Sequelize.STRING,
+      isCreditCard: true
     },
     secCode: {
+      type: Sequelize.INTEGER,
+    },
+    expirationMonth: {
         type: Sequelize.INTEGER,
-    }
-
-}, { sequelize: db, modelName: "payment" })
+    },
+    expirationYear: {
+        type: Sequelize.INTEGER,
+    },
+    hiddenNumber: {
+      type: Sequelize.VIRTUAL,
+      get: function () {
+        return this.ccNumber
+          ? Array(this.ccNumber.length - 4)
+              .fill("*")
+              .join("") + this.ccNumber.slice(-4)
+          : ""
+      },
+    },
+  },
+  { sequelize: db, modelName: "payment" }
+)
 
 module.exports = Payment

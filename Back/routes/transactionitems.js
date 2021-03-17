@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
                         quantity:
                             Number(req.body.quantity) + Number(transactionItem.quantity),
                     })
-                    .then((transactionItemUpdated) => res.send(transactionItemUpdated))
+                    .then((transactionItemUpdated) => res.status(200).json(transactionItemUpdated))
             }
         }).catch((err) => {
             console.log(err)
@@ -33,7 +33,7 @@ router.delete("/id", (req, res) => {
     TransactionItem.destroy({
         where: { id: req.params.id },
     }).then(() => {
-        res.status(200).send()
+        res.status(200).json()
     }).catch((err) => {
         console.log(err)
         res.sendStatus(400)

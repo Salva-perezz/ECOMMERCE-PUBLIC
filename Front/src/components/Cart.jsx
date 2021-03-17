@@ -97,7 +97,9 @@ const Cart = () => {
           ))}
           <div className="cart-total">
             <div className="cart-total-amount">Order Total: ${total}</div>
-            <button>Checkout</button>
+            <Link to="/checkout">
+              <button>Checkout</button>
+            </Link>
           </div>
         </div>
       ) : (

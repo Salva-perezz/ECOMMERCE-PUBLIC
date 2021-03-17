@@ -4,8 +4,8 @@ const nodemailer = require("nodemailer");
 router.post("/", (req, res) => {
     let transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
-        post: 465,
-        secure: true,
+        post: 587,
+        secure: false,
         auth: {
             user: "corine.sauer43@ethereal.email",
             pass: "mqtr7kyQ5aqvzH8eVJ"
@@ -19,7 +19,7 @@ router.post("/", (req, res) => {
     }
 
     transporter.sendMail(mailOptions, (err, info) => {
-        if (info) res.status(200).json("Email Sent")
+        if (info) res.status(201).json("Email Sent")
         else res.status(400), console.log(err)
     })
 })

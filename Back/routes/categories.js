@@ -10,7 +10,7 @@ router.get('/types', (req, res) => {
 
 router.post('/types', (req, res) => {
    Type.create(req.body)
-      .then(typesCreated => res.status(200).json(typesCreated))
+      .then(typesCreated => res.status(201).json(typesCreated))
 });
 
 router.delete('/types/:id', (req, res) => {
@@ -39,7 +39,7 @@ router.get('/years/', (req, res) => {
 
 router.post('/years', (req, res) => {
    Year.create(req.body)
-      .then(yearCreated => res.status(200).json(yearCreated))
+      .then(yearCreated => res.status(201).json(yearCreated))
 });
 
 router.delete('/years/:id', (req, res) => {
@@ -68,7 +68,7 @@ router.get('/countries', (req, res) => {
 
 router.post('/countries', (req, res) => {
    Country.create(req.body)
-      .then(countryCreated => res.status(200).json(countryCreated))
+      .then(countryCreated => res.status(201).json(countryCreated))
 });
 
 router.delete('/countries/:id', (req, res) => {

@@ -7,6 +7,7 @@ import { currentCartItemsReducer } from "./currentCartItems"
 import { yearsReducer } from "./years"
 import { countriesReducer } from "./countries"
 import { typesReducer } from "./types"
+import { currentProductReducer } from "./currentProduct"
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -19,7 +20,8 @@ const store = configureStore({
     currentCartItems: currentCartItemsReducer,
     years: yearsReducer,
     countries: countriesReducer,
-    types: typesReducer
+    types: typesReducer,
+    currentProduct: currentProductReducer,
   },
 })
 

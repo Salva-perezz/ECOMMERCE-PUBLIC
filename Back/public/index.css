@@ -505,6 +505,10 @@ a:link {
   padding: 12px 0.75em;
 }
 
+.cart-total button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
 .empty-cart-container {
   width: 400px;
   margin: 0 auto;
@@ -536,7 +540,7 @@ a:link {
   width: 1000px;
   margin: 70px auto 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 }
 
@@ -548,7 +552,7 @@ a:link {
 .address-container {
   display: flex;
   flex-direction: column;
-  margin-left: 25px;
+  /* margin-left: 25px; */
 }
 
 .payment-or-address-container {
@@ -601,14 +605,16 @@ a:link {
 .payment-or-address-container button {
   width: 378px;
   margin: 20px 0 0;
-  background-color: rgb(231, 202, 127);
+  /* background-color: rgb(231, 202, 127); */
+  background-color: rgb(238, 238, 238);
   color: black;
   font-size: 1.2em;
   padding: 12px 0.75em;
 }
 
 .payment-or-address-container button:hover {
-  background-color: rgb(243, 208, 118);
+  background-color: rgb(230, 230, 230);
+  /* background-color: rgb(243, 208, 118); */
 }
 
 .payment-or-address-form input {
@@ -643,7 +649,6 @@ a:link {
 .expiration-date {
   display: flex;
   flex-direction: row;
-  /* background-color: red; */
 }
 
 .expiration-date input {
@@ -658,10 +663,24 @@ a:link {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 936px;
+  /* width: 374px; */
+  /* padding: 40px; */
   margin: 0 auto;
-  border: rgb(202, 202, 202) solid 1px;
+  /* border: rgb(202, 202, 202) solid 1px; */
   margin-bottom: 60px;
+}
+
+.checkout-submit-container button {
+  width: 458px;
+  margin: -20px 0 20px;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 1.2em;
+  padding: 12px 0.75em;
+}
+
+.checkout-submit-container button:hover {
+  background-color: rgb(243, 208, 118);
 }
 
 /* SPINNER */
