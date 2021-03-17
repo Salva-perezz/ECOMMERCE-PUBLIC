@@ -24,13 +24,6 @@ router.put("/:id", (req, res) => {
     where: { id: req.params.id },
     returning: true,
     plain: true
-  }).then((userUpdated) => {
-    res.status(200).json(userUpdated[1])
-  }).catch((err) => {
-    console.log(err)
-    res.sendStatus(400)
-<<<<<<< HEAD
-=======
   })
     .then((userEdited) => {
       res.status(200).json(userEdited[1]);
@@ -38,7 +31,6 @@ router.put("/:id", (req, res) => {
     .catch((err) => {
       console.log(err);
       res.sendStatus(400);
->>>>>>> 7970134bbde322d3226f1c9b6e9c7864752ba807
     });
 });
 

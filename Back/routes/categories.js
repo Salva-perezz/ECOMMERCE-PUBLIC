@@ -7,7 +7,7 @@ router.get('/types', (req, res) => {
    .then(types => res.status(200).json(types)) 
 });
 
-router.get('/years/', (req, res) => {
+router.get('/years', (req, res) => {
     Year.findAll()
     .then(years => res.status(200).json(years)) 
  });
