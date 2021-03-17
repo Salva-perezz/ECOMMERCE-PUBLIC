@@ -24,8 +24,8 @@ const AdminProducts = () => {
 
   const handleEdit = (e, product) => {
     e.preventDefault();
-    dispatch(setCurrentProduct(product))
-    history.push('/admin/product/edit')
+    localStorage.setItem('currentProduct', JSON.stringify(product));
+    history.push(`/admin/product/edit`);
   };
 
   const handleDelete = (e, id) => {
@@ -41,6 +41,7 @@ const AdminProducts = () => {
         <div className="loader"></div>
       ) : (
         <>
+        <Link to={`/admin/products/${null}`}>Add product</Link>
           <div className="results-title">Search Results</div>
           <div className="results-container">
             {products.map((product, index) => (
