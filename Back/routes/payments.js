@@ -23,7 +23,7 @@ router.post("/", (req, res) => {
         if (!payment) {
             Payment.create(req.body)
                 .then(paymentCreated => paymentCreated.setUser(req.body.userId))
-                .then((paymentCreated) => res.status(200).send(paymentCreated))
+                .then((paymentCreated) => res.status(201).json(paymentCreated))
         } else {
                 console.log("Tarjeta Existente")
                 res.sendStatus(400)
