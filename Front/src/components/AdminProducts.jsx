@@ -1,53 +1,70 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setCurrentProduct } from '../store/currentProduct'
+import React, { useState } from "react"
+import axios from "axios"
+import path from "path"
+import { Link, useHistory } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { setCurrentProduct } from "../store/currentProduct"
 
 const AdminProducts = () => {
-  const [products, setProducts] = useState("loading");
-  const currentUser = useSelector((state) => state.currentUser);
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const [products, setProducts] = useState("loading")
+  const currentUser = useSelector((state) => state.currentUser)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   React.useEffect(() => {
     axios
       .get("/api/products/")
       .then(({ data }) => {
-        setProducts(data);
+        setProducts(data)
       })
-      .catch((err) => console.log(err));
-    return () => setProducts("loading");
-  }, []);
+      .catch((err) => console.log(err))
+    return () => setProducts("loading")
+  }, [])
 
-  React.useEffect(() => {}, [products]);
+  React.useEffect(() => {}, [products])
 
   const handleEdit = (e, product) => {
-    e.preventDefault();
+    e.preventDefault()
     dispatch(setCurrentProduct(product))
-    history.push('/admin/product/edit')
-  };
+    history.push("/admin/product/edit")
+  }
 
   const handleDelete = (e, id) => {
-    e.preventDefault();
+    e.preventDefault()
     axios
       .delete(`/api/products/admin/delete/${id}/${currentUser.isAdmin}`)
-      .then(() => setProducts(products.filter((product) => product.id != id)));
-  };
-  console.log(currentUser);
+      .then(() => setProducts(products.filter((product) => product.id != id)))
+  }
+  console.log(currentUser)
   return (
     <>
       {products === "loading" ? (
         <div className="loader"></div>
       ) : (
         <>
-          <div className="results-title">Search Results</div>
+          <div className="results-title">Manage Products</div>
           <div className="results-container">
             {products.map((product, index) => (
-              <div key={index} className="single-result">
+              <div
+                key={index}
+                className="single-result admin-products-single-product"
+              >
+                <img
+                  className="admin-products-delete-icon"
+                  src={path.join(__dirname, "icons/delete.png")}
+                  onClick={(e) => handleDelete(e, product.id)}
+                ></img>
+                <img
+                  className="admin-products-edit-icon"
+                  src={path.join(__dirname, "icons/edit.png")}
+                  onClick={(e) => handleEdit(e, product)}
+                ></img>
                 <div className="picture-container">
                   <Link to={`/products/${product.id}`}>
-                    <img src={product.urlPicture} />
+                    <img
+                      className="single-result-picture"
+                      src={product.urlPicture}
+                    />
                   </Link>
                 </div>
                 <hr />
@@ -61,25 +78,19 @@ const AdminProducts = () => {
                     {"$" + product.price}
                   </div>
                 </div>
-                <button
+                {/* <button
                   className="add-to-cart-results"
                   onClick={(e) => handleEdit(e, product)}
                 >
                   Edit
-                </button>
-                <button
-                  onClick={(e) => handleDelete(e, product.id)}
-                  className="add-to-cart-results"
-                >
-                  Delete
-                </button>
+                </button> */}
               </div>
             ))}
           </div>
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default AdminProducts;
+export default AdminProducts

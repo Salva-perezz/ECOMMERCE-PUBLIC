@@ -1,7 +1,6 @@
 const router = require("express").Router()
 const { Op } = require("sequelize")
 const { Product } = require("../models");
-const { checkAdmin } = require('../middleware/isAdmin');
 
 
 router.post("/", (req, res) => {
@@ -51,7 +50,7 @@ router.get("/search", (req, res) => {
 router.get("/", (req, res) => {
     Product.findAll({
         offset: req.query.l, //desde que n de registro muestro
-        /* limit: 12 */
+        limit: 12
     }).then((products) => {
         res.status(200).json(products)
     }).catch((err) => {
@@ -70,8 +69,7 @@ router.get("/:id", (req, res) => {
         })
 })
 
-router.put("/:id/:isAdmin", checkAdmin, (req, res) => {
-    console.log(req.params.id);
+router.put("/:id", (req, res) => {
     Product.update(req.body, {
         where: { id: req.params.id },
         returning: true,
@@ -84,11 +82,11 @@ router.put("/:id/:isAdmin", checkAdmin, (req, res) => {
     })
 })
 
-router.delete("/admin/delete/:id/:isAdmin", checkAdmin, (req, res) => {
+router.delete("/admin/delete/:id", (req, res) => {
     Product.destroy({
-        where: { id: req.params.id },
-    }).then((product) => {
-        res.status(200).json(product)
+        where: { id: req.params.id }
+    }).then(() => {
+        res.status(200).json()
     }).catch((err) => {
         console.log(err)
         res.sendStatus(400)
