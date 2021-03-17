@@ -10,4 +10,4 @@ router.use("/transactionitems", require("./transactionitems"))
 router.use("/emails", require("./emails"))
 router.use("/categories", require("./categories"))
 
-module.exports = router
+module.exports = router;

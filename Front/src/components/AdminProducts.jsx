@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentProduct } from '../store/currentProduct'
+
 
 const AdminProducts = () => {
   const [products, setProducts] = useState("loading");
@@ -11,6 +11,7 @@ const AdminProducts = () => {
   const history = useHistory();
 
   React.useEffect(() => {
+    localStorage.removeItem("currentProduct");
     axios
       .get("/api/products/")
       .then(({ data }) => {
@@ -24,8 +25,8 @@ const AdminProducts = () => {
 
   const handleEdit = (e, product) => {
     e.preventDefault();
-    dispatch(setCurrentProduct(product))
-    history.push('/admin/product/edit')
+    localStorage.setItem('currentProduct', JSON.stringify(product));
+    history.push(`/admin/product/edit`);
   };
 
   const handleDelete = (e, id) => {
@@ -41,6 +42,7 @@ const AdminProducts = () => {
         <div className="loader"></div>
       ) : (
         <>
+        <Link to='/admin/product/edit' >Add product</Link>
           <div className="results-title">Search Results</div>
           <div className="results-container">
             {products.map((product, index) => (
