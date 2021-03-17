@@ -1,11 +1,14 @@
 const router = require("express").Router()
 const { Op } = require("sequelize")
-const { Product } = require("../models");
-
+const { Product, Country, Type, Year } = require("../models");
+const { checkAdmin } = require('../middleware/isAdmin');
 
 router.post("/", (req, res) => {
     Product.create(req.body)
         .then((productCreated) => {
+            productCreated.setCountry(req.body.countryId)
+                .then((productCreated) => { productCreated.setType(req.body.typeId) })
+                .then((productCreated) => { productCreated.setYear(req.body.yearId) })
             res.status(201).json(productCreated)
         }).catch((err) => {
             console.log(err)
@@ -13,15 +16,43 @@ router.post("/", (req, res) => {
         })
 })
 
-
 router.get("/search", (req, res) => {
-    const search = req.query.s.split(" ").map((ob) => ob.charAt(0).toUpperCase() + ob.slice(1)) //Mayuscula a la primera letra de cada item
-    if (req.query.c) { //Category
+    const skip = req.query.s
+    const query = req.query.q.split(" ").map((ob) => { return `%${ob.charAt(0).toUpperCase() + ob.slice(1)}%` })
+    Product.findAll({
+        where: {
+            [Op.or]: [
+                { name: { [Op.like]: { [Op.any]: query } } },
+                { brand: { [Op.like]: { [Op.any]: query } } },
+            ],
+        },
+        order: ["name"],
+        offset: skip, //skip n resultados
+        limit: 12 //n resultados x fetch
+    }).then((products) => {
+        res.status(200).json(products)
+    }).catch((err) => {
+        console.log(err)
+        res.sendStatus(400)
+    })
+})
+
+router.get("/categories", (req, res) => {
+    const query = req.query.q
+    const model = eval(req.query.m)
+    const skip = req.query.s
+    const category = req.query.c
+    console.log(model)
+    if (model) {
         Product.findAll({
-            where: {
-                [req.query.c]: { [Op.substring]: search } //Category y Search
-            }, offset: req.query.o, //skip n resultados
-            limit: 12 // n resultados x fetch
+            include: [{
+                model: model,
+                where: { [category]: query }
+            }],
+            order: ["name"],
+            offset: skip, //skip n resultados
+            limit: 12 //n resultados x fetch
+
         }).then((products) => {
             res.status(200).json(products)
         }).catch((err) => {
@@ -31,12 +62,9 @@ router.get("/search", (req, res) => {
     }
     else {
         Product.findAll({
-            where: {
-                [Op.or]: [
-                    { name: { [Op.substring]: { [Op.any]: search } } }, //arreglo de datos de busqueda
-                    { brand: { [Op.substring]: { [Op.any]: search } } }, // arreglo de datos de busqueda
-                ],
-            }, offset: req.query.o, //skip n resultados
+            where: { [category]: query },
+            order: ["name"],
+            offset: skip, //skip n resultados
             limit: 12 //n resultados x fetch
         }).then((products) => {
             res.status(200).json(products)
@@ -45,12 +73,14 @@ router.get("/search", (req, res) => {
             res.sendStatus(400)
         })
     }
+
 })
 
 router.get("/", (req, res) => {
     Product.findAll({
+        order: ["name"],
         offset: req.query.l, //desde que n de registro muestro
-        limit: 12
+        limit: 12,
     }).then((products) => {
         res.status(200).json(products)
     }).catch((err) => {
@@ -60,8 +90,25 @@ router.get("/", (req, res) => {
 })
 
 router.get("/:id", (req, res) => {
-    Product.findByPk(req.params.id)
+    Product.findOne({
+        where: { id: req.params.id },
+        include: [Country, Type, Year]
+    })
         .then((product) => {
+            product = {
+                id: product.id,
+                name: product.name,
+                brand: product.brand,
+                region: product.region,
+                description: product.description,
+                price: product.price,
+                size: product.size,
+                discount: product.discount,
+                urlPicture: product.urlPicture,
+                country: product.country.name,
+                type: product.type.name,
+                year: product.year.name
+            }
             res.status(200).json(product)
         }).catch((err) => {
             console.log(err)
@@ -69,7 +116,7 @@ router.get("/:id", (req, res) => {
         })
 })
 
-router.put("/:id", (req, res) => {
+router.put("/:id/:isAdmin", checkAdmin, (req, res) => {
     Product.update(req.body, {
         where: { id: req.params.id },
         returning: true,

@@ -12,9 +12,10 @@ const Country = require("./country");
 
 //Relaciones: Transaction
 
-Transaction.belongsTo(User);
-Transaction.belongsTo(Payment);
-Transaction.belongsTo(Address);
+Transaction.belongsTo(User)
+Transaction.belongsTo(Payment)
+Transaction.belongsTo(Address)
+Transaction.hasMany(TransactionItem)
 
 //Relaciones: transactionItem
 

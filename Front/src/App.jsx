@@ -82,10 +82,10 @@ const App = () => {
       <NavBar />
       <div className="main-container">
         <Switch>
-          <Route path="/admin/product/edit" render={() => <AdminProduct />} /> {/* Salva y Mar */}
+          <Route path="/admin/product/edit" render={() => <AdminProduct />} />
           <Route path="/admin/products" render={() => <AdminProducts />} />
-          <Route path="/admin/users" render={() => <AdminUsers />} /> {/* Salva y Mar */}
-          <Route path="/admin/categories" render={() => <AdminCategories />} /> {/* Salva y Mar */}
+          <Route path="/admin/users" render={() => <AdminUsers />} />
+          <Route path="/admin/categories" render={() => <AdminCategories />} />
           <Route
             path="/products/:id"
             render={({ match }) => <SingleProduct match={match} />}

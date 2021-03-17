@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+
 const AdminProduct = () => {
+  const Product = JSON.parse(localStorage.getItem('currentProduct'));
+  const currentProduct = Product ? Product : {};
   const history = useHistory();
-  const currentProduct = useSelector((state) => state.currentProduct);
   const currentUser = useSelector((state) => state.currentUser);
   const years = useSelector((state) => state.years);
   const countries = useSelector((state) => state.countries);
@@ -22,38 +24,40 @@ const AdminProduct = () => {
   const [year, setYear] = useState(currentProduct.yearId);
   const [country, setCountry] = useState(currentProduct.countryId);
 
+
   const handleChange = (e, set) => {
     set(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(year);
+
     const countryId = Number(country);
     const typeId = Number(type);
     const yearId = Number(year);
     const sizeNumber = Number(size);
     const stockNumber = Number(stock);
     const priceNumber = Number(price);
-
-    console.log("HOLA", countryId, typeId, yearId);
+    console.log(currentProduct.id)
 
     if (currentProduct.id) {
       axios
         .put(`/api/products/${currentProduct.id}/${currentUser.isAdmin}`, {
-          name,
-          brand,
-          region,
-          description,
+          name: name,
+          brand: brand,
+          region: region,
+          description: description,
           price: priceNumber,
           size: sizeNumber,
           stock: stockNumber,
           urlPicture: picture,
-          countryId,
-          yearId,
-          typeId,
+          countryId: countryId,
+          yearId: yearId,
+          typeId: typeId,
         })
-        .then((product) => history.push(`/products/${product.id}`));
+        .then((product) =>{
+          history.push(`/products/${product.data.id}`)
+        });
     } else {
       axios.post("/api/products/", {
         name,
@@ -69,6 +73,7 @@ const AdminProduct = () => {
         typeId,
       });
     }
+    localStorage.removeItem("currentProduct");
   };
 
   console.log(currentProduct);
