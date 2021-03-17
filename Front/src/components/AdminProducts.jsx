@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentProduct } from '../store/currentProduct'
+
 
 const AdminProducts = () => {
   const [products, setProducts] = useState("loading");
@@ -11,6 +11,7 @@ const AdminProducts = () => {
   const history = useHistory();
 
   React.useEffect(() => {
+    localStorage.removeItem("currentProduct");
     axios
       .get("/api/products/")
       .then(({ data }) => {
@@ -41,7 +42,7 @@ const AdminProducts = () => {
         <div className="loader"></div>
       ) : (
         <>
-        <Link to={`/admin/products/${null}`}>Add product</Link>
+        <Link to='/admin/product/edit' >Add product</Link>
           <div className="results-title">Search Results</div>
           <div className="results-container">
             {products.map((product, index) => (
