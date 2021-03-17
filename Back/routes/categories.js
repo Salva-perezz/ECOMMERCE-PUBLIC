@@ -32,7 +32,7 @@ router.put('/types/:id', (req, res) => {
 
 //YEARS
 
-router.get('/years/', (req, res) => {
+router.get('/years', (req, res) => {
    Year.findAll()
       .then(years => res.status(200).json(years))
 });
