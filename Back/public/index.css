@@ -341,7 +341,7 @@ a hr {
   border: rgb(202, 202, 202) solid 1px;
   padding: 40px;
 }
-z
+
 .sign-up-or-log-in h2 {
   margin-top: 20px;
   font-weight: 200;
@@ -767,6 +767,28 @@ z
 
 /* ADMIN PRODUCTS */
 
+.admin-products-title-and-button {
+  display: flex;
+  flex-direction: row;
+  width: 1120px;
+  margin: 40px auto 0px;
+  align-items: flex-end;
+}
+
+.admin-products-add-new-product button {
+  font-size: 1.1em;
+  outline: none;
+  width: 180px;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  padding: 8px 10px;
+  margin-bottom: 20px;
+}
+
+.admin-products-add-new-product button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
 .admin-products-delete-icon {
   height: 30px;
   width: 30px;
@@ -792,6 +814,172 @@ z
   border-radius: 0;
   border-bottom: rgb(75, 75, 75) solid 2px;
   margin-bottom: 50px;
+}
+
+/* ADMIN PRODUCT */
+
+.admin-product-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 374px;
+  margin: 70px auto 120px;
+  border: rgb(202, 202, 202) solid 1px;
+  padding: 40px;
+}
+
+.admin-product-edit label {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.admin-product-edit input {
+  outline: none;
+  width: 350px;
+  padding: 0.9em;
+  font-size: 0.9em;
+  border: none;
+  border: rgb(128, 128, 128) solid 1px;
+  margin-bottom: 5px;
+  font-family: ArcherPro-Light;
+}
+
+.admin-product-edit select {
+  outline: none;
+  width: 378px;
+  padding: 0.9em;
+  font-size: 0.9em;
+  border: none;
+  border: rgb(128, 128, 128) solid 1px;
+  margin-bottom: 5px;
+  font-family: ArcherPro-Light;
+  background-color: white;
+}
+
+.admin-product-edit textarea {
+  outline: none;
+  width: 350px;
+  height: 125px;
+  padding: 0.9em;
+  font-size: 0.9em;
+  border: none;
+  border: rgb(128, 128, 128) solid 1px;
+  margin-bottom: 5px;
+  font-family: ArcherPro-Light;
+  resize: vertical;
+}
+
+.admin-product-edit button {
+  outline: none;
+  width: 378px;
+  margin: 20px 0 0;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 1.2em;
+  padding: 12px 0.75em;
+  font-family: ArcherPro-Light;
+}
+
+.admin-product-edit button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+/* ADMIN CATEGORIES */
+
+.admin-categories-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: flex-start;
+}
+
+.admin-categories-single-container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  text-align: center;
+  width: 250px;
+  margin: 40px 20px 120px;
+  border: rgb(202, 202, 202) solid 1px;
+  padding: 30px;
+}
+
+.admin-categories-single-container button {
+  width: 250px;
+  background-color: rgb(238, 238, 238);
+  color: black;
+  font-size: 1em;
+  padding: 12px 0.75em;
+}
+
+.admin-categories-single-container button:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+.admin-categories-single-container form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.admin-categories-edit-form button {
+  width: 80px;
+  height: 38px;
+  margin: 0 0 0;
+  background-color: rgb(238, 238, 238);
+  color: black;
+  font-size: 0.9em;
+  padding: 6px 6px;
+}
+
+.admin-categories-single-container input {
+  outline: none;
+  height: 15px;
+  width: 138px;
+  padding: 10px;
+  font-size: 0.9em;
+  border: none;
+  border: rgb(128, 128, 128) solid 1px;
+  font-family: ArcherPro-Light;
+}
+
+.admin-categories-single-title {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+.admin-categories-single-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.admin-categories-single-item button {
+  padding: 5px 10px;
+}
+
+.admin-categories-delete-icon {
+  height: 25px;
+}
+
+.admin-categories-edit-icon {
+  height: 25px;
+}
+
+.admin-categories-container hr {
+  width: 250px;
+  margin: 0 auto;
+  border: none;
+  border-top: rgb(218, 218, 218) solid 1px;
 }
 
 /* EMPTY CART */
@@ -828,11 +1016,16 @@ z
   flex-direction: column;
   width: 100%;
   margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+.order-history-single-order {
+  margin-bottom: 90px;
 }
 
 .order-history-title {
   font-family: "IM Fell Double Pica SC";
-  font-size: 1.5em;
+  font-size: 1.8em;
   width: 950px;
   margin: 10px auto 10px;
 }
@@ -859,24 +1052,6 @@ z
   border-top: rgb(218, 218, 218) solid 1px;
 }
 
-.order-address {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 20px;
-  width: 400px;
-  height: 100px;
-}
-
-.order-payment {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 20px;
-  width: 400px;
-  height: 100px;
-}
-
 .order-history-picture {
   height: 100px;
 }
@@ -900,6 +1075,28 @@ z
   width: 100px;
   margin: auto 0;
   text-align: right;
+}
+
+.order-history-total{
+  width: 950px;
+  font-size: 1.4em;
+  margin: 10px auto 10px;
+  text-align: right;
+}
+
+.order-history-address-and-payment {
+  width: 950px;
+  margin: -45px auto 20px;
+  text-align: right;
+  /* display: flex;
+  flex-direction: row;
+  align-items: flex-start; */
+  /* font-size: 1.2em; */
+}
+
+.order-history-address {
+  display: flex;
+  flex-direction: column;
 }
 
 /* SPINNER */
