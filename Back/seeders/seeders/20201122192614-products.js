@@ -123,7 +123,6 @@ module.exports = {
         createdAt: "2021-03-11 10:37:30.391-03",
         updatedAt: "2021-03-11 10:37:30.391-03"
       },
-
       {
         name: "Berry Bros. & Rudd Pouilly-Fuissé by Olivier Merlin",
         brand: "Olivier Merlin",
@@ -141,7 +140,6 @@ module.exports = {
         createdAt: "2021-03-11 10:37:30.391-03",
         updatedAt: "2021-03-11 10:37:30.391-03"
       },
-
       {
         name: "Penfolds",
         brand: "Penfolds",
@@ -159,7 +157,6 @@ module.exports = {
         createdAt: "2021-03-11 10:37:30.391-03",
         updatedAt: "2021-03-11 10:37:30.391-03"
       },
-
       {
         name: "Nicolas-Jay",
         brand: "Domaine Nicolas Jay",
@@ -177,7 +174,6 @@ module.exports = {
         createdAt: "2021-03-11 10:37:30.391-03",
         updatedAt: "2021-03-11 10:37:30.391-03"
       },
-
       {
         name: "Horsepower Vineyards Syrah The Tribe Vineyard",
         brand: "Horsepower Vineyards",
@@ -195,7 +191,6 @@ module.exports = {
         createdAt: "2021-03-11 10:37:30.391-03",
         updatedAt: "2021-03-11 10:37:30.391-03"
       },
-
       {
         name: "Brunello di Montalcino",
         brand: "Scopetone, Tuscany",
@@ -229,7 +224,11 @@ module.exports = {
         urlPicture: "https://media.bbr.com/s/bbr/20198117656-ms",
         createdAt: "2021-03-11 10:37:30.391-03",
         updatedAt: "2021-03-11 10:37:30.391-03"
-      }
+      },
+
+      
+
+
     ]);
   },
   down: (queryInterface, Sequelize) => {
