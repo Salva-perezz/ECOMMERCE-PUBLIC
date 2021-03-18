@@ -5,7 +5,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert("countries", [
       {
-        name: "Autralia",
+        name: "Australia",
         createdAt: new Date(),
         updatedAt: new Date(),
       },

@@ -10,23 +10,24 @@ const SearchResults = (props) => {
   const currentUser = useSelector((state) => state.currentUser)
   const dispatch = useDispatch()
   const history = useHistory()
+  const [title, setTitle] = useState("")
 
   // const products = [{name: "Pepe", price: 25, brand: "Pepe"}]
 
   const search = useLocation().search;
-  const q = new URLSearchParams(search).get('q');
-
+  const q = new URLSearchParams(search).get('q')
+  const m = new URLSearchParams(search).get('m');
   React.useEffect(() => {
     axios
-      .get(`/api/products/search?q=${q}`)
+      .get(`/api/products/search?q=${q}&m=${m}`)
       // .get(`/api/search/${props.match.params.query}`)
       .then(({ data }) => {
-        console.log(data)
-        setProducts(data)
+        setProducts(data.products)
+        setTitle(data.model)
       })
       .catch((err) => console.log(err))
     return () => setProducts("loading")
-  }, [q])
+  }, [q, m])
 
   const addToCart = function (product) {
     if (!currentUser) history.push("/login")
@@ -57,7 +58,7 @@ const SearchResults = (props) => {
         <div className="loader"></div>
       ) : (
         <>
-          <div className="results-title">Search Results</div>
+          <div className="results-title">{title}</div>
           <div className="results-container">
             {products.map((product, index) => (
               <div key={index} className="single-result">

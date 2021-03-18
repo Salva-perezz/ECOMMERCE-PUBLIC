@@ -64,7 +64,6 @@ router.post('/years/:isAdmin', checkAdmin, (req, res) => {
    })
 })
 
-
 router.delete('/years/:id/:isAdmin', (req, res) => {
    Year.destroy({
       where: { id: req.params.id }
