@@ -148,6 +148,7 @@ a:link {
 .categories {
   display: flex;
   justify-content: space-around;
+  position: relative
 }
 
 .categories button {

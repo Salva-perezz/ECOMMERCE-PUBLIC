@@ -18,42 +18,43 @@ router.post("/", (req, res) => {
 
 router.get("/search", (req, res) => {
     const skip = req.query.s
-    const query = req.query.q.split(" ").map((ob) => { return `%${ob.charAt(0).toUpperCase() + ob.slice(1)}%` })
-    Product.findAll({
-        where: {
-            [Op.or]: [
-                { name: { [Op.like]: { [Op.any]: query } } },
-                { brand: { [Op.like]: { [Op.any]: query } } },
+    const model = eval(req.query.m)
+    if (!model) {
+        const query = req.query.q.split(" ").map((ob) => { return `%${ob.charAt(0).toUpperCase() + ob.slice(1)}%` })
+        Product.findAll({
+            where: {
+                [Op.or]: [
+                    { name: { [Op.like]: { [Op.any]: query } } },
+                    { brand: { [Op.like]: { [Op.any]: query } } },
+                ],
+            },
+            order: ["name"],
+            offset: skip, //skip n resultados
+            limit: 12 //n resultados x fetch
+        }).then((products) => {
+            res.status(200).json({ products, model: "Search Results" })
+        }).catch((err) => {
+            console.log(err)
+            res.sendStatus(400)
+        })
+    }
+    else {
+        const query = req.query.q
+        Product.findAll({
+            include: [
+                { model: model, where: { name: query } },
             ],
-        },
-        order: ["name"],
-        offset: skip, //skip n resultados
-        limit: 12 //n resultados x fetch
-    }).then((products) => {
-        res.status(200).json(products)
-    }).catch((err) => {
-        console.log(err)
-        res.sendStatus(400)
-    })
-})
+            order: ["name"],
+            offset: skip, //skip n resultados
+            limit: 12 //n resultados x fetch
+        }).then((products) => {
+            res.status(200).json({ products, model })
+        }).catch((err) => {
+            console.log(err)
+            res.sendStatus(400)
+        })
+    }
 
-router.get("/categories", (req, res) => {
-    const skip = req.query.s
-    Product.findAll({
-        include: [
-            req.query.c ? { model: Country, where: { name: req.query.c } } : { model: Country },
-            req.query.t ? { model: Type, where: { name: req.query.t } } : { model: Type },
-            req.query.y ? { model: Year, where: { name: req.query.y } } : { model: Year }
-        ],
-        order: ["name"],
-        offset: skip, //skip n resultados
-        limit: 12 //n resultados x fetch
-    }).then((products) => {
-        res.status(200).json(products)
-    }).catch((err) => {
-        console.log(err)
-        res.sendStatus(400)
-    })
 })
 
 router.get("/", (req, res) => {
