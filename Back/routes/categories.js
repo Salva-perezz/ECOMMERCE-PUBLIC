@@ -1,4 +1,5 @@
 const router = require("express").Router()
+const { checkAdmin } = require("../middleware/isAdmin");
 const { Type, Year, Country } = require('../models');
 
 //TYPES
@@ -8,7 +9,7 @@ router.get('/types', (req, res) => {
       .then(types => res.status(200).json(types))
 });
 
-router.post('/types', (req, res) => {
+router.post('/types/:isAdmin', checkAdmin, (req, res) => {
    Type.findOne({
       where: { name: req.body.name }
    }).then((type) => {
@@ -17,19 +18,23 @@ router.post('/types', (req, res) => {
             .then(typeCreated => res.status(201).json(typeCreated))
       } else {
          res.status(400).send("Category already exists")
-         
+
       }
    })
-});
+})
 
-router.delete('/types/:id', (req, res) => {
+router.delete('/types/:id/:isAdmin', (req, res) => {
    Type.destroy({
-      id: req.params.id
+      where: { id: req.params.id }
    })
       .then(() => res.status(200).json())
-});
+      .catch(err => {
+         console.log(err)
+         res.sendStatus
+      })
+})
 
-router.put('/types/:id', (req, res) => {
+router.put('/types/:id/:isAdmin', checkAdmin, (req, res) => {
    Type.update(req.body, {
       where: { id: req.params.id },
       returning: true,
@@ -46,7 +51,7 @@ router.get('/years', (req, res) => {
       .then(years => res.status(200).json(years))
 });
 
-router.post('/years', (req, res) => {
+router.post('/years/:isAdmin', checkAdmin, (req, res) => {
    Year.findOne({
       where: { name: req.body.name }
    }).then((year) => {
@@ -57,16 +62,17 @@ router.post('/years', (req, res) => {
          res.status(400).send("Category already exists")
       }
    })
-});
+})
 
-router.delete('/years/:id', (req, res) => {
+
+router.delete('/years/:id/:isAdmin', (req, res) => {
    Year.destroy({
-      id: req.params.id
+      where: { id: req.params.id }
    })
       .then(() => res.status(200).json())
 });
 
-router.put('/years/:id', (req, res) => {
+router.put('/years/:id/:isAdmin', checkAdmin, (req, res) => {
    Year.update(req.body, {
       where: { id: req.params.id },
       returning: true,
@@ -83,7 +89,7 @@ router.get('/countries', (req, res) => {
       .then(countries => res.status(200).json(countries))
 });
 
-router.post('/countries', (req, res) => {
+router.post('/countries/:isAdmin', checkAdmin, (req, res) => {
    Country.findOne({
       where: { name: req.body.name }
    }).then((country) => {
@@ -96,19 +102,20 @@ router.post('/countries', (req, res) => {
    })
 });
 
-router.delete('/countries/:id', (req, res) => {
+router.delete('/countries/:id/:isAdmin', (req, res) => {
    Country.destroy({
-      id: req.params.id
+      where: { id: req.params.id }
    })
       .then(() => res.status(200).json())
 });
 
-router.put('/countries/:id', (req, res) => {
+router.put('/countries/:id/:isAdmin', checkAdmin, (req, res) => {
    Country.update(req.body, {
       where: { id: req.params.id },
       returning: true,
       plain: true
    }).then((countryUpdated) => {
+      console.log(countryUpdated[1]);
       res.status(200).json(countryUpdated[1])
    });
 })
