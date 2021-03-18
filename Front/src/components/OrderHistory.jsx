@@ -28,7 +28,21 @@ const OrderHistory = () => {
               <div className="order-history-title">
                 Order Date: {order.checkoutDate.slice(0, 10)}
               </div>
-              <hr />
+              {/* <hr /> */}
+              <div className="order-history-address-and-payment">
+              <div className="order-history-address">
+                Shipping Address: {order.address.address}, {order.address.city},{" "}
+                  {order.address.state}, {order.address.zipCode},{" "}
+                  {order.address.country}
+              </div>
+              {/* <hr/> */}
+              <div className="order-history-payment">
+                Payment Method: {order.payment.cardType}, {order.payment.hiddenNumber}
+                  ***************, Expiration Date:{" "}
+                  {order.payment.expirationMonth}/{order.payment.expirationYear}
+              </div>
+            </div>
+              <hr/>
               <div className="order-history-labels">
                 <div className="order-history-column-1">Item</div>
                 <div className="order-history-column-2">Price</div>
@@ -60,7 +74,7 @@ const OrderHistory = () => {
                 </div>
               ))}
             </div>
-            <div>
+            <div className="order-history-total">
               Order Total: $
               {order.transaction_items.reduce(
                 (accumulator, item) =>
@@ -69,20 +83,7 @@ const OrderHistory = () => {
                 0
               )}
             </div>
-            <div className="order-address">
-              Shipping Address:
-              <div> {order.address.address}</div>
-              <div> {order.address.city}</div>
-              <div> {order.address.state}</div>
-              <div> {order.address.country}</div>
-              <div>{order.address.zipCode}</div>
-            </div>
-            <div className="order-payment">
-              Payment Method:
-              <div> {order.payment.cardType}</div>
-              <div> {order.payment.ccNumber}</div>
-              <div>Expiration Date: {order.payment.expirationMonth}/{order.payment.expirationYear}</div>
-            </div>
+            <hr />
           </div>
         ))}
     </div>

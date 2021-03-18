@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import path from "path";
 
 const AdminProducts = () => {
   const [products, setProducts] = useState("loading")
