@@ -117,7 +117,7 @@ router.put('/countries/:id/:isAdmin', checkAdmin, (req, res) => {
    }).then((countryUpdated) => {
       console.log(countryUpdated[1]);
       res.status(200).json(countryUpdated[1])
-   });
+   })
 })
 
 module.exports = router;
