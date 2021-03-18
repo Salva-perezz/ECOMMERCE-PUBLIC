@@ -21,17 +21,17 @@ a {
   text-decoration: none;
 }
 
-a:link { 
-  color: black; 
- }
+a:link {
+  color: black;
+}
 
- a:visited { 
-  color: black; 
- }
+a:visited {
+  color: black;
+}
 
- a hr {
+a hr {
   border: none;
- }
+}
 
 @font-face {
   font-family: "prueba";
@@ -134,13 +134,15 @@ a:link {
   right: 120px;
 }
 
-.not-logged-in, .logged-in {
+.not-logged-in,
+.logged-in {
   margin: auto 0;
   display: flex;
   flex-direction: row;
 }
 
-.not-logged-in button, .logged-in button {
+.not-logged-in button,
+.logged-in button {
   font-size: 1.2em;
   margin-left: 10px;
 }
@@ -256,7 +258,7 @@ a:link {
   flex-direction: row;
   flex-wrap: wrap;
   width: 1120px;
-  margin: 0 auto;
+  margin: 0 auto 80px;
   /* border: rgb(201, 201, 201) solid 1px; */
 }
 
@@ -273,7 +275,7 @@ a:link {
   /* align-items: center; */
 }
 
-.single-result img {
+.single-result-picture {
   height: 280px;
   padding: 10px 0;
 }
@@ -313,6 +315,7 @@ a:link {
 
 .add-to-cart-results {
   background-color: rgb(231, 202, 127);
+  /* background-color: rgb(238, 238, 238); */
   font-size: 1em;
   padding: 10px 25px;
   font-family: ArcherPro-Light;
@@ -322,6 +325,7 @@ a:link {
 
 .add-to-cart-results:hover {
   background-color: rgb(243, 208, 118);
+  /* background-color: rgb(230, 230, 230); */
 }
 
 /* REGISTER */
@@ -453,7 +457,7 @@ z
   text-align: right;
 }
 
-.column-3 input{
+.column-3 input {
   outline: none;
   border: none;
   border-radius: 0;
@@ -641,7 +645,7 @@ z
   flex-direction: row;
 }
 
-.security-code input{
+.security-code input {
   width: 146px;
   margin-right: 20px;
 }
@@ -683,6 +687,220 @@ z
   background-color: rgb(243, 208, 118);
 }
 
+/* ADMIN USERS */
+
+.admin-users-container {
+  margin-bottom: 90px;
+}
+
+.admin-users-labels {
+  display: flex;
+  flex-direction: row;
+  width: 700px;
+  margin: 10px auto 10px;
+}
+
+.admin-users-title {
+  width: 700px;
+  margin: 50px auto 20px;
+  font-size: 2em;
+  font-family: "IM Fell Double Pica SC";
+}
+
+.admin-users-container hr {
+  width: 700px;
+  margin: 0 auto;
+  border: none;
+  border-top: rgb(218, 218, 218) solid 1px;
+}
+
+.admin-users-column-1 {
+  width: 145px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.admin-users-column-2 {
+  width: 145px;
+  margin: auto 0;
+}
+.admin-users-column-3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 260px;
+  margin: auto 0;
+}
+.admin-users-column-4 {
+  width: 150px;
+  margin: auto 0;
+  text-align: center;
+}
+
+.admin-single-user-container {
+  display: flex;
+  flex-direction: row;
+  width: 700px;
+  margin: 10px auto 10px;
+}
+
+.admin-single-user-container button {
+  outline: none;
+  width: 150px;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  padding: 3px 0;
+}
+
+.admin-single-user-container button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+.gray button {
+  background-color: rgb(238, 238, 238);
+}
+
+.gray button:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+/* ADMIN PRODUCTS */
+
+.admin-products-delete-icon {
+  height: 30px;
+  width: 30px;
+  /* align-self:flex-start; */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.admin-products-edit-icon {
+  height: 30px;
+  width: 30px;
+  /* align-self:flex-start; */
+  position: absolute;
+  top: 45px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.admin-products-single-product {
+  position: relative;
+  border-radius: 0;
+  border-bottom: rgb(75, 75, 75) solid 2px;
+  margin-bottom: 50px;
+}
+
+/* EMPTY CART */
+
+.empty-cart-container {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-cart-title {
+  font-family: "IM Fell Double Pica SC";
+  font-size: 2em;
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 200px;
+}
+
+.empty-cart-container button {
+  width: 255px;
+  margin: 20px 0 0;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 20px;
+  padding: 12px 0.75em;
+}
+
+/* ORDER HISTORY */
+
+.order-history-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.order-history-title {
+  font-family: "IM Fell Double Pica SC";
+  font-size: 1.5em;
+  width: 950px;
+  margin: 10px auto 10px;
+}
+
+.order-history-single-item {
+  display: flex;
+  flex-direction: row;
+  font-size: 1em;
+  width: 950px;
+  margin: 10px auto 10px;
+}
+
+.order-history-labels {
+  display: flex;
+  flex-direction: row;
+  width: 950px;
+  margin: 10px auto 10px;
+}
+
+.order-history-container hr {
+  width: 950px;
+  margin: 0 auto;
+  border: none;
+  border-top: rgb(218, 218, 218) solid 1px;
+}
+
+.order-address {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 400px;
+  height: 100px;
+}
+
+.order-payment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  width: 400px;
+  height: 100px;
+}
+
+.order-history-picture {
+  height: 100px;
+}
+
+.order-history-column-1 {
+  width: 650px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.order-history-column-2 {
+  width: 100px;
+  margin: auto 0;
+}
+.order-history-column-3 {
+  width: 100px;
+  margin: auto 0;
+  text-align: center;
+}
+.order-history-column-4 {
+  width: 100px;
+  margin: auto 0;
+  text-align: right;
+}
+
 /* SPINNER */
 
 .loader {
@@ -696,6 +914,10 @@ z
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

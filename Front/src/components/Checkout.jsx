@@ -168,6 +168,7 @@ const Checkout = () => {
                         </div>
                       </div>
                     </div>
+                    {console.log(__dirname)}
                     <img
                       className="checkout-delete-icon"
                       src="icons/delete.png"

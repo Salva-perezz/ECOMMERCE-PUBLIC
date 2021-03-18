@@ -14,18 +14,19 @@ const SearchResults = (props) => {
   // const products = [{name: "Pepe", price: 25, brand: "Pepe"}]
 
   const search = useLocation().search;
-  const s = new URLSearchParams(search).get('s');
+  const q = new URLSearchParams(search).get('q');
 
   React.useEffect(() => {
     axios
-      .get(`/api/products/search?s=${s}`)
+      .get(`/api/products/search?q=${q}`)
       // .get(`/api/search/${props.match.params.query}`)
       .then(({ data }) => {
+        console.log(data)
         setProducts(data)
       })
       .catch((err) => console.log(err))
     return () => setProducts("loading")
-  }, [s])
+  }, [q])
 
   const addToCart = function (product) {
     if (!currentUser) history.push("/login")
@@ -62,7 +63,8 @@ const SearchResults = (props) => {
               <div key={index} className="single-result">
                 <div className="picture-container">
                   <Link to={`/products/${product.id}`}>
-                    <img src={product.urlPicture} />
+                    <img className="single-result-picture"
+                    src={product.urlPicture} />
                   </Link>
                 </div>
                 <hr />

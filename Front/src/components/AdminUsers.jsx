@@ -1,69 +1,78 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import axios from "axios"
 
 const AdminUsers = () => {
-  const token = localStorage.getItem("token");
-  const currentUser = useSelector((state) => state.currentUser);
-  const [userList, setUserList] = useState([]);
+  const token = localStorage.getItem("token")
+  const currentUser = useSelector((state) => state.currentUser)
+  const [userList, setUserList] = useState([])
 
   useEffect(() => {
-    if(currentUser)axios.get(`/api/users/admin/all/${currentUser.id}/${currentUser.isAdmin}`).then((users) => setUserList(users.data));
-  }, [currentUser]);
+    if (currentUser)
+      axios
+        .get(`/api/users/admin/all/${currentUser.id}/${currentUser.isAdmin}`)
+        .then((users) => setUserList(users.data))
+  }, [currentUser])
 
-  useEffect(() => {}, [userList]);
+  useEffect(() => {}, [userList])
 
   const adminHandler = (e, id, isAdmin) => {
-    e.preventDefault();
+    e.preventDefault()
     axios
       .put("/api/users/admin/updateuser", { token, id, isAdmin })
       .then(({ data }) => {
         setUserList(
           userList.map((user) => {
             if (user.id != data.id) {
-              return user;
+              return user
             } else {
-              user.isAdmin = data.isAdmin;
-              return user;
+              user.isAdmin = data.isAdmin
+              return user
             }
           })
-        );
+        )
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
   return (
-    <div>
+    <div className="admin-users-container">
+      <div className="admin-users-title">User Permissions</div>
+      <hr/>
+      <div className="admin-users-labels">
+        <div className="admin-users-column-1">First Name</div>
+        <div className="admin-users-column-1">Last Name</div>
+        <div className="admin-users-column-3">Email</div>
+        <div className="admin-users-column-4">Admin</div>
+      </div>
+      <hr/>
       {userList.length &&
         userList.map((user) => {
           return (
-            <div key={user.id}>
-              <div>
-                <h3>{`${user.name} ${user.lastName}`}</h3>
-              </div>
-              <div>
-                <p>{user.email}</p>
-              </div>
-              <div>
+            <div className={user.isAdmin ? "admin-single-user-container" : "admin-single-user-container gray"} key={user.id}>
+              <div className="admin-users-column-1">{user.name}</div>
+              <div className="admin-users-column-1">{user.lastName}</div>
+              <div className="admin-users-column-3">{user.email}</div>
+              <div className="admin-users-column-4">
                 {user.isAdmin ? (
                   <button
                     type="submit"
                     onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
                   >
-                    Remove admin
+                    Remove as Admin
                   </button>
                 ) : (
                   <button
                     onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
                   >
-                    Give admin
+                    Make Admin
                   </button>
                 )}
               </div>
             </div>
-          );
+          )
         })}
     </div>
-  );
-};
+  )
+}
 
-export default AdminUsers;
+export default AdminUsers

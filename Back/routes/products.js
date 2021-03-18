@@ -109,11 +109,11 @@ router.put("/:id/:isAdmin", checkAdmin, (req, res) => {
     })
 })
 
-router.delete("/admin/delete/:id/:isAdmin", checkAdmin, (req, res) => {
+router.delete("/admin/delete/:id", (req, res) => {
     Product.destroy({
-        where: { id: req.params.id },
-    }).then((product) => {
-        res.status(200).json(product)
+        where: { id: req.params.id }
+    }).then(() => {
+        res.status(200).json()
     }).catch((err) => {
         console.log(err)
         res.sendStatus(400)

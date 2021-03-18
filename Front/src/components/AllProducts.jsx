@@ -56,7 +56,8 @@ const AllProducts = () => {
               <div key={index} className="single-result">
                 <div className="picture-container">
                   <Link to={`/products/${product.id}`}>
-                    <img src={product.urlPicture} />
+                    <img className="single-result-picture"
+                    src={product.urlPicture} />
                   </Link>
                 </div>
                 <hr />
