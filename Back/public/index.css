@@ -13,21 +13,25 @@ button {
   cursor: pointer;
 }
 
+select {
+  font-family: ArcherPro-Light;
+}
+
 a {
   text-decoration: none;
 }
 
-a:link { 
-  color: black; 
- }
+a:link {
+  color: black;
+}
 
- a:visited { 
-  color: black; 
- }
+a:visited {
+  color: black;
+}
 
- a hr {
+a hr {
   border: none;
- }
+}
 
 @font-face {
   font-family: "prueba";
@@ -130,11 +134,15 @@ a:link {
   right: 120px;
 }
 
-.not-logged-in, .logged-in {
+.not-logged-in,
+.logged-in {
   margin: auto 0;
+  display: flex;
+  flex-direction: row;
 }
 
-.not-logged-in button, .logged-in button {
+.not-logged-in button,
+.logged-in button {
   font-size: 1.2em;
   margin-left: 10px;
 }
@@ -142,6 +150,7 @@ a:link {
 .categories {
   display: flex;
   justify-content: space-around;
+  position: relative
 }
 
 .categories button {
@@ -151,6 +160,17 @@ a:link {
 .navbar-container hr {
   border: none;
   border-top: rgb(218, 218, 218) solid 1px;
+}
+
+.cart-quantity {
+  background-color: black;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 2px;
 }
 
 .home-main-picture {
@@ -239,7 +259,7 @@ a:link {
   flex-direction: row;
   flex-wrap: wrap;
   width: 1120px;
-  margin: 0 auto;
+  margin: 0 auto 80px;
   /* border: rgb(201, 201, 201) solid 1px; */
 }
 
@@ -256,7 +276,7 @@ a:link {
   /* align-items: center; */
 }
 
-.single-result img {
+.single-result-picture {
   height: 280px;
   padding: 10px 0;
 }
@@ -296,6 +316,7 @@ a:link {
 
 .add-to-cart-results {
   background-color: rgb(231, 202, 127);
+  /* background-color: rgb(238, 238, 238); */
   font-size: 1em;
   padding: 10px 25px;
   font-family: ArcherPro-Light;
@@ -305,6 +326,7 @@ a:link {
 
 .add-to-cart-results:hover {
   background-color: rgb(243, 208, 118);
+  /* background-color: rgb(230, 230, 230); */
 }
 
 /* REGISTER */
@@ -318,9 +340,8 @@ a:link {
   margin: 70px auto 120px;
   border: rgb(202, 202, 202) solid 1px;
   padding: 40px;
-
 }
-
+z
 .sign-up-or-log-in h2 {
   margin-top: 20px;
   font-weight: 200;
@@ -366,6 +387,16 @@ a:link {
 
 .sign-up-or-log-in button:hover {
   background-color: rgb(243, 208, 118);
+}
+
+.sign-up-or-log-in-error {
+  margin-top: 15px;
+}
+
+.sign-up-or-log-in-no-account {
+  margin-top: 15px;
+  font-weight: 600;
+  color: rgb(114, 114, 114);
 }
 
 .footer {
@@ -427,7 +458,7 @@ a:link {
   text-align: right;
 }
 
-.column-3 input{
+.column-3 input {
   outline: none;
   border: none;
   border-radius: 0;
@@ -451,6 +482,7 @@ a:link {
 .cart-delete-icon {
   height: 2em;
   margin-left: 3px;
+  cursor: pointer;
 }
 
 .cart-total {
@@ -478,6 +510,398 @@ a:link {
   padding: 12px 0.75em;
 }
 
+.cart-total button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+.empty-cart-container {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-cart-title {
+  font-family: "IM Fell Double Pica SC";
+  font-size: 2em;
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 200px;
+}
+
+.empty-cart-container button {
+  width: 255px;
+  margin: 20px 0 0;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 20px;
+  padding: 12px 0.75em;
+}
+
+/* CHECKOUT */
+
+.checkout-container {
+  width: 1000px;
+  margin: 70px auto 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.payment-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-container {
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 25px; */
+}
+
+.payment-or-address-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 30px;
+  width: 374px;
+  border: rgb(202, 202, 202) solid 1px;
+  padding: 40px;
+  align-self: center;
+}
+
+.payment-or-address-title {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 200;
+}
+
+.payment-or-address-container hr {
+  border: none;
+  border-top: rgb(218, 218, 218) solid 1px;
+  width: 370px;
+}
+
+.card-or-address-option {
+  display: flex;
+  flex-direction: row;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-or-address-option input {
+  margin-right: 8px;
+}
+
+.card-or-address-input-and-name {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkout-delete-icon {
+  height: 1.5em;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
+.payment-or-address-container button {
+  width: 378px;
+  margin: 20px 0 0;
+  /* background-color: rgb(231, 202, 127); */
+  background-color: rgb(238, 238, 238);
+  color: black;
+  font-size: 1.2em;
+  padding: 12px 0.75em;
+}
+
+.payment-or-address-container button:hover {
+  background-color: rgb(230, 230, 230);
+  /* background-color: rgb(243, 208, 118); */
+}
+
+.payment-or-address-form input {
+  outline: none;
+  width: 350px;
+  padding: 0.9em;
+  font-size: 0.9em;
+  border: none;
+  border: rgb(128, 128, 128) solid 1px;
+  margin-bottom: 5px;
+}
+
+.payment-or-address-form label {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.security-code-and-expiration-date {
+  display: flex;
+  flex-direction: row;
+}
+
+.security-code input {
+  width: 146px;
+  margin-right: 20px;
+}
+
+.expiration-date {
+  display: flex;
+  flex-direction: row;
+}
+
+.expiration-date input {
+  width: 62px;
+}
+
+.expiration-date input:first-child {
+  margin-right: 5px;
+}
+
+.checkout-submit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 374px; */
+  /* padding: 40px; */
+  margin: 0 auto;
+  /* border: rgb(202, 202, 202) solid 1px; */
+  margin-bottom: 60px;
+}
+
+.checkout-submit-container button {
+  width: 458px;
+  margin: -20px 0 20px;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 1.2em;
+  padding: 12px 0.75em;
+}
+
+.checkout-submit-container button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+/* ADMIN USERS */
+
+.admin-users-container {
+  margin-bottom: 90px;
+}
+
+.admin-users-labels {
+  display: flex;
+  flex-direction: row;
+  width: 700px;
+  margin: 10px auto 10px;
+}
+
+.admin-users-title {
+  width: 700px;
+  margin: 50px auto 20px;
+  font-size: 2em;
+  font-family: "IM Fell Double Pica SC";
+}
+
+.admin-users-container hr {
+  width: 700px;
+  margin: 0 auto;
+  border: none;
+  border-top: rgb(218, 218, 218) solid 1px;
+}
+
+.admin-users-column-1 {
+  width: 145px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.admin-users-column-2 {
+  width: 145px;
+  margin: auto 0;
+}
+.admin-users-column-3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 260px;
+  margin: auto 0;
+}
+.admin-users-column-4 {
+  width: 150px;
+  margin: auto 0;
+  text-align: center;
+}
+
+.admin-single-user-container {
+  display: flex;
+  flex-direction: row;
+  width: 700px;
+  margin: 10px auto 10px;
+}
+
+.admin-single-user-container button {
+  outline: none;
+  width: 150px;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  padding: 3px 0;
+}
+
+.admin-single-user-container button:hover {
+  background-color: rgb(243, 208, 118);
+}
+
+.gray button {
+  background-color: rgb(238, 238, 238);
+}
+
+.gray button:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+/* ADMIN PRODUCTS */
+
+.admin-products-delete-icon {
+  height: 30px;
+  width: 30px;
+  /* align-self:flex-start; */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.admin-products-edit-icon {
+  height: 30px;
+  width: 30px;
+  /* align-self:flex-start; */
+  position: absolute;
+  top: 45px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.admin-products-single-product {
+  position: relative;
+  border-radius: 0;
+  border-bottom: rgb(75, 75, 75) solid 2px;
+  margin-bottom: 50px;
+}
+
+/* EMPTY CART */
+
+.empty-cart-container {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-cart-title {
+  font-family: "IM Fell Double Pica SC";
+  font-size: 2em;
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 200px;
+}
+
+.empty-cart-container button {
+  width: 255px;
+  margin: 20px 0 0;
+  background-color: rgb(231, 202, 127);
+  color: black;
+  font-size: 20px;
+  padding: 12px 0.75em;
+}
+
+/* ORDER HISTORY */
+
+.order-history-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.order-history-title {
+  font-family: "IM Fell Double Pica SC";
+  font-size: 1.5em;
+  width: 950px;
+  margin: 10px auto 10px;
+}
+
+.order-history-single-item {
+  display: flex;
+  flex-direction: row;
+  font-size: 1em;
+  width: 950px;
+  margin: 10px auto 10px;
+}
+
+.order-history-labels {
+  display: flex;
+  flex-direction: row;
+  width: 950px;
+  margin: 10px auto 10px;
+}
+
+.order-history-container hr {
+  width: 950px;
+  margin: 0 auto;
+  border: none;
+  border-top: rgb(218, 218, 218) solid 1px;
+}
+
+.order-address {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 400px;
+  height: 100px;
+}
+
+.order-payment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  width: 400px;
+  height: 100px;
+}
+
+.order-history-picture {
+  height: 100px;
+}
+
+.order-history-column-1 {
+  width: 650px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.order-history-column-2 {
+  width: 100px;
+  margin: auto 0;
+}
+.order-history-column-3 {
+  width: 100px;
+  margin: auto 0;
+  text-align: center;
+}
+.order-history-column-4 {
+  width: 100px;
+  margin: auto 0;
+  text-align: right;
+}
+
 /* SPINNER */
 
 .loader {
@@ -491,6 +915,10 @@ a:link {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

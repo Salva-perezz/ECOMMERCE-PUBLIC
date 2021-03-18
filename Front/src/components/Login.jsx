@@ -3,15 +3,18 @@ import axios from "axios"
 import { getCurrentUser } from "../store/currentUser"
 import { useSelector, useDispatch } from "react-redux"
 import { loadStoreCart } from "../store/currentCart"
-import { useHistory } from "react-router-dom"
+import { loadStoreCartItems } from "../store/currentCartItems"
+import { useHistory, Link } from "react-router-dom"
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
 
   const currentUser = useSelector((state) => state.currentUser)
+  const currentCart = useSelector((state) => state.currentCart)
 
   const handleSubmit = function (event) {
     event.preventDefault()
@@ -22,21 +25,37 @@ const Login = () => {
       })
       .then((newUser) => {
         localStorage.setItem("token", newUser.data.token)
-        dispatch(getCurrentUser({ id: newUser.data.user.id }))
+        dispatch(getCurrentUser({ id: newUser.data.user.id, isAdmin: newUser.data.user.isAdmin }))
       })
+      .catch(() => setError(true))
   }
 
   React.useEffect(() => {
-    if(currentUser) axios
-      .post("/api/transactions", {
-        userId: currentUser.id,
-      })
-      .then((cart) => {
-        dispatch(loadStoreCart({ id: cart.data.id }))
-        history.push("/products")
-      })
+    if (currentUser)
+      axios
+        .post("/api/transactions", {
+          userId: currentUser.id,
+        })
+        .then((cart) => {
+          dispatch(loadStoreCart({ id: cart.data.id }))
+        })
   }, [currentUser])
 
+  React.useEffect(() => {
+    if (currentCart !== "loading")
+      axios
+        .put("/api/transactionitems/load", {
+          transactionId: currentCart.id,
+        })
+        .then((cartItems) => {
+          dispatch(loadStoreCartItems(cartItems.data))
+          history.push("/products")
+        })
+  }, [currentCart])
+
+  const Error = () => (
+    <div className="sign-up-or-log-in-error">Invalid Email or Password</div>
+  )
 
   return (
     <div className="sign-up-or-log-in">
@@ -59,6 +78,10 @@ const Login = () => {
         />
         <button>Log In</button>
       </form>
+      <Link to="/register">
+        <div className="sign-up-or-log-in-no-account" >Don't have an account? Sign up</div>
+      </Link>
+      {error && <Error />}
     </div>
   )
 }

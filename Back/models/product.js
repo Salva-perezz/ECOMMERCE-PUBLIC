@@ -13,17 +13,8 @@ Product.init({
     region: {
         type: Sequelize.STRING
     },
-    country: {
-        type: Sequelize.STRING
-    },
-    type: {
-        type: Sequelize.STRING
-    },
     description: {
         type: Sequelize.TEXT
-    },
-    year:{
-        type: Sequelize.INTEGER
     },
     price:{
         type: Sequelize.INTEGER

@@ -4,9 +4,13 @@ import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { getCurrentUser } from "../store/currentUser"
+import { loadStoreCart } from "../store/currentCart"
+import { clearStoreCart } from "../store/currentCartItems"
+import CategoryDropdown  from "./CategoryDropdown"
 
 const NavBar = () => {
   // const currentUser = useSelector((state) => state.currentUser)
+  const currentCartItems = useSelector((state) => state.currentCartItems)
   const [searchQuery, setSearchQuery] = useState("")
   const dispatch = useDispatch()
   const history = useHistory()
@@ -20,17 +24,18 @@ const NavBar = () => {
   const handleSubmit = function (event) {
     event.preventDefault()
     setSearchQuery("")
-    history.push("/search/" + searchQuery)
+    history.push("/search?q=" + searchQuery)
   }
 
   const handleLogout = function (event) {
     localStorage.clear()
     dispatch(getCurrentUser(""))
+    dispatch(loadStoreCart("loading"))
+    dispatch(clearStoreCart())
     history.push("/")
   }
 
-  React.useEffect(() => {
-  }, [token])
+  React.useEffect(() => {}, [token])
 
   return (
     <div className="navbar-container">
@@ -58,6 +63,15 @@ const NavBar = () => {
                 <Link to="/cart">
                   <button>View Cart</button>
                 </Link>
+                {currentCartItems.length ? (
+                  <div className="cart-quantity">
+                    {currentCartItems.reduce(
+                      (accumulator, currentValue) =>
+                        accumulator + Number(currentValue.quantity),
+                      0
+                    )}
+                  </div>
+                ) : null}
                 <button onClick={handleLogout}>Log Out</button>
               </div>
             ) : (
@@ -74,12 +88,7 @@ const NavBar = () => {
         </div>
       </div>
       <hr />
-      <div className="categories">
-        <button>Type</button>
-        <button>Country</button>
-        <button>Wine Producer</button>
-        <button>Vintage</button>
-      </div>
+      <CategoryDropdown/>
       <hr />
     </div>
   )

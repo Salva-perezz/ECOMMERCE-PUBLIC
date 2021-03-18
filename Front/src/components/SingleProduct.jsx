@@ -1,14 +1,17 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom"
 import { addToStoreCart } from "../store/currentCartItems"
 
 const SingleProduct = (props) => {
   const [quantity, setQuantity] = useState(1)
   const [product, setProduct] = useState("loading")
   const currentCart = useSelector((state) => state.currentCart)
+  const currentUser = useSelector((state) => state.currentUser)
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const increaseQuantity = function () {
     setQuantity((quantity) => quantity + 1)
@@ -29,19 +32,22 @@ const SingleProduct = (props) => {
   }, [])
 
   const addToCart = function () {
-    axios
+    if(!currentUser) history.push("/login")
+    else axios
       .post("/api/transactionitems", {
         transactionId: currentCart.id,
         productId: product.id,
         quantity: quantity,
       })
-      .then(() =>
+      .then((transactionItem) =>
         dispatch(
           addToStoreCart({
             name: product.name,
             urlPicture: product.urlPicture,
             price: product.price,
-            quantity: quantity
+            quantity: transactionItem.data.quantity,
+            productId: product.id,
+            id: transactionItem.data.id
           })
         )
       )
