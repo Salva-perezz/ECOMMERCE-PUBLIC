@@ -25,4 +25,4 @@ export const currentCartItemsReducer = createReducer([], {
         return cartItem
       }
     }),
-})
+});

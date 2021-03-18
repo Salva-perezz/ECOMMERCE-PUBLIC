@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 
 router.get('/id:', (req, res) => {
     Review.findAll({
-        where: { id: req.params.id }
+        where: { productId: req.params.id }
     })
         .then(reviews => res.status(200).json(reviews))
 });
