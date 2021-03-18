@@ -28,7 +28,6 @@ router.post("/", (req, res) => {
         })
 })
 
-//Modificar por delete con req.params.id
 router.delete("/id", (req, res) => {
     TransactionItem.destroy({
         where: { id: req.params.id },
@@ -43,7 +42,10 @@ router.delete("/id", (req, res) => {
 router.put("/", (req, res) => {
     TransactionItem
         .update(
-            { quantity: req.body.quantity },
+            {
+                quantity: req.body.quantity,
+                reviewed: true
+            },
             {
                 where: { id: req.body.id },
                 returning: true,
