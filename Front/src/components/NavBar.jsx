@@ -6,6 +6,7 @@ import axios from "axios"
 import { getCurrentUser } from "../store/currentUser"
 import { loadStoreCart } from "../store/currentCart"
 import { clearStoreCart } from "../store/currentCartItems"
+import CategoryDropdown  from "./CategoryDropdown"
 
 const NavBar = () => {
   // const currentUser = useSelector((state) => state.currentUser)
@@ -87,12 +88,7 @@ const NavBar = () => {
         </div>
       </div>
       <hr />
-      <div className="categories">
-        <button>Type</button>
-        <button>Country</button>
-        {/* <button>Wine Producer</button> */}
-        <button>Vintage</button>
-      </div>
+      <CategoryDropdown/>
       <hr />
     </div>
   )

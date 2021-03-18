@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/", (req, res) => {
+    const tansaction = { }
     let htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +34,10 @@ router.post("/", (req, res) => {
 </head>
 <body>
     <h1>Clement Online Wine Store</h1>
-    <h3>${req.body.fullname}, gracias por su compra!</h3> 
+    <h3>${req.body.fullname}, gracias por su compra!</h3>
+    <ul>
+        
+    </ul>
 </body>
 </html>
     `
