@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
             attributes: ["fullName", "cardType", "ccNumber", "expirationMonth", "expirationYear"]
         }, {
             model: Address,
-            attributes: ["address", "country", "city", "zipCode"]
+            attributes: ["address", "country", "city", "state", "zipCode"]
         }, {
             model: TransactionItem,
             attributes: ["quantity"],

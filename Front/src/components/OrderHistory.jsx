@@ -7,7 +7,8 @@ const OrderHistory = () => {
   const currentUser = useSelector((state) => state.currentUser)
 
   React.useEffect(() => {
-    if (currentUser) axios
+    if (currentUser)
+      axios
         .get("/api/transactions/" + currentUser.id)
         .then(({ data }) => {
           console.log(data)
@@ -24,13 +25,38 @@ const OrderHistory = () => {
         orderHistory.map((order, index) => (
           <div key={index}>
             <div>
+              <div className="order-history-title">
+                Order Date: {order.checkoutDate.slice(0, 10)}
+              </div>
+              <hr />
+              <div className="order-history-labels">
+                <div className="order-history-column-1">Item</div>
+                <div className="order-history-column-2">Price</div>
+                <div className="order-history-column-3">Quantity</div>
+                <div className="order-history-column-4">Sub-total</div>
+              </div>
+              <hr />
               {order.transaction_items.map((item, index) => (
-                <div key={index} className="order-history-single-order">
-                  <img src={item.product.urlPicture}></img>
-                  <div>{item.product.name}</div>
-                  <div>{item.product.price}</div>
-                  <div>{item.quantity}</div>
-                  <div>{item.quantity * item.product.price}</div>
+                <div key={index}>
+                  <div className="order-history-single-item">
+                    <div className="order-history-column-1">
+                      <img
+                        className="order-history-picture"
+                        src={item.product.urlPicture}
+                      ></img>
+                      {item.product.name}
+                    </div>
+                    <div className="order-history-column-2">
+                      ${item.product.price}
+                    </div>
+                    <div className="order-history-column-3">
+                      {item.quantity}
+                    </div>
+                    <div className="order-history-column-4">
+                      ${item.quantity * item.product.price}
+                    </div>
+                  </div>
+                  <hr />
                 </div>
               ))}
             </div>
@@ -44,17 +70,18 @@ const OrderHistory = () => {
               )}
             </div>
             <div className="order-address">
-              Order Address:
+              Shipping Address:
               <div> {order.address.address}</div>
               <div> {order.address.city}</div>
+              <div> {order.address.state}</div>
               <div> {order.address.country}</div>
               <div>{order.address.zipCode}</div>
             </div>
             <div className="order-payment">
-              Payment:
+              Payment Method:
               <div> {order.payment.cardType}</div>
-              <div> {order.payment.expirationMonth}</div>
-              <div> {order.payment.expirationYear}</div>
+              <div> {order.payment.ccNumber}</div>
+              <div>Expiration Date: {order.payment.expirationMonth}/{order.payment.expirationYear}</div>
             </div>
           </div>
         ))}

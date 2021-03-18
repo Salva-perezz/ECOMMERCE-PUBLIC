@@ -48,7 +48,7 @@ const AdminUsers = () => {
       {userList.length &&
         userList.map((user) => {
           return (
-            <div className={user.isAdmin ? "admin-single-user-container gray" : "admin-single-user-container"} key={user.id}>
+            <div className={user.isAdmin ? "admin-single-user-container" : "admin-single-user-container gray"} key={user.id}>
               <div className="admin-users-column-1">{user.name}</div>
               <div className="admin-users-column-1">{user.lastName}</div>
               <div className="admin-users-column-3">{user.email}</div>

@@ -23,7 +23,7 @@ const NavBar = () => {
   const handleSubmit = function (event) {
     event.preventDefault()
     setSearchQuery("")
-    history.push("/search?s=" + searchQuery)
+    history.push("/search?q=" + searchQuery)
   }
 
   const handleLogout = function (event) {
