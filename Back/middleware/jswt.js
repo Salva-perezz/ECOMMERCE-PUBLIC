@@ -5,7 +5,6 @@ const checkToken = (req, res, next) => {
   const data = jwt.verify(token, "ecommerce");
 
   if(data) {
-    console.log(data)
     req.user = data;
     next()
 }
@@ -18,7 +17,6 @@ const checkTokenBody = (req, res, next) => {
 
   if(data) {
     req.user = data;
-    console.log('PASE')
     next()
 }
 };

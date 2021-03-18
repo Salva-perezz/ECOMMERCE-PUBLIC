@@ -35,7 +35,6 @@ const Checkout = () => {
   const dispatch = useDispatch()
 
   React.useEffect(() => {
-    console.log(currentUser.id)
     if (currentUser)
       axios.get("/api/payments/" + currentUser.id).then((cards) => {
         setCards(cards.data)
@@ -43,7 +42,6 @@ const Checkout = () => {
   }, [currentUser])
 
   React.useEffect(() => {
-    console.log(currentUser.id)
     if (currentUser)
       axios.get("/api/addresses/" + currentUser.id).then((address) => {
         setAddresses(address.data)
