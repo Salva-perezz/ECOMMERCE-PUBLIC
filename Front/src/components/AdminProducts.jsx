@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import path from "path";
+import React, { useState } from "react"
+import axios from "axios"
+import { Link, useHistory } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import path from "path"
 
 const AdminProducts = () => {
   const [products, setProducts] = useState("loading")
@@ -11,7 +11,7 @@ const AdminProducts = () => {
   const history = useHistory()
 
   React.useEffect(() => {
-    localStorage.removeItem("currentProduct");
+    localStorage.removeItem("currentProduct")
     axios
       .get("/api/products/")
       .then(({ data }) => {
@@ -24,10 +24,10 @@ const AdminProducts = () => {
   React.useEffect(() => {}, [products])
 
   const handleEdit = (e, product) => {
-    e.preventDefault();
-    localStorage.setItem('currentProduct', JSON.stringify(product));
-    history.push(`/admin/product/edit`);
-  };
+    e.preventDefault()
+    localStorage.setItem("currentProduct", JSON.stringify(product))
+    history.push(`/admin/product/edit`)
+  }
 
   const handleDelete = (e, id) => {
     e.preventDefault()
@@ -42,8 +42,14 @@ const AdminProducts = () => {
         <div className="loader"></div>
       ) : (
         <>
-        <Link to='/admin/product/edit' >Add product</Link>
+        <div className="admin-products-title-and-button">
           <div className="results-title">Manage Products</div>
+          <div className="admin-products-add-new-product">
+            <Link to="/admin/product/edit">
+              <button>Add New Product</button>
+            </Link>
+          </div>
+          </div>
           <div className="results-container">
             {products.map((product, index) => (
               <div

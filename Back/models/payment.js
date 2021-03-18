@@ -27,6 +27,7 @@ Payment.init(
     hiddenNumber: {
       type: Sequelize.VIRTUAL,
       get: function () {
+        console.log(this.ccNumber)
         return this.ccNumber
           ? Array(this.ccNumber.length - 4)
               .fill("*")

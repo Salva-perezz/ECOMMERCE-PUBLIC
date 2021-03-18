@@ -78,6 +78,7 @@ const AdminProduct = () => {
 
   console.log(currentProduct);
   return (
+    <div className="admin-product-edit">
     <form onSubmit={(e) => handleSubmit(e)}>
       <div>
         <label htmlFor="name">Name</label>
@@ -111,12 +112,11 @@ const AdminProduct = () => {
       </div>
       <div>
         <label htmlFor="Description">Description</label>
-        <input
+        <textarea className="admin-product-edit-description"
           onChange={(e) => handleChange(e, setDescription)}
           name="Description"
           value={description}
           placeholder="description"
-          type="text"
         />
       </div>
       <div>
@@ -217,6 +217,7 @@ const AdminProduct = () => {
         <button type="submit">Submit</button>
       </div>
     </form>
+    </div>
   );
 };
 
