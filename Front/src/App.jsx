@@ -22,6 +22,7 @@ import { loadStoreCartItems } from "./store/currentCartItems"
 import { Route, Switch } from "react-router"
 import axios from "axios"
 import AdminProducts from "./components/AdminProducts"
+import OrderHistory from "./components/OrderHistory"
 
 const App = () => {
   const currentUser = useSelector((state) => state.currentUser)
@@ -98,6 +99,7 @@ const App = () => {
           <Route path="/login" render={() => <Login />} />
           <Route path="/cart" render={() => <Cart />} />
           <Route path="/checkout" render={() => <Checkout />} />
+          <Route path="/history" render={() => <OrderHistory />} />
           <Route path="/" render={() => <Home />} />
         </Switch>
       </div>
