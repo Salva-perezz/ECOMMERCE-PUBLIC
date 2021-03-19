@@ -35,7 +35,7 @@ const Login = () => {
       .catch(() => setError(true));
   };
 
-  /* React.useEffect(() => {
+  React.useEffect(() => {
     if (currentUser)
       axios
         .post("/api/transactions", {
@@ -56,7 +56,7 @@ const Login = () => {
           dispatch(loadStoreCartItems(cartItems.data));
           history.push("/products");
         });
-  }, [currentCart]); */
+  }, [currentCart]);
 
   const Error = () => (
     <div className="sign-up-or-log-in-error">Invalid Email or Password</div>
