@@ -6,13 +6,14 @@ import { useSelector, useDispatch } from "react-redux"
 import {
   removeFromStoreCart,
   changeQuantityInStoreCart,
+  currentCartItemsReducer,
 } from "../store/currentCartItems"
 
 const Cart = () => {
   const currentCartItems = useSelector((state) => state.currentCartItems)
+
   const [total, setTotal] = useState(0)
   const dispatch = useDispatch()
-
   React.useEffect(() => {
     setTotal(
       currentCartItems &&
@@ -26,34 +27,31 @@ const Cart = () => {
   }, [currentCartItems])
 
   const removeFromCart = function ({ id }) {
-    axios
-      .put("/api/transactionitems/remove", {
-        id,
-      })
-      .then(() =>
-        dispatch(
-          removeFromStoreCart({
-            id,
-          })
-        )
+    axios.delete(`/api/transactionitems/${id}`).then(() =>
+      dispatch(
+        removeFromStoreCart({
+          id,
+        })
       )
+    )
   }
 
-  const changeQuantity = function ({ productId, quantity }) {
-    // axios
-    //   .post("/api/transactionitems", {
-    //     transactionId: currentCart.id,
-    //     productId: product.id,
-    //     quantity: 1,
-    //   })
-    //   .then(() =>
-    dispatch(
-      changeQuantityInStoreCart({
-        productId,
-        quantity,
-      })
-    )
-    // )
+  const changeQuantity = function ({ id, productId }, quantity) {
+    if (quantity && quantity > 0) {
+      axios
+        .put("/api/transactionitems/quantity", {
+          id: id,
+          quantity: quantity,
+        })
+        .then(() =>
+          dispatch(
+            changeQuantityInStoreCart({
+              productId,
+              quantity,
+            })
+          )
+        )
+    }
   }
 
   return (
@@ -70,7 +68,7 @@ const Cart = () => {
           </div>
           <hr />
           {currentCartItems.map((cartItem, index) => (
-            <div key={index} >
+            <div key={index}>
               <div className="cart-item">
                 <div className="column-1">
                   <img
@@ -81,7 +79,11 @@ const Cart = () => {
                 </div>
                 <div className="column-2">{"$" + cartItem.price}</div>
                 <div className="column-3">
-                  <input type="text" value={cartItem.quantity} />
+                  <input
+                    type="number"
+                    onBlur={(e) => changeQuantity(cartItem, e.target.value)}
+                    placeholder={cartItem.quantity}
+                  />
                   <img
                     onClick={() => removeFromCart(cartItem)}
                     className="cart-delete-icon"

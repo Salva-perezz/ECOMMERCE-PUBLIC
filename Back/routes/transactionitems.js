@@ -28,7 +28,7 @@ router.post("/", (req, res) => {
         })
 })
 
-router.delete("/id", (req, res) => {
+router.delete("/:id", (req, res) => {
     TransactionItem.destroy({
         where: { id: req.params.id },
     }).then(() => {
@@ -59,11 +59,34 @@ router.put("/", (req, res) => {
         })
 })
 
+router.put("/quantity", (req, res) => {
+    TransactionItem
+        .update(
+            {
+                quantity: req.body.quantity,
+            },
+            {
+                where: { id: req.body.id },
+                returning: true,
+                plain: true
+            })
+        .then((transactionItemUpdated) => {
+            res.status(200).json(transactionItemUpdated[1])
+        }).catch((err) => {
+            console.log(err)
+            res.sendStatus(400)
+        })
+})
+
+
 router.put("/load", (req, res) => {
     TransactionItem.findAll({
         where: { transactionId: req.body.transactionId },
-        include: Product,
-    })
+        include: {
+            model:Product,
+            order: ["name"]    
+        },
+       })
         .then((transactionItems) => {
             transactionItems = transactionItems.map((item) => {
                 return {
