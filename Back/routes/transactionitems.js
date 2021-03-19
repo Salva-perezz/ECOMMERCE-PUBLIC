@@ -28,7 +28,6 @@ router.post("/", (req, res) => {
         })
 })
 
-<<<<<<< HEAD
 router.post('/localstorage', (req, res) => {
     const array = req.body.array;
     let index = array.length;
@@ -70,8 +69,6 @@ router.post('/localstorage', (req, res) => {
     })
 })
 
-=======
->>>>>>> e0f1f5b7360446a2f0be3cb426f1033d265260e8
 router.delete("/:id", (req, res) => {
     TransactionItem.destroy({
         where: { id: req.params.id },

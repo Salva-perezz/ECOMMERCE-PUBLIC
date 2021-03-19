@@ -1,6 +1,7 @@
 import axios from "axios"
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState([])
@@ -12,6 +13,7 @@ const OrderHistory = () => {
         .get("/api/transactions/" + currentUser.id)
         .then(({ data }) => {
           console.log(data)
+          data.reverse()
           setOrderHistory(data)
         })
         .catch((err) => console.log(err))
@@ -20,8 +22,7 @@ const OrderHistory = () => {
 
   return (
     <div className="order-history-container">
-      {console.log(orderHistory.length)}
-      {orderHistory.length > 0 &&
+      {orderHistory.length > 0 ? (
         orderHistory.map((order, index) => (
           <div key={index}>
             <div className="order-history-single-order">
@@ -73,19 +74,29 @@ const OrderHistory = () => {
                   <hr />
                 </div>
               ))}
-            <div className="order-history-total">
-              Order Total: $
-              {order.transaction_items.reduce(
-                (accumulator, item) =>
-                  accumulator +
-                  Number(item.product.price) * Number(item.quantity),
-                0
-              )}
-            </div>
+              <div className="order-history-total">
+                Order Total: $
+                {order.transaction_items.reduce(
+                  (accumulator, item) =>
+                    accumulator +
+                    Number(item.product.price) * Number(item.quantity),
+                  0
+                )}
+              </div>
               <hr />
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <div className="empty-page-container">
+          <div className="empty-page-title">
+            You Have No Orders Yet
+            <Link to="/">
+              <button>Continue Shopping</button>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

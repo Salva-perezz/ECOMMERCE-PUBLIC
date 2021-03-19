@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
 import axios from "axios"
 import { editType, setTypes, addOneType } from "../store/types"
 import { editCountry, setCountries, addOneCountry } from "../store/countries"
@@ -45,11 +46,11 @@ const AdminCategories = () => {
     setName()
   }
 
-  const editForm = (e, id) => {
+  const editForm = (e, name) => {
     e.preventDefault()
     setShowEditForm(!showEditForm)
-    setEditItem(id)
-    setName(id)
+    setEditItem(name)
+    setName(name)
   }
 
   const addForm = (e, category) => {
@@ -87,6 +88,7 @@ const AdminCategories = () => {
 
   return (
     <>
+    {currentUser.isAdmin ?
       <div className="admin-categories-container">
         <div>
           <div className="admin-categories-single-container">
@@ -310,6 +312,14 @@ const AdminCategories = () => {
           </div>
         </div>
       </div>
+      : <div className="empty-page-container">
+      <div className="empty-page-title">
+        Access Denied
+        <Link to="/">
+          <button>Continue Shopping</button>
+        </Link>
+      </div>
+    </div>}
     </>
   )
 }

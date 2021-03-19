@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import axios from "axios"
+import { Link } from "react-router-dom"
 
 const AdminUsers = () => {
   const token = localStorage.getItem("token")
@@ -35,43 +36,63 @@ const AdminUsers = () => {
       .catch((err) => console.log(err))
   }
   return (
-    <div className="admin-users-container">
-      <div className="admin-users-title">User Permissions</div>
-      <hr/>
-      <div className="admin-users-labels">
-        <div className="admin-users-column-1">First Name</div>
-        <div className="admin-users-column-1">Last Name</div>
-        <div className="admin-users-column-3">Email</div>
-        <div className="admin-users-column-4">Admin</div>
-      </div>
-      <hr/>
-      {userList.length &&
-        userList.map((user) => {
-          return (
-            <div className={user.isAdmin ? "admin-single-user-container" : "admin-single-user-container gray"} key={user.id}>
-              <div className="admin-users-column-1">{user.name}</div>
-              <div className="admin-users-column-1">{user.lastName}</div>
-              <div className="admin-users-column-3">{user.email}</div>
-              <div className="admin-users-column-4">
-                {user.isAdmin ? (
-                  <button
-                    type="submit"
-                    onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
-                  >
-                    Remove as Admin
-                  </button>
-                ) : (
-                  <button
-                    onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
-                  >
-                    Make Admin
-                  </button>
-                )}
-              </div>
-            </div>
-          )
-        })}
-    </div>
+    <>
+      {currentUser.isAdmin ? (
+        <div className="admin-users-container">
+          <div className="admin-users-title">User Permissions</div>
+          <hr />
+          <div className="admin-users-labels">
+            <div className="admin-users-column-1">First Name</div>
+            <div className="admin-users-column-1">Last Name</div>
+            <div className="admin-users-column-3">Email</div>
+            <div className="admin-users-column-4">Admin</div>
+          </div>
+          <hr />
+          {userList.length &&
+            userList.map((user) => {
+              return (
+                <div
+                  className={
+                    user.isAdmin
+                      ? "admin-single-user-container"
+                      : "admin-single-user-container gray"
+                  }
+                  key={user.id}
+                >
+                  <div className="admin-users-column-1">{user.name}</div>
+                  <div className="admin-users-column-1">{user.lastName}</div>
+                  <div className="admin-users-column-3">{user.email}</div>
+                  <div className="admin-users-column-4">
+                    {user.isAdmin ? (
+                      <button
+                        type="submit"
+                        onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
+                      >
+                        Remove as Admin
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(e) => adminHandler(e, user.id, user.isAdmin)}
+                      >
+                        Make Admin
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+        </div>
+      ) : (
+        <div className="empty-page-container">
+          <div className="empty-page-title">
+            Access Denied
+            <Link to="/">
+              <button>Continue Shopping</button>
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
