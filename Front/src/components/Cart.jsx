@@ -8,12 +8,23 @@ import {
   changeQuantityInStoreCart,
   currentCartItemsReducer,
 } from "../store/currentCartItems"
+import { toggleRefresh } from "../store/navBarRefresh"
+
 
 const Cart = () => {
-  const currentCartItems = useSelector((state) => state.currentCartItems)
-
+  let currentCartItems = useSelector((state) => state.currentCartItems)
   const [total, setTotal] = useState(0)
+  const currentUser = useSelector(state => state.currentUser);
   const dispatch = useDispatch()
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem('notLoggedCart')));
+  const [elEstornudoDeFede, setelEstornudoDeFede] = useState(1)
+
+  !currentUser ? currentCartItems = items : null;
+
+  React.useEffect(() => {
+    localStorage.setItem('notLoggedCart', JSON.stringify(items))
+  }, [elEstornudoDeFede])
+
   React.useEffect(() => {
     setTotal(
       currentCartItems &&
@@ -26,14 +37,29 @@ const Cart = () => {
     )
   }, [currentCartItems])
 
-  const removeFromCart = function ({ id }) {
-    axios.delete(`/api/transactionitems/${id}`).then(() =>
-      dispatch(
-        removeFromStoreCart({
-          id,
-        })
-      )
-    )
+  const removeFromCart = function (cartItem) {
+    if(!currentUser){
+      let varItems = items;
+      let indice;
+      varItems.map((item, index) => {
+        if(item.productId == cartItem.productId){
+          indice = index
+        }
+      });
+      varItems.splice(indice, 1)
+      setItems(varItems)
+      setelEstornudoDeFede(elEstornudoDeFede + 1)
+      dispatch(toggleRefresh());
+    } else{
+    axios
+      .delete("/api/transactionitems/" + cartItem.id)
+      .then(() =>
+        dispatch(
+          removeFromStoreCart({
+            id: cartItem.id,
+          })
+        )
+      )}
   }
 
   const changeQuantity = function ({ id, productId }, quantity) {
@@ -56,7 +82,7 @@ const Cart = () => {
 
   return (
     <>
-      {currentCartItems.length ? (
+      {currentCartItems && currentCartItems.length ? (
         <div className="cart-container">
           <div className="cart-title">Your Shopping Cart</div>
           <hr />
@@ -99,7 +125,7 @@ const Cart = () => {
           ))}
           <div className="cart-total">
             <div className="cart-total-amount">Order Total: ${total}</div>
-            <Link to="/checkout">
+            <Link to={currentUser ? '/checkout' : '/login'}>
               <button>Checkout</button>
             </Link>
           </div>

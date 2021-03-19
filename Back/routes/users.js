@@ -47,7 +47,7 @@ router.put("/:id", (req, res) => {
   router.post("/register", (req, res) => {
     User.create(req.body)
       .then((user) => {
-        const token = jswt.sign({ id: user.id, email: user.email }, "ecommerce");
+        const token = jswt.sign({ id: user.id, isAdmin: user.isAdmin }, "ecommerce");
 
         res.status(201).json({ token, user });
       })

@@ -1,29 +1,70 @@
-import React, { useState } from "react"
-import axios from "axios"
-import { Link, useHistory } from "react-router-dom"
-import { useSelector, useDispatch } from "react-redux"
-import { addToStoreCart } from "../store/currentCartItems"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addToStoreCart } from "../store/currentCartItems";
+import { toggleRefresh } from "../store/navBarRefresh";
 
 const AllProducts = () => {
-  const [products, setProducts] = useState("loading")
-  const currentCart = useSelector((state) => state.currentCart)
-  const currentUser = useSelector((state) => state.currentUser)
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const [products, setProducts] = useState("loading");
+  const currentCart = useSelector((state) => state.currentCart);
+  const currentUser = useSelector((state) => state.currentUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [notLoggedCart, setnotLoggedCart] = useState();
+  const [variable, setVariable] = useState(1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios
       .get("/api/products/")
       .then(({ data }) => {
-        setProducts(data)
+        setProducts(data);
       })
-      .catch((err) => console.log(err))
-    return () => setProducts("loading")
-  }, [])
+      .catch((err) => console.log(err));
+    return () => setProducts("loading");
+  }, []);
+
+  useEffect(() => {
+    localStorage.getItem("notLoggedCart")
+      ? setnotLoggedCart(JSON.parse(localStorage.getItem("notLoggedCart")))
+      : setnotLoggedCart([]);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("notLoggedCart", JSON.stringify(notLoggedCart));
+  }, [notLoggedCart, variable]);
+
 
   const addToCart = function (product) {
-    if (!currentUser) history.push("/login")
-    else
+    console.log(variable)
+    let indice;
+    if (!currentUser) {
+      console.log('NOTLOGGEDCART', notLoggedCart)
+      console.log('PRODUCT', product)
+      notLoggedCart.map((cartItem, index) => {
+        console.log('CARTITEM', cartItem)
+        if (cartItem.productId == product.id) {
+          console.log('LO HIZO')
+          indice = index;
+        }
+      })
+      console.log(indice)
+      if(indice == undefined){
+      setnotLoggedCart((state) => [...state, {
+        name: product.name,
+        urlPicture: product.urlPicture,
+        price: product.price,
+        quantity: 1,
+        productId: product.id,
+
+      }]);
+    } else {
+      console.log(notLoggedCart[indice])
+      notLoggedCart[indice].quantity += 1
+      setVariable(variable + 1)
+    }
+      dispatch(toggleRefresh());
+    } else
       axios
         .post("/api/transactionitems", {
           transactionId: currentCart.id,
@@ -41,8 +82,8 @@ const AllProducts = () => {
               id: transactionItem.data.id,
             })
           )
-        )
-  }
+        );
+  };
 
   return (
     <>
@@ -83,7 +124,7 @@ const AllProducts = () => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default AllProducts
+export default AllProducts;

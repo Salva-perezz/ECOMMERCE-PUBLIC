@@ -27,7 +27,7 @@ const NewUser = () => {
       .then((newUser) => {
         console.log(newUser)
         localStorage.setItem("token", newUser.data.token)
-        dispatch(getCurrentUser({ id: newUser.data.user.id }))
+        dispatch(getCurrentUser({ id: newUser.data.user.id, isAdmin: newUser.data.user.isAdmin }))
         history.push("/products")
       })
   }

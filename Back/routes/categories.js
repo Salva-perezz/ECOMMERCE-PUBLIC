@@ -114,7 +114,6 @@ router.put('/countries/:id/:isAdmin', checkAdmin, (req, res) => {
       returning: true,
       plain: true
    }).then((countryUpdated) => {
-      console.log(countryUpdated[1]);
       res.status(200).json(countryUpdated[1])
    })
 })
