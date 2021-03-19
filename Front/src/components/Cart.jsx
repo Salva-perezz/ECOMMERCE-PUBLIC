@@ -62,7 +62,8 @@ const Cart = () => {
       )}
   }
 
-  const changeQuantity = function ({ id, productId }, quantity) {
+  const changeQuantity = function (cartItem, quantity) {
+    let { id, productId } = cartItem
     if (quantity && quantity > 0) {
       axios
         .put("/api/transactionitems/quantity", {
@@ -131,10 +132,10 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div className="empty-cart-container">
-          <div className="empty-cart-title">
+        <div className="empty-page-container">
+          <div className="empty-page-title">
             Your Cart Is Empty
-            <Link to="/products">
+            <Link to="/">
               <button>Continue Shopping</button>
             </Link>
           </div>

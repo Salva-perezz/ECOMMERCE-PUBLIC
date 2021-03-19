@@ -65,7 +65,7 @@ const Checkout = () => {
       })
       .then((newTransaction) => {
         dispatch(loadStoreCart({ id: newTransaction.data.id }))
-        history.push("/")
+        history.push("/history")
       })
       .catch((error) => console.log(error))
   }

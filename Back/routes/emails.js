@@ -12,15 +12,14 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/", (req, res) => {
-
-    // const transactionInfo = req.body.transactionInfo.map(item => {
-    //     return `<div>
-    //         <ul>
-    //             <li>${item.name} qty:${item.quantity} u.price:${item.price}</li>
-    //         </ul>
-    //         <h4> Total: $ ${0+=item.price}.-</h4>
-    //     </div>`
-    // })
+    let tot = 0
+    const transactionInfo = req.body.transactionInfo.map(item => {
+        tot+=item.price*item.quantity
+        return `<div>
+                <h4>${item.name} qty:${item.quantity}</h4>
+                <h4>unit price $${item.price*item.quantity}</h4>
+        </div>`
+    })
 
     let htmlTemplate = `
 <!DOCTYPE html>
@@ -43,10 +42,11 @@ router.post("/", (req, res) => {
 </head>
 <body>
     <h1>Clement Online Wine Store</h1>
-    <h3>${req.body.fullname}, thank you for choosing us.</h3>
+    <h2>${req.body.fullname}, thank you for your order.</h2>
     <hr>
-    <p>Order details:</p>
+    <h3>Purchase details:</h4>
     ${transactionInfo}
+    <h2>Total amount $ ${tot}</h4>
 </body>
 </html>
     `
@@ -54,8 +54,8 @@ router.post("/", (req, res) => {
         from: "Clement Online <clementonlinewineshop@gmail.com>",
         to: `${req.body.fullname} <${req.body.mailto}>`,
         subject: `Orden de compra N: ${req.body.transactionId}`,
-        text: req.body.body,
-        html: htmlTemplate
+        html: htmlTemplate,
+        attachements: [{filename: "../public/LogoClement.png"}]
     }
 
     transporter.sendMail(mail, (err, data) => {
