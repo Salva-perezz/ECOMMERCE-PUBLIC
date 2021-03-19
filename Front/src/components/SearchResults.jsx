@@ -3,14 +3,19 @@ import axios from "axios"
 import { Link, useHistory, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { addToStoreCart } from "../store/currentCartItems"
+import { toggleRefresh } from "../store/navBarRefresh";
+import { setLocalItems } from "../store/locaItems"
 
 const SearchResults = (props) => {
   const [products, setProducts] = useState("loading")
   const currentCart = useSelector((state) => state.currentCart)
   const currentUser = useSelector((state) => state.currentUser)
+  const localItems = useSelector(state => state.localItems)
   const dispatch = useDispatch()
   const history = useHistory()
   const [title, setTitle] = useState("")
+  const [notLoggedCart, setnotLoggedCart] = useState();
+  const [variable, setVariable] = useState(1);
 
   // const products = [{name: "Pepe", price: 25, brand: "Pepe"}]
 
@@ -29,9 +34,39 @@ const SearchResults = (props) => {
     return () => setProducts("loading")
   }, [q, m])
 
+  React.useEffect(() => {
+    localStorage.getItem("notLoggedCart")
+      ? setnotLoggedCart(JSON.parse(localStorage.getItem("notLoggedCart")))
+      : setnotLoggedCart([]);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(localItems)
+    localStorage.setItem("notLoggedCart", JSON.stringify(notLoggedCart));
+  }, [notLoggedCart, variable]);
+
   const addToCart = function (product) {
-    if (!currentUser) history.push("/login")
-    else
+    let indice;
+    if (!currentUser) {
+      notLoggedCart.map((cartItem, index) => {
+        if (cartItem.productId == product.id) {
+          indice = index;
+        }
+      })
+      if(indice == undefined){
+      setnotLoggedCart((state) => [...state, {
+        name: product.name,
+        urlPicture: product.urlPicture,
+        price: product.price,
+        quantity: 1,
+        productId: product.id,
+      }]);
+    } else {
+      notLoggedCart[indice].quantity += 1
+      setVariable(variable + 1)
+    }
+      dispatch(toggleRefresh());
+    } else
       axios
         .post("/api/transactionitems", {
           transactionId: currentCart.id,
@@ -49,8 +84,8 @@ const SearchResults = (props) => {
               id: transactionItem.data.id,
             })
           )
-        )
-  }
+        );
+  };
 
   return (
     <>
