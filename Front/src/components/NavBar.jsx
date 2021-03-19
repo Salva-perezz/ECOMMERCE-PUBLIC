@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom"
@@ -8,11 +8,15 @@ import { loadStoreCart } from "../store/currentCart"
 import { clearStoreCart } from "../store/currentCartItems"
 
 const NavBar = () => {
-  // const currentUser = useSelector((state) => state.currentUser)
   const currentCartItems = useSelector((state) => state.currentCartItems)
   const [searchQuery, setSearchQuery] = useState("")
   const dispatch = useDispatch()
   const history = useHistory()
+  const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('notLoggedCart')));
+  const refresh = useSelector(state => state.refresh);
+
+  useEffect(() => {
+  }, [refresh])
 
   const token = localStorage.getItem("token")
 
@@ -27,7 +31,7 @@ const NavBar = () => {
   }
 
   const handleLogout = function (event) {
-    localStorage.clear()
+    localStorage.removeItem('token')
     dispatch(getCurrentUser(""))
     dispatch(loadStoreCart("loading"))
     dispatch(clearStoreCart())
@@ -56,8 +60,8 @@ const NavBar = () => {
                 />
               </form>
             </div>
+                {token ? (
 
-            {token ? (
               <div className="logged-in">
                 <Link to="/cart">
                   <button>View Cart</button>
@@ -66,15 +70,27 @@ const NavBar = () => {
                   <div className="cart-quantity">
                     {currentCartItems.reduce(
                       (accumulator, currentValue) =>
-                        accumulator + Number(currentValue.quantity),
+                      accumulator + Number(currentValue.quantity),
                       0
-                    )}
+                      )}
                   </div>
                 ) : null}
                 <button onClick={handleLogout}>Log Out</button>
               </div>
             ) : (
               <div className="not-logged-in">
+                <Link to="/cart">
+                  <button>View Cart</button>
+                </Link>
+                {localItems ? (
+                  <div className="cart-quantity">
+                    {localItems.reduce(
+                      (accumulator, currentValue) =>
+                      accumulator + Number(currentValue.quantity),
+                      0
+                      )}
+                  </div>
+                ) : null}
                 <Link to="/login">
                   <button>Log In</button>
                 </Link>
