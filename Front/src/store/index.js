@@ -7,6 +7,8 @@ import { currentCartItemsReducer } from "./currentCartItems"
 import { yearsReducer } from "./years"
 import { countriesReducer } from "./countries"
 import { typesReducer } from "./types"
+import { refreshReducer } from "./navBarRefresh"
+import { localItemsReducer } from "./locaItems"
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -20,6 +22,8 @@ const store = configureStore({
     years: yearsReducer,
     countries: countriesReducer,
     types: typesReducer,
+    refresh: refreshReducer,
+    localItems: localItemsReducer,
   },
 })
 

@@ -25,8 +25,14 @@ const Login = () => {
       })
       .then((newUser) => {
         localStorage.setItem("token", newUser.data.token)
-        dispatch(getCurrentUser({ id: newUser.data.user.id, isAdmin: newUser.data.user.isAdmin }))
+        dispatch(
+          getCurrentUser({
+            id: newUser.data.user.id,
+            isAdmin: newUser.data.user.isAdmin,
+          })
+        )
       })
+      .then(() => history.goBack())
       .catch(() => setError(true))
   }
 
@@ -37,9 +43,9 @@ const Login = () => {
           userId: currentUser.id,
         })
         .then((cart) => {
-          dispatch(loadStoreCart({ id: cart.data.id }))
-        })
-  }, [currentUser])
+          dispatch(loadStoreCart({ id: cart.data.id }));
+        });
+  }, [currentUser]);
 
   React.useEffect(() => {
     if (currentCart !== "loading")
@@ -48,10 +54,10 @@ const Login = () => {
           transactionId: currentCart.id,
         })
         .then((cartItems) => {
-          dispatch(loadStoreCartItems(cartItems.data))
-          history.push("/products")
-        })
-  }, [currentCart])
+          dispatch(loadStoreCartItems(cartItems.data));
+          history.push("/products");
+        });
+  }, [currentCart]);
 
   const Error = () => (
     <div className="sign-up-or-log-in-error">Invalid Email or Password</div>
@@ -79,7 +85,9 @@ const Login = () => {
         <button>Log In</button>
       </form>
       <Link to="/register">
-        <div className="sign-up-or-log-in-no-account" >Don't have an account? Sign up</div>
+        <div className="sign-up-or-log-in-no-account">
+          Don't have an account? Sign up
+        </div>
       </Link>
       {error && <Error />}
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom"
@@ -6,14 +6,20 @@ import axios from "axios"
 import { getCurrentUser } from "../store/currentUser"
 import { loadStoreCart } from "../store/currentCart"
 import { clearStoreCart } from "../store/currentCartItems"
-import CategoryDropdown  from "./CategoryDropdown"
+import CategoryDropdown from "./CategoryDropdown"
 
 const NavBar = () => {
-  // const currentUser = useSelector((state) => state.currentUser)
   const currentCartItems = useSelector((state) => state.currentCartItems)
+  const currentUser = useSelector((state) => state.currentUser)
   const [searchQuery, setSearchQuery] = useState("")
   const dispatch = useDispatch()
   const history = useHistory()
+  const [localItems, setLocalItems] = useState(
+    JSON.parse(localStorage.getItem("notLoggedCart"))
+  )
+  const refresh = useSelector((state) => state.refresh)
+
+  useEffect(() => {}, [refresh])
 
   const token = localStorage.getItem("token")
 
@@ -28,7 +34,7 @@ const NavBar = () => {
   }
 
   const handleLogout = function (event) {
-    localStorage.clear()
+    localStorage.removeItem("token")
     dispatch(getCurrentUser(""))
     dispatch(loadStoreCart("loading"))
     dispatch(clearStoreCart())
@@ -42,7 +48,9 @@ const NavBar = () => {
       <div className="navbar-first-row-container">
         <div className="navbar-first-row">
           <div className="logo-container">
+            <Link to="/">
             <div className="logo">Clement</div>
+            </Link>
             <div className="logo-tagline">online wine shop</div>
           </div>
           <div className="search-and-log-in">
@@ -57,13 +65,14 @@ const NavBar = () => {
                 />
               </form>
             </div>
-
             {token ? (
               <div className="logged-in">
-                <Link to="/cart">
-                  <button>View Cart</button>
-                </Link>
-                {currentCartItems.length ? (
+                {currentUser.isAdmin ? null : (
+                  <Link to="/cart">
+                    <button>View Cart</button>
+                  </Link>
+                )}
+                {!currentUser.isAdmin && currentCartItems.length ? (
                   <div className="cart-quantity">
                     {currentCartItems.reduce(
                       (accumulator, currentValue) =>
@@ -72,10 +81,27 @@ const NavBar = () => {
                     )}
                   </div>
                 ) : null}
+                {currentUser.isAdmin ? null : (
+                    <Link to="/history">
+                      <button>Orders</button>
+                    </Link>
+                )}
                 <button onClick={handleLogout}>Log Out</button>
               </div>
             ) : (
               <div className="not-logged-in">
+                <Link to="/cart">
+                  <button>View Cart</button>
+                </Link>
+                {localItems ? (
+                  <div className="cart-quantity">
+                    {localItems.reduce(
+                      (accumulator, currentValue) =>
+                        accumulator + Number(currentValue.quantity),
+                      0
+                    )}
+                  </div>
+                ) : null}
                 <Link to="/login">
                   <button>Log In</button>
                 </Link>
@@ -88,7 +114,7 @@ const NavBar = () => {
         </div>
       </div>
       <hr />
-      <CategoryDropdown/>
+      <CategoryDropdown />
       <hr />
     </div>
   )

@@ -6,12 +6,24 @@ import { useSelector, useDispatch } from "react-redux"
 import {
   removeFromStoreCart,
   changeQuantityInStoreCart,
+  currentCartItemsReducer,
 } from "../store/currentCartItems"
+import { toggleRefresh } from "../store/navBarRefresh"
+
 
 const Cart = () => {
-  const currentCartItems = useSelector((state) => state.currentCartItems)
+  let currentCartItems = useSelector((state) => state.currentCartItems)
   const [total, setTotal] = useState(0)
+  const currentUser = useSelector(state => state.currentUser);
   const dispatch = useDispatch()
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem('notLoggedCart')));
+  const [elEstornudoDeFede, setelEstornudoDeFede] = useState(1)
+
+  !currentUser ? currentCartItems = items : null;
+
+  React.useEffect(() => {
+    localStorage.setItem('notLoggedCart', JSON.stringify(items))
+  }, [elEstornudoDeFede])
 
   React.useEffect(() => {
     setTotal(
@@ -25,40 +37,53 @@ const Cart = () => {
     )
   }, [currentCartItems])
 
-  const removeFromCart = function ({ id }) {
+  const removeFromCart = function (cartItem) {
+    if(!currentUser){
+      let varItems = items;
+      let indice;
+      varItems.map((item, index) => {
+        if(item.productId == cartItem.productId){
+          indice = index
+        }
+      });
+      varItems.splice(indice, 1)
+      setItems(varItems)
+      setelEstornudoDeFede(elEstornudoDeFede + 1)
+      dispatch(toggleRefresh());
+    } else{
     axios
-      .put("/api/transactionitems/remove", {
-        id,
-      })
+      .delete("/api/transactionitems/" + cartItem.id)
       .then(() =>
         dispatch(
           removeFromStoreCart({
-            id,
+            id: cartItem.id,
           })
         )
-      )
+      )}
   }
 
-  const changeQuantity = function ({ productId, quantity }) {
-    // axios
-    //   .post("/api/transactionitems", {
-    //     transactionId: currentCart.id,
-    //     productId: product.id,
-    //     quantity: 1,
-    //   })
-    //   .then(() =>
-    dispatch(
-      changeQuantityInStoreCart({
-        productId,
-        quantity,
-      })
-    )
-    // )
+  const changeQuantity = function (cartItem, quantity) {
+    let { id, productId } = cartItem
+    if (quantity && quantity > 0) {
+      axios
+        .put("/api/transactionitems/quantity", {
+          id: id,
+          quantity: quantity,
+        })
+        .then(() =>
+          dispatch(
+            changeQuantityInStoreCart({
+              productId,
+              quantity,
+            })
+          )
+        )
+    }
   }
 
   return (
     <>
-      {currentCartItems.length ? (
+      {currentCartItems && currentCartItems.length ? (
         <div className="cart-container">
           <div className="cart-title">Your Shopping Cart</div>
           <hr />
@@ -70,7 +95,7 @@ const Cart = () => {
           </div>
           <hr />
           {currentCartItems.map((cartItem, index) => (
-            <div key={index} >
+            <div key={index}>
               <div className="cart-item">
                 <div className="column-1">
                   <img
@@ -81,7 +106,11 @@ const Cart = () => {
                 </div>
                 <div className="column-2">{"$" + cartItem.price}</div>
                 <div className="column-3">
-                  <input type="text" value={cartItem.quantity} />
+                  <input
+                    type="number"
+                    onBlur={(e) => changeQuantity(cartItem, e.target.value)}
+                    placeholder={cartItem.quantity}
+                  />
                   <img
                     onClick={() => removeFromCart(cartItem)}
                     className="cart-delete-icon"
@@ -97,16 +126,16 @@ const Cart = () => {
           ))}
           <div className="cart-total">
             <div className="cart-total-amount">Order Total: ${total}</div>
-            <Link to="/checkout">
+            <Link to={currentUser ? '/checkout' : '/login'}>
               <button>Checkout</button>
             </Link>
           </div>
         </div>
       ) : (
-        <div className="empty-cart-container">
-          <div className="empty-cart-title">
+        <div className="empty-page-container">
+          <div className="empty-page-title">
             Your Cart Is Empty
-            <Link to="/products">
+            <Link to="/">
               <button>Continue Shopping</button>
             </Link>
           </div>

@@ -18,7 +18,7 @@ const Checkout = () => {
   const [selectedPayment, setSelectedPayment] = useState("")
   const [selectedAddress, setSelectedAddress] = useState("")
 
-  const [fullname, setFullname] = useState("")
+  const [fullName, setFullname] = useState("")
   const [cardType, setCardType] = useState("")
   const [ccNumber, setCCNumber] = useState("")
   const [secCode, setSecCode] = useState("")
@@ -35,7 +35,6 @@ const Checkout = () => {
   const dispatch = useDispatch()
 
   React.useEffect(() => {
-    console.log(currentUser.id)
     if (currentUser)
       axios.get("/api/payments/" + currentUser.id).then((cards) => {
         setCards(cards.data)
@@ -43,7 +42,6 @@ const Checkout = () => {
   }, [currentUser])
 
   React.useEffect(() => {
-    console.log(currentUser.id)
     if (currentUser)
       axios.get("/api/addresses/" + currentUser.id).then((address) => {
         setAddresses(address.data)
@@ -67,7 +65,7 @@ const Checkout = () => {
       })
       .then((newTransaction) => {
         dispatch(loadStoreCart({ id: newTransaction.data.id }))
-        history.push("/")
+        history.push("/history")
       })
       .catch((error) => console.log(error))
   }
@@ -98,7 +96,7 @@ const Checkout = () => {
     event.preventDefault()
     axios
       .post("/api/payments/", {
-        fullname,
+        fullName,
         cardType,
         ccNumber,
         secCode,
@@ -209,7 +207,7 @@ const Checkout = () => {
                   <label>Name on Card</label>
                   <input
                     type="text"
-                    name="fullname"
+                    name="fullName"
                     onChange={(event) => setFullname(event.target.value)}
                   />
                   <div className="security-code-and-expiration-date">

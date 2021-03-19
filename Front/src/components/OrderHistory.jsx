@@ -1,6 +1,7 @@
 import axios from "axios"
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState([])
@@ -12,6 +13,7 @@ const OrderHistory = () => {
         .get("/api/transactions/" + currentUser.id)
         .then(({ data }) => {
           console.log(data)
+          data.reverse()
           setOrderHistory(data)
         })
         .catch((err) => console.log(err))
@@ -20,13 +22,26 @@ const OrderHistory = () => {
 
   return (
     <div className="order-history-container">
-      {console.log(orderHistory.length)}
-      {orderHistory.length > 0 &&
+      {orderHistory.length > 0 ? (
         orderHistory.map((order, index) => (
           <div key={index}>
-            <div>
+            <div className="order-history-single-order">
               <div className="order-history-title">
                 Order Date: {order.checkoutDate.slice(0, 10)}
+              </div>
+              {/* <hr /> */}
+              <div className="order-history-address-and-payment">
+                <div className="order-history-address">
+                  Shipping Address: {order.address.address},{" "}
+                  {order.address.city}, {order.address.state},{" "}
+                  {order.address.zipCode}, {order.address.country}
+                </div>
+                {/* <hr/> */}
+                <div className="order-history-payment">
+                  Payment Method: {order.payment.cardType},{" "}
+                  {order.payment.hiddenNumber}, Expiration Date:{" "}
+                  {order.payment.expirationMonth}/{order.payment.expirationYear}
+                </div>
               </div>
               <hr />
               <div className="order-history-labels">
@@ -59,32 +74,29 @@ const OrderHistory = () => {
                   <hr />
                 </div>
               ))}
-            </div>
-            <div>
-              Order Total: $
-              {order.transaction_items.reduce(
-                (accumulator, item) =>
-                  accumulator +
-                  Number(item.product.price) * Number(item.quantity),
-                0
-              )}
-            </div>
-            <div className="order-address">
-              Shipping Address:
-              <div> {order.address.address}</div>
-              <div> {order.address.city}</div>
-              <div> {order.address.state}</div>
-              <div> {order.address.country}</div>
-              <div>{order.address.zipCode}</div>
-            </div>
-            <div className="order-payment">
-              Payment Method:
-              <div> {order.payment.cardType}</div>
-              <div> {order.payment.ccNumber}</div>
-              <div>Expiration Date: {order.payment.expirationMonth}/{order.payment.expirationYear}</div>
+              <div className="order-history-total">
+                Order Total: $
+                {order.transaction_items.reduce(
+                  (accumulator, item) =>
+                    accumulator +
+                    Number(item.product.price) * Number(item.quantity),
+                  0
+                )}
+              </div>
+              <hr />
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <div className="empty-page-container">
+          <div className="empty-page-title">
+            You Have No Orders Yet
+            <Link to="/">
+              <button>Continue Shopping</button>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
