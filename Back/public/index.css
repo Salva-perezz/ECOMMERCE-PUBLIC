@@ -48,6 +48,8 @@ a hr {
   src: url("Sonneta Script.otf");
 }
 
+/* NAVBAR */
+
 .navbar-container {
   width: 1120px;
   margin: 0 auto 20px;
@@ -147,16 +149,6 @@ a hr {
   margin-left: 10px;
 }
 
-.categories {
-  display: flex;
-  justify-content: space-around;
-  position: relative
-}
-
-.categories button {
-  font-size: 1em;
-}
-
 .navbar-container hr {
   border: none;
   border-top: rgb(218, 218, 218) solid 1px;
@@ -172,6 +164,37 @@ a hr {
   font-weight: 600;
   margin-top: 2px;
 }
+
+/* DROPDOWN */
+
+.navbar-categories {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
+.navbar-categories button {
+  font-size: 1em;
+}
+
+.navbar-categories-name {
+  position: relative;
+}
+
+.navbar-categories-list {
+  margin-top: 8px;
+  padding: 10px 70px 15px 20px;
+  position: absolute;
+  left: -20px;
+  background-color: white;
+  list-style-type: none;
+  text-align: left;
+  border: rgb(202, 202, 202) solid 1px;
+  line-height: 1.5em;
+  border-top: none;
+}
+
+/* HOME */
 
 .home-main-picture {
   width: 1120px;
@@ -402,7 +425,7 @@ a hr {
 .footer {
   margin-top: 25px;
   padding-top: 20px;
-  padding-bottom: 70px;
+  padding-bottom: 120px;
   text-align: center;
   background-color: rgb(0, 0, 0);
   color: rgb(214, 214, 214);
@@ -982,9 +1005,9 @@ a hr {
   border-top: rgb(218, 218, 218) solid 1px;
 }
 
-/* EMPTY CART */
+/* EMPTY PAGE */
 
-.empty-cart-container {
+.empty-page-container {
   width: 400px;
   margin: 0 auto;
   display: flex;
@@ -992,7 +1015,7 @@ a hr {
   align-items: center;
 }
 
-.empty-cart-title {
+.empty-page-title {
   font-family: "IM Fell Double Pica SC";
   font-size: 2em;
   text-align: center;
@@ -1000,7 +1023,7 @@ a hr {
   margin-bottom: 200px;
 }
 
-.empty-cart-container button {
+.empty-page-container button {
   width: 255px;
   margin: 20px 0 0;
   background-color: rgb(231, 202, 127);
@@ -1077,7 +1100,7 @@ a hr {
   text-align: right;
 }
 
-.order-history-total{
+.order-history-total {
   width: 950px;
   font-size: 1.4em;
   margin: 10px auto 10px;

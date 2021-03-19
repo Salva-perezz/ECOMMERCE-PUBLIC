@@ -1,39 +1,40 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { getCurrentUser } from "../store/currentUser";
-import { useSelector, useDispatch } from "react-redux";
-import { loadStoreCart } from "../store/currentCart";
-import { loadStoreCartItems } from "../store/currentCartItems";
-import { useHistory, Link } from "react-router-dom";
+import React, { useState } from "react"
+import axios from "axios"
+import { getCurrentUser } from "../store/currentUser"
+import { useSelector, useDispatch } from "react-redux"
+import { loadStoreCart } from "../store/currentCart"
+import { loadStoreCartItems } from "../store/currentCartItems"
+import { useHistory, Link } from "react-router-dom"
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState(false)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-  const currentUser = useSelector((state) => state.currentUser);
-  const currentCart = useSelector((state) => state.currentCart);
+  const currentUser = useSelector((state) => state.currentUser)
+  const currentCart = useSelector((state) => state.currentCart)
 
   const handleSubmit = function (event) {
-    event.preventDefault();
+    event.preventDefault()
     axios
       .post("/api/users/login", {
         email,
         password,
       })
       .then((newUser) => {
-        localStorage.setItem("token", newUser.data.token);
+        localStorage.setItem("token", newUser.data.token)
         dispatch(
           getCurrentUser({
             id: newUser.data.user.id,
             isAdmin: newUser.data.user.isAdmin,
           })
-        );
+        )
       })
-      .catch(() => setError(true));
-  };
+      .then(() => history.goBack())
+      .catch(() => setError(true))
+  }
 
   React.useEffect(() => {
     if (currentUser)
@@ -60,7 +61,7 @@ const Login = () => {
 
   const Error = () => (
     <div className="sign-up-or-log-in-error">Invalid Email or Password</div>
-  );
+  )
 
   return (
     <div className="sign-up-or-log-in">
@@ -90,7 +91,7 @@ const Login = () => {
       </Link>
       {error && <Error />}
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

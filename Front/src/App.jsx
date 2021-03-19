@@ -9,6 +9,7 @@ import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
 import Cart from "./components/Cart.jsx";
 import Checkout from "./components/Checkout.jsx";
+import OrderHistory from "./components/OrderHistory.jsx";
 import AdminProduct from "./components/AdminProduct.jsx";
 import AdminUsers from "./components/AdminUsers.jsx";
 import AdminCategories from "./components/AdminCategories.jsx";

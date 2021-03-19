@@ -19,7 +19,7 @@ const CategoryDropdown = () => {
   return (
     <>
       {currentUser.isAdmin ? (
-        <div className="categories">
+        <div className="navbar-categories">
           <div className="categoriesOptions">
           <Link to="/admin/categories"><button>Categories</button></Link>
           </div>
@@ -31,8 +31,8 @@ const CategoryDropdown = () => {
           </div>
         </div>
       ) : (
-        <div className="categories">
-          <div className="categoriesOptions">
+        <div className="navbar-categories">
+          <div className="navbar-categories-name">
             <button
               onClick={() => {
                 setShowMenuType(!showMenuType)
@@ -43,10 +43,10 @@ const CategoryDropdown = () => {
               Type
             </button>
             {showMenuType ? (
-              <ul className="categoriesOptionsList">
+              <div className="navbar-categories-list">
                 {typeCategories.map((type, i) => {
                   return (
-                    <li key={i}>
+                    <div key={i}>
                       <button
                         onClick={() => {
                           searchCategory(type.name, "Type")
@@ -55,13 +55,13 @@ const CategoryDropdown = () => {
                       >
                         {type.name}
                       </button>
-                    </li>
+                    </div>
                   )
                 })}
-              </ul>
+              </div>
             ) : null}
           </div>
-          <div className="categoriesOptions">
+          <div className="navbar-categories-name">
             <button
               onClick={() => {
                 setShowMenuCountry(!showMenuCountry)
@@ -72,10 +72,10 @@ const CategoryDropdown = () => {
               Country
             </button>
             {showMenuCountry ? (
-              <ul className="categoriesOptionsList">
+              <div className="navbar-categories-list">
                 {countryCategories.map((country, i) => {
                   return (
-                    <li key={i}>
+                    <div key={i}>
                       <button
                         onClick={() => {
                           searchCategory(country.name, "Country")
@@ -84,13 +84,13 @@ const CategoryDropdown = () => {
                       >
                         {country.name}
                       </button>
-                    </li>
+                    </div>
                   )
                 })}
-              </ul>
+              </div>
             ) : null}
           </div>
-          <div className="categoriesOptions">
+          <div className="navbar-categories-name">
             <button
               onClick={() => {
                 setShowMenuYear(!showMenuYear)
@@ -101,10 +101,10 @@ const CategoryDropdown = () => {
               Vintage
             </button>
             {showMenuYear ? (
-              <ul className="categoriesOptionsList">
+              <div className="navbar-categories-list">
                 {yearCategories.map((year, i) => {
                   return (
-                    <li key={i}>
+                    <div key={i}>
                       {" "}
                       <button
                         onClick={() => {
@@ -114,10 +114,10 @@ const CategoryDropdown = () => {
                       >
                         {year.name}
                       </button>
-                    </li>
+                    </div>
                   )
                 })}
-              </ul>
+              </div>
             ) : null}
           </div>
         </div>
