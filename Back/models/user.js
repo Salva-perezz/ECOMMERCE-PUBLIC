@@ -28,7 +28,7 @@ User.init(
     },
     isAdmin: {
       type: Sequelize.BOOLEAN,
-      defaultValue: true,
+      defaultValue: false,
     },
   },
   { sequelize: db, modelName: "user" }
