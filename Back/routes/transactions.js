@@ -30,10 +30,10 @@ router.get("/:id", (req, res) => {
         }, attributes: ["checkoutDate"],
         include: [{
             model: Payment,
-            attributes: ["fullName", "cardType", "hiddenNumber", "expirationMonth", "expirationYear"]
+            attributes: ["fullName", "cardType", "ccNumber", "hiddenNumber", "expirationMonth", "expirationYear"]
         }, {
             model: Address,
-            attributes: ["address", "country", "city", "zipCode"]
+            attributes: ["address", "country", "city", "state", "zipCode"]
         }, {
             model: TransactionItem,
             attributes: ["quantity"],

@@ -18,7 +18,7 @@ const Checkout = () => {
   const [selectedPayment, setSelectedPayment] = useState("")
   const [selectedAddress, setSelectedAddress] = useState("")
 
-  const [fullname, setFullname] = useState("")
+  const [fullName, setFullname] = useState("")
   const [cardType, setCardType] = useState("")
   const [ccNumber, setCCNumber] = useState("")
   const [secCode, setSecCode] = useState("")
@@ -96,7 +96,7 @@ const Checkout = () => {
     event.preventDefault()
     axios
       .post("/api/payments/", {
-        fullname,
+        fullName,
         cardType,
         ccNumber,
         secCode,
@@ -166,6 +166,7 @@ const Checkout = () => {
                         </div>
                       </div>
                     </div>
+                    {console.log(__dirname)}
                     <img
                       className="checkout-delete-icon"
                       src="icons/delete.png"
@@ -206,7 +207,7 @@ const Checkout = () => {
                   <label>Name on Card</label>
                   <input
                     type="text"
-                    name="fullname"
+                    name="fullName"
                     onChange={(event) => setFullname(event.target.value)}
                   />
                   <div className="security-code-and-expiration-date">

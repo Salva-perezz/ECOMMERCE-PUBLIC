@@ -114,6 +114,7 @@ const App = () => {
           <Route path="/login" render={() => <Login />} />
           <Route path="/cart" render={() => <Cart />} />
           <Route path="/checkout" render={() => <Checkout />} />
+          <Route path="/history" render={() => <OrderHistory />} />
           <Route path="/" render={() => <Home />} />
         </Switch>
       </div>

@@ -12,6 +12,16 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/", (req, res) => {
+
+    // const transactionInfo = req.body.transactionInfo.map(item => {
+    //     return `<div>
+    //         <ul>
+    //             <li>${item.name} qty:${item.quantity} u.price:${item.price}</li>
+    //         </ul>
+    //         <h4> Total: $ ${0+=item.price}.-</h4>
+    //     </div>`
+    // })
+
     let htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +43,10 @@ router.post("/", (req, res) => {
 </head>
 <body>
     <h1>Clement Online Wine Store</h1>
-    <h3>${req.body.fullname}, gracias por su compra!</h3> 
+    <h3>${req.body.fullname}, thank you for choosing us.</h3>
+    <hr>
+    <p>Order details:</p>
+    ${transactionInfo}
 </body>
 </html>
     `

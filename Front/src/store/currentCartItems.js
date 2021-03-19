@@ -17,12 +17,14 @@ export const currentCartItemsReducer = createReducer([], {
   [removeFromStoreCart]: (state, action) =>
     state.filter((cartItem) => cartItem.id !== action.payload.id),
   [clearStoreCart]: (state, action) => [],
-  [changeQuantityInStoreCart]: (state, action) =>
+  [changeQuantityInStoreCart]: (state, action) => {
     state.map((cartItem) => {
       if (cartItem.productId !== action.payload.productId) return cartItem
       else {
         cartItem.quantity = action.payload.quantity
         return cartItem
       }
-    }),
+    })
+  }
+  ,
 });

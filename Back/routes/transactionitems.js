@@ -28,6 +28,7 @@ router.post("/", (req, res) => {
         })
 })
 
+<<<<<<< HEAD
 router.post('/localstorage', (req, res) => {
     const array = req.body.array;
     let index = array.length;
@@ -69,6 +70,8 @@ router.post('/localstorage', (req, res) => {
     })
 })
 
+=======
+>>>>>>> e0f1f5b7360446a2f0be3cb426f1033d265260e8
 router.delete("/:id", (req, res) => {
     TransactionItem.destroy({
         where: { id: req.params.id },
@@ -100,11 +103,34 @@ router.put("/", (req, res) => {
         })
 })
 
+router.put("/quantity", (req, res) => {
+    TransactionItem
+        .update(
+            {
+                quantity: req.body.quantity,
+            },
+            {
+                where: { id: req.body.id },
+                returning: true,
+                plain: true
+            })
+        .then((transactionItemUpdated) => {
+            res.status(200).json(transactionItemUpdated[1])
+        }).catch((err) => {
+            console.log(err)
+            res.sendStatus(400)
+        })
+})
+
+
 router.put("/load", (req, res) => {
     TransactionItem.findAll({
         where: { transactionId: req.body.transactionId },
-        include: Product,
-    })
+        include: {
+            model:Product,
+            order: ["name"]    
+        },
+       })
         .then((transactionItems) => {
             transactionItems = transactionItems.map((item) => {
                 return {
