@@ -36,7 +36,6 @@ const AllProducts = () => {
 
 
   const addToCart = function (product) {
-    console.log(variable)
     let indice;
     if (!currentUser) {
       console.log('NOTLOGGEDCART', notLoggedCart)
