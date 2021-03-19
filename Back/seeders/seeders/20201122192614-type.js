@@ -19,11 +19,6 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        name: 'Cortese',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
     ]);
   },
   down: (queryInterface, Sequelize) => {
