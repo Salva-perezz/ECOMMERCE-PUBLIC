@@ -3,12 +3,15 @@ import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { addToStoreCart } from "../store/currentCartItems"
+import { toggleRefresh } from "../store/navBarRefresh";
 
 const SingleProduct = (props) => {
   const [quantity, setQuantity] = useState(1)
   const [product, setProduct] = useState("loading")
   const currentCart = useSelector((state) => state.currentCart)
   const currentUser = useSelector((state) => state.currentUser)
+  const [notLoggedCart, setnotLoggedCart] = useState();
+  const [variable, setVariable] = useState(1);
 
   const dispatch = useDispatch()
   const history = useHistory()
@@ -31,9 +34,40 @@ const SingleProduct = (props) => {
     return () => setProduct("loading")
   }, [])
 
+  React.useEffect(() => {
+    localStorage.getItem("notLoggedCart")
+      ? setnotLoggedCart(JSON.parse(localStorage.getItem("notLoggedCart")))
+      : setnotLoggedCart([]);
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("notLoggedCart", JSON.stringify(notLoggedCart));
+  }, [notLoggedCart, variable]);
+
   const addToCart = function () {
-    if(!currentUser) history.push("/login")
-    else axios
+    let indice;
+    if(!currentUser) {
+      notLoggedCart.map((cartItem, index) => {
+        if (cartItem.productId == product.id) {
+          indice = index;
+        }
+      })
+      if(indice == undefined){
+      setnotLoggedCart((state) => [...state, {
+        name: product.name,
+        urlPicture: product.urlPicture,
+        price: product.price,
+        quantity: quantity,
+        productId: product.id,
+      }]);
+    } else {
+      notLoggedCart[indice].quantity += 1
+      setVariable(variable + 1)
+    }
+      dispatch(toggleRefresh());
+    }
+    else {
+      axios
       .post("/api/transactionitems", {
         transactionId: currentCart.id,
         productId: product.id,
@@ -51,6 +85,7 @@ const SingleProduct = (props) => {
           })
         )
       )
+    }
   }
 
   return (

@@ -36,11 +36,8 @@ const AllProducts = () => {
 
 
   const addToCart = function (product) {
-    console.log(variable)
     let indice;
     if (!currentUser) {
-      console.log('NOTLOGGEDCART', notLoggedCart)
-      console.log('PRODUCT', product)
       notLoggedCart.map((cartItem, index) => {
         console.log('CARTITEM', cartItem)
         if (cartItem.productId == product.id) {
@@ -48,7 +45,6 @@ const AllProducts = () => {
           indice = index;
         }
       })
-      console.log(indice)
       if(indice == undefined){
       setnotLoggedCart((state) => [...state, {
         name: product.name,

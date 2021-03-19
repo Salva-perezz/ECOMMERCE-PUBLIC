@@ -13,11 +13,13 @@ const NavBar = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const dispatch = useDispatch()
   const history = useHistory()
-  const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('notLoggedCart')));
+  const [localItems, setLocalItems] = useState([]);
   const refresh = useSelector(state => state.refresh);
 
-  useEffect(() => {
-  }, [refresh])
+ useEffect(() => {
+   console.log(localItems)
+  }, [localItems, refresh])
+
 
   const token = localStorage.getItem("token")
 
